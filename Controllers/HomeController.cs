@@ -4,6 +4,8 @@ using System.Data.SqlClient;
 using Microsoft.EntityFrameworkCore;
 using myPet;
 using myPet.Data;
+using System.ComponentModel.DataAnnotations;
+using Microsoft.IdentityModel.Tokens;
 
 namespace myPet4.Controllers
 {
@@ -30,20 +32,26 @@ namespace myPet4.Controllers
 
         public IActionResult userCreateForm(string login)
         {
-            if(ModelState.IsValid)
-            {
-                return Redirect("/");
-            }
-
-            //    if (login != null)
-            //    {
-            //        Person person = new Person(login);
-            //        _context.Persons.Add(person);
-            //        _context.SaveChanges();
-            //        return View();
-            //    }
-            //    return View();
-            return View(userCreateForm);
+            if (ModelState.IsValid)
+            { 
+                var persons = _context.Persons.Where(p => p.login == login);
+                if (persons.IsNullOrEmpty())
+                //Person per = _context.Persons.Where<Person>(p => EF.Functions.Like(p.login, login));
+                //if (_context.Persons.Where(p => EF.Functions.Like(p.login, login)) == null)
+                {
+                    Person person = new Person(login);
+                    _context.Add<Person>(person);
+                    _context.SaveChanges();
+                    return View("Index");
+                }
+                else
+                {
+                    ModelState.AddModelError("UserCreatingErr", "Такой пользователь уже существует");
+                          
+                    return View("userCreateForm");
+                }
+             }
+             else return View("userCreateForm");       
         }
     }
 }

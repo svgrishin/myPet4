@@ -18,13 +18,13 @@ namespace myPet
         public DbSet <Finance>Finances { get; set; }
 
 
-        //protected override void OnModelCreating(ModelBuilder modelBuilder)
-        //{
-        //    modelBuilder.Entity<Income>().ToTable("income");
-        //    modelBuilder.Entity<Transaction>().ToTable("transactions");
-        //    modelBuilder.Entity<Item>().ToTable("items");
-        //    modelBuilder.Entity<Person>().ToTable("Persons");
-        //    modelBuilder.Entity<Finance>().ToTable("Finance");
-        //}
+        protected override void OnModelCreating(ModelBuilder modelBuilder)
+        {
+            modelBuilder.Entity<Income>().ToTable("income");
+            modelBuilder.Entity<Transaction>().ToTable("transactions");
+            modelBuilder.Entity<Item>().ToTable("items");
+            modelBuilder.Entity<Person>().ToTable("Persons");
+            modelBuilder.Entity<Finance>().ToTable("Finance");
+        }
     }
 }
