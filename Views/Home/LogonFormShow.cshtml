@@ -1,0 +1,17 @@
+﻿@model myPet.myPetContext
+
+@{
+    ViewData["Title"] = "Logon";
+    Layout = "~/Views/Home/_Layout.cshtml";
+}
+
+<h1>Logon</h1>
+    <thead>
+        @Html.DisplayNameFor(model => model.Persons)
+    </thead>
+<tbody>
+    <form>
+        @Html.DropDownListFor(m => m.Persons, new SelectList(Model.Persons,"id","login"))
+        <input type="submit" value="Создать" /> 
+    </form>        
+</tbody>

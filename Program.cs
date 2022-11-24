@@ -20,7 +20,7 @@ app.UseHttpsRedirection();
 app.UseRouting();
 app.MapControllerRoute(
     name: "default",
-    pattern: "{controller=Home}/{action=login}");
+    pattern: "{controller=Home}/{action=HelloForm}");
 
 
 app.Run();
