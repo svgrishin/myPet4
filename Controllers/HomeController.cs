@@ -7,6 +7,8 @@ using myPet.Data;
 using System.ComponentModel.DataAnnotations;
 using Microsoft.IdentityModel.Tokens;
 using myPet.Models;
+using Microsoft.EntityFrameworkCore.Metadata.Internal;
+using Microsoft.AspNetCore.Mvc.Rendering;
 
 namespace myPet4.Controllers
 {
@@ -53,14 +55,20 @@ namespace myPet4.Controllers
 
         public IActionResult LogonFormShow()
         {
-            return View(_context);
+            ViewData["PersonsList"] = new SelectList(_context.Persons, "id","login",0);
+            return View();
         }
         
+        [HttpPost]
+        public IActionResult UserForm(int id)
+        {
+            _context.user.Person = _context.Persons.Find(id);
+            return View("Index");
+        }
+
         public IActionResult ItemsCreate()
         {
             return View();
         }
-
-        //public 
     }
 }

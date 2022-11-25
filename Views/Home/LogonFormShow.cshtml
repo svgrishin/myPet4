@@ -1,4 +1,5 @@
-﻿@model myPet.myPetContext
+﻿@model myPet.Data.Person
+@using myPet.Models
 
 @{
     ViewData["Title"] = "Logon";
@@ -7,11 +8,20 @@
 
 <h1>Logon</h1>
     <thead>
-        @Html.DisplayNameFor(model => model.Persons)
+
     </thead>
 <tbody>
-    <form>
-        @Html.DropDownListFor(m => m.Persons, new SelectList(Model.Persons,"id","login"))
-        <input type="submit" value="Создать" /> 
+
+    <form asp-action="UserForm">
+        @Html.DropDownListFor(m => m.id, (IEnumerable<SelectListItem>)ViewData["PersonsList"], "--Select--")
+
+            <span asp-validation-for=@ViewData["err"], class="text-danger"></span>
+
+        <input type="submit" value="Войти" />
     </form>        
 </tbody>
+@section Scripts {
+    @{
+        await Html.RenderPartialAsync("_ValidationScriptsPartial");
+    }
+}

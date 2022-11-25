@@ -18,5 +18,10 @@ namespace myPet.Data
         {
             this.login = login;
         }
+
+        public Person()
+        {
+
+        }
     }
 }

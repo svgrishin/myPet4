@@ -16,6 +16,8 @@ namespace myPet
         public DbSet<Item> Items { get; set; }
         public DbSet<Income> Incomes { get; set; }
         public DbSet <Finance>Finances { get; set; }
+        
+        public Models.Data user { get; set; } = new Models.Data();
 
 
         protected override void OnModelCreating(ModelBuilder modelBuilder)
@@ -25,6 +27,7 @@ namespace myPet
             modelBuilder.Entity<Item>().ToTable("items");
             modelBuilder.Entity<Person>().ToTable("Persons");
             modelBuilder.Entity<Finance>().ToTable("Finance");
+            //user = new Person();
         }
     }
 }
