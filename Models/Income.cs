@@ -4,12 +4,13 @@ using System.Data.SqlTypes;
 
 namespace myPet.Data
 {
-    public class Income
+    public partial class income
     {
         public int id { get; set; }
         public int person { get; set; }
         public decimal summ { get; set; }
-        public DateTime dateOf { get; set; }
-        public virtual ICollection<Person> Persons { get; set; }
+        public System.DateTime dateOf { get; set; }
+
+        public virtual Persons Persons { get; set; }
     }
 }

@@ -4,10 +4,21 @@ namespace myPet.Models
 {
     public class Data
     {
-        public List<Transaction> Transactions { get; set; }
-        public Person Person { get; set; }
-        public List<Item> Items { get; set; }
-        public List<Income> Incomes { get; set; }
-        public Finance Finance { get; set; }
+        public Persons Person { get; set; }
+        public DateOnly[] Period { get; set; }
+        public Data(Persons person)
+        {
+            Person = person;
+        }
+        //public class personItem
+        //{
+        //    public List<Transaction> Transactions { get; set; }
+        //    public Item item { get; set; }
+        //    public personItem(Item itemOf, List<Transaction> transactions)
+        //    {
+        //        this.item = itemOf;
+        //        Transactions = transactions;
+        //    }
+        //}
     }
 }
