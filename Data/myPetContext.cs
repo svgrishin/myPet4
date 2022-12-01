@@ -26,7 +26,7 @@ namespace myPet
         protected override void OnModelCreating(ModelBuilder modelBuilder)
         {
             modelBuilder.Entity<income>().ToTable("income");
-            modelBuilder.Entity<Transactions>().ToTable("transactions");
+            modelBuilder.Entity<Transactions>().ToTable("Transactions");
             modelBuilder.Entity<ItemPerson>().ToTable("ItemPerson");
             modelBuilder.Entity<Persons>(b =>
             {

@@ -14,9 +14,21 @@ namespace myPet.Data
             this.login= login;
         }
 
+        public Persons(Persons p)
+        {
+            this.income = p.income;
+            this.ItemPerson = p.ItemPerson;
+            this.login = p.login;
+        }
+
+        public Persons()
+        {
+            
+        }
+
         public int id { get; set; }
         public string login { get; set; }
-        public Nullable<int> items { get; set; }
+        //public Nullable<int> items { get; set; }
 
         public virtual Finance Finance { get; set; }
         [System.Diagnostics.CodeAnalysis.SuppressMessage("Microsoft.Usage", "CA2227:CollectionPropertiesShouldBeReadOnly")]
