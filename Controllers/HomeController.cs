@@ -47,26 +47,25 @@ namespace myPet4.Controllers
 
             switch (step)
             {
-                case "неделя":
+                case "Неделя":
                     s = 'd';
-                    d2.AddDays(7);
+                    d2 = d2.AddDays(7);
          
                     break;
 
                 case "Месяц":
                     s = 'm';
-                    d2.AddMonths(1);
+                    d2 = d2.AddMonths(1);
                     break;
                         
                 case "Год":
                     s = 'y';
-                    d2.AddYears(1);
+                    d2 = d2.AddYears(1);
                     break;
 
                 case "Настраиваемый":
                     s = 'c';
-                    d2 = new DateOnly();
-                    d2 = DateBegin;
+                    d2 = new DateOnly(DateEnd.Value.Year, DateEnd.Value.Month, DateEnd.Value.Day);
                     break;
             }
             
