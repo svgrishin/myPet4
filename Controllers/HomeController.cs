@@ -33,8 +33,21 @@ namespace myPet4.Controllers
             return View();
         }
 
-        public IActionResult userCreateForm(string login)
+        [HttpGet]
+        public IActionResult userCreateForm()
         {
+            return View();
+        }
+
+        [HttpPost]
+        public IActionResult userCreateForm(string login, DateOnly? DateBegin, string? step)
+        {
+            var d = DateBegin;
+            var d2 = step;
+
+
+
+
             if (ModelState.IsValid)
             { 
                 var persons = _context.Persons.Where(p => p.login == login);
@@ -63,6 +76,9 @@ namespace myPet4.Controllers
         [HttpPost]
         public IActionResult UserForm(int id)
         {
+            //var d1 = 
+
+
             List<Persons> p3 = _context.Persons.Where(p => p.id == id).Include(p => p.ItemPerson).ToList();
             foreach (ItemPerson item in p3.First().ItemPerson)
             {

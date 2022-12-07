@@ -6,19 +6,10 @@ namespace myPet.Models
     {
         public Persons Person { get; set; }
         public DateOnly[] Period { get; set; }
-        public Data(Persons person)
+        public Data(Persons person, DateOnly[] period)
         {
             Person = person;
+            Period = period;
         }
-        //public class personItem
-        //{
-        //    public List<Transaction> Transactions { get; set; }
-        //    public Item item { get; set; }
-        //    public personItem(Item itemOf, List<Transaction> transactions)
-        //    {
-        //        this.item = itemOf;
-        //        Transactions = transactions;
-        //    }
-        //}
     }
 }
