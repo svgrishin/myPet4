@@ -22,21 +22,27 @@
                 @Html.ValidationMessage("UserCreatingErr")
 
                 <label class="control-label">Начало расчётного периода</label>
-                <input type="date"name="DateBegin" class="form-control" />
+                <input type="date" name="DateBegin" class="form-control" />
 
                 <label id="select" class="control-label">Периодичность</label>
                 <div id="ss">
-                    @Html.DropDownList("step", new SelectList(new string[] { "Неделя", "Месяц", "Квартал", "Настраиваемый" }), "Выберите периодичность")
-                    
+                    @Html.DropDownList("step", new SelectList(new string[] { "Неделя", "Месяц", "Квартал", "Настраиваемый" }), "Выберите периодичность")                
                 </div>
-                
-                
-                
 
+                <div id ="dateEnd" style="visibility:hidden">
+                    <label class="control-label">Конец расчётного периода</label>
+                    <input type="date" name="DateEnd" class="form-control" />
+                    <script>
+                        var c = document.getElementById("step");
+                        var d = document.getElementById("dateEnd");
+                        c.onchange = function () {
+                            if (c.value == "Настраиваемый")
+                                d.style.visibility="visible"
+                            else d.style.visibility="hidden";
+                        }
+                    </script>
+                </div>
             </div>
-            
-            
-            
             <div class="form-group">
                 <input type="submit" value="Create" class="btn btn-primary" />
             </div>
@@ -47,19 +53,6 @@
 <div>
     <a asp-action="Index">Back to List</a>
 </div>
-
-<script>
-    document.getElementById("step").onchange = function () {
-        if (document.getElementById("step").value == "Настраиваемый")
-        alert("аааааААааа");
-       
-    }
-</script>
-
-
-
-
-
 
 
 

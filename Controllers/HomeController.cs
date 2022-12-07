@@ -40,13 +40,36 @@ namespace myPet4.Controllers
         }
 
         [HttpPost]
-        public IActionResult userCreateForm(string login, DateOnly? DateBegin, string? step)
+        public IActionResult userCreateForm(string login, DateOnly DateBegin, DateOnly? DateEnd, string step)
         {
-            var d = DateBegin;
-            var d2 = step;
+            DateOnly d2 = DateBegin;
+            char s;
 
+            switch (step)
+            {
+                case "неделя":
+                    s = 'd';
+                    d2.AddDays(7);
+         
+                    break;
 
+                case "Месяц":
+                    s = 'm';
+                    d2.AddMonths(1);
+                    break;
+                        
+                case "Год":
+                    s = 'y';
+                    d2.AddYears(1);
+                    break;
 
+                case "Настраиваемый":
+                    s = 'c';
+                    d2 = new DateOnly();
+                    d2 = DateBegin;
+                    break;
+            }
+            
 
             if (ModelState.IsValid)
             { 
