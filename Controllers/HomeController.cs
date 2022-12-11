@@ -91,7 +91,17 @@ namespace myPet4.Controllers
 
         public IActionResult LogonForm()
         {
-            ViewData["PersonsList"] = new SelectList(_context.Persons, "id","login",0);
+            //ViewData["PersonsList"] = new SelectList(_context.Persons, "id","login",0);
+
+            var a = new List<Persons>(_context.Persons.ToList());
+
+            List<Persons> persons = new List<Persons>(_context.Persons.OrderBy(p => p.login).ToList());
+            ViewBag.personList = persons;
+
+
+            //IEnumerable<Persons> a = new List<Persons>(_context.Persons.Select()
+            //ViewData["PersonsList"] = a;
+
             return View();
         }
         

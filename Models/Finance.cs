@@ -21,6 +21,9 @@ namespace myPet.Data
         public decimal toSave { get; set; }
         public Nullable<decimal> freeMoney { get; set; }
         public decimal salary { get; set; }
+        public DateTime dateBegin { get; set; }
+        public DateTime dateEnd { get; set; }
+        public char step { get; set; }
 
         [ForeignKey("id")]
         public virtual Persons Person { get; set; }

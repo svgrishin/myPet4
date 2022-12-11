@@ -1,5 +1,5 @@
 ﻿@model myPet.Data.Persons
-@using myPet.Models
+@*@using myPet.Models*@
 
 @{
     ViewData["Title"] = "Logon";
@@ -13,7 +13,8 @@
 <tbody>
 
     <form asp-action="UserForm">
-        @Html.DropDownListFor(m => m.id, (IEnumerable<SelectListItem>)ViewData["PersonsList"], "--Select--")
+        @*@Html.DropDownListFor(m => m, ViewData["PersonsList"] as SelectList,"login", "--Select--")*@
+        @Html.DropDownListFor(m => m.id, new SelectList(ViewBag.personList,"id","login"), "--Select--");
 
             <span asp-validation-for=@ViewData["err"], class="text-danger"></span>
 
