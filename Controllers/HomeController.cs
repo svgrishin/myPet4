@@ -16,6 +16,7 @@ namespace myPet4.Controllers
 {
     public class HomeController : Controller
     {
+        public static int personIndex;
         private readonly myPetContext _context;
         public HomeController(myPetContext context)
         {
@@ -98,7 +99,6 @@ namespace myPet4.Controllers
             List<Persons> persons = new List<Persons>(_context.Persons.OrderBy(p => p.login).ToList());
             ViewBag.personList = persons;
 
-
             //IEnumerable<Persons> a = new List<Persons>(_context.Persons.Select()
             //ViewData["PersonsList"] = a;
 
@@ -108,10 +108,8 @@ namespace myPet4.Controllers
         [HttpPost]
         public IActionResult UserForm(int id)
         {
-            //var d1 = 
-
-
             List<Persons> p3 = _context.Persons.Where(p => p.id == id).Include(p => p.ItemPerson).ToList();
+            personIndex = p3[0].id;
             foreach (ItemPerson item in p3.First().ItemPerson)
             {
                 item.Transactions = _context.Transactions.Where(p => p.summ > 1000).Where(p => p.item == item.id).ToList();
