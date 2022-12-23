@@ -92,15 +92,10 @@ namespace myPet4.Controllers
 
         public IActionResult LogonForm()
         {
-            //ViewData["PersonsList"] = new SelectList(_context.Persons, "id","login",0);
-
             var a = new List<Persons>(_context.Persons.ToList());
 
             List<Persons> persons = new List<Persons>(_context.Persons.OrderBy(p => p.login).ToList());
             ViewBag.personList = persons;
-
-            //IEnumerable<Persons> a = new List<Persons>(_context.Persons.Select()
-            //ViewData["PersonsList"] = a;
 
             return View();
         }
@@ -109,14 +104,14 @@ namespace myPet4.Controllers
         public IActionResult UserForm(int id)
         {
             List<Persons> p3 = _context.Persons.Where(p => p.id == id).Include(p => p.ItemPerson).ToList();
-            personIndex = p3[0].id;
+            personIndex = p3.First().id;
             foreach (ItemPerson item in p3.First().ItemPerson)
             {
                 item.Transactions = _context.Transactions.Where(p => p.summ > 1000).Where(p => p.item == item.id).ToList();
             }
-            return View("Index");
+            ViewBag.personIndex = personIndex;
+            return View("userForm");
         }
-        
         
         
         public IActionResult ItemsCreate()
