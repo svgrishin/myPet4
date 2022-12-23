@@ -34,45 +34,73 @@ namespace myPet4.Controllers
             return View();
         }
 
+        //[HttpGet]
+        //public IActionResult userCreateForm()
+        //{
+        //    return View();
+        //}
+
+        //[HttpPost]
+        //public IActionResult userCreateForm(string login, DateOnly DateBegin, DateOnly? DateEnd, string step)
+        //{
+        //    DateOnly d2 = DateBegin;
+        //    char s;
+
+        //    switch (step)
+        //    {
+        //        case "Неделя":
+        //            s = 'd';
+        //            d2 = d2.AddDays(7);
+         
+        //            break;
+
+        //        case "Месяц":
+        //            s = 'm';
+        //            d2 = d2.AddMonths(1);
+        //            break;
+                        
+        //        case "Год":
+        //            s = 'y';
+        //            d2 = d2.AddYears(1);
+        //            break;
+
+        //        case "Настраиваемый":
+        //            s = 'c';
+        //            d2 = new DateOnly(DateEnd.Value.Year, DateEnd.Value.Month, DateEnd.Value.Day);
+        //            break;
+        //    }
+            
+
+        //    if (ModelState.IsValid)
+        //    { 
+        //        var persons = _context.Persons.Where(p => p.login == login);
+        //        if (persons.IsNullOrEmpty())
+        //        {
+        //            Persons person = new Persons(login);
+        //            _context.Add<Persons>(person);
+        //            _context.SaveChanges();
+        //            return View("ItemsCreate");
+        //        }
+        //        else
+        //        {
+        //            ModelState.AddModelError("UserCreatingErr", "Такой пользователь уже существует");   
+        //            return View("userCreateForm");
+        //        }
+        //     }
+        //     else return View("userCreateForm");       
+        //}
+
         [HttpGet]
-        public IActionResult userCreateForm()
+        public IActionResult createUser()
         {
             return View();
         }
 
         [HttpPost]
-        public IActionResult userCreateForm(string login, DateOnly DateBegin, DateOnly? DateEnd, string step)
+        public IActionResult createUser(string login)
         {
-            DateOnly d2 = DateBegin;
-            char s;
-
-            switch (step)
-            {
-                case "Неделя":
-                    s = 'd';
-                    d2 = d2.AddDays(7);
-         
-                    break;
-
-                case "Месяц":
-                    s = 'm';
-                    d2 = d2.AddMonths(1);
-                    break;
-                        
-                case "Год":
-                    s = 'y';
-                    d2 = d2.AddYears(1);
-                    break;
-
-                case "Настраиваемый":
-                    s = 'c';
-                    d2 = new DateOnly(DateEnd.Value.Year, DateEnd.Value.Month, DateEnd.Value.Day);
-                    break;
-            }
-            
-
             if (ModelState.IsValid)
-            { 
+            {
                 var persons = _context.Persons.Where(p => p.login == login);
                 if (persons.IsNullOrEmpty())
                 {
@@ -83,11 +111,67 @@ namespace myPet4.Controllers
                 }
                 else
                 {
-                    ModelState.AddModelError("UserCreatingErr", "Такой пользователь уже существует");   
+                    ModelState.AddModelError("UserCreatingErr", "Такой пользователь уже существует");
                     return View("userCreateForm");
                 }
-             }
-             else return View("userCreateForm");       
+            }
+            else return View("userCreateForm");
+        }
+
+        [HttpGet]
+        public IActionResult createFinance()
+        {
+            return View();
+        }
+
+        [HttpPost]
+        public IActionResult createFinance(DateOnly DateBegin, DateOnly? DateEnd, string step)
+        {
+            DateOnly d2 = DateBegin;
+            char s;
+
+            switch (step)
+            {
+                case "Неделя":
+                    s = 'd';
+                    d2 = d2.AddDays(7);
+
+                    break;
+
+                case "Месяц":
+                    s = 'm';
+                    d2 = d2.AddMonths(1);
+                    break;
+
+                case "Год":
+                    s = 'y';
+                    d2 = d2.AddYears(1);
+                    break;
+
+                case "Настраиваемый":
+                    s = 'c';
+                    d2 = new DateOnly(DateEnd.Value.Year, DateEnd.Value.Month, DateEnd.Value.Day);
+                    break;
+            }
+
+
+            if (ModelState.IsValid)
+            {
+                var persons = _context.Persons.Where(p => p.login == login);
+                if (persons.IsNullOrEmpty())
+                {
+                    Persons person = new Persons(login);
+                    _context.Add<Persons>(person);
+                    _context.SaveChanges();
+                    return View("ItemsCreate");
+                }
+                else
+                {
+                    ModelState.AddModelError("UserCreatingErr", "Такой пользователь уже существует");
+                    return View("userCreateForm");
+                }
+            }
+            else return View("userCreateForm");
         }
 
         public IActionResult LogonForm()
