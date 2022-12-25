@@ -16,7 +16,7 @@ namespace myPet4.Controllers
 {
     public class HomeController : Controller
     {
-        public static int personIndex;
+        public static Persons currentPerson;
         private readonly myPetContext _context;
         public HomeController(myPetContext context)
         {
@@ -107,15 +107,16 @@ namespace myPet4.Controllers
                     Persons person = new Persons(login);
                     _context.Add<Persons>(person);
                     _context.SaveChanges();
-                    return View("ItemsCreate");
+                    currentPerson = person;
+                    return View("createFinance");
                 }
                 else
                 {
                     ModelState.AddModelError("UserCreatingErr", "Такой пользователь уже существует");
-                    return View("userCreateForm");
+                    return View("createUser");
                 }
             }
-            else return View("userCreateForm");
+            else return View("createUser");
         }
 
         [HttpGet]
@@ -125,10 +126,10 @@ namespace myPet4.Controllers
         }
 
         [HttpPost]
-        public IActionResult createFinance(DateOnly DateBegin, DateOnly? DateEnd, string step)
+        public IActionResult createFinance(int ID, decimal cash, decimal credit, decimal toSave, decimal salary, DateTime dateBegin, DateTime? dateEnd, string step)
         {
-            DateOnly d2 = DateBegin;
-            char s;
+            DateTime d2 = dateBegin;
+            char s='c';
 
             switch (step)
             {
@@ -150,28 +151,32 @@ namespace myPet4.Controllers
 
                 case "Настраиваемый":
                     s = 'c';
-                    d2 = new DateOnly(DateEnd.Value.Year, DateEnd.Value.Month, DateEnd.Value.Day);
+                    d2 = new DateTime(dateEnd.Value.Year, dateEnd.Value.Month, dateEnd.Value.Day);
                     break;
             }
 
-
             if (ModelState.IsValid)
             {
-                var persons = _context.Persons.Where(p => p.login == login);
-                if (persons.IsNullOrEmpty())
-                {
-                    Persons person = new Persons(login);
-                    _context.Add<Persons>(person);
-                    _context.SaveChanges();
-                    return View("ItemsCreate");
-                }
-                else
-                {
-                    ModelState.AddModelError("UserCreatingErr", "Такой пользователь уже существует");
-                    return View("userCreateForm");
-                }
+                https://translated.turbopages.org/proxy_u/en-ru.ru.45538a6c-63a8445d-095a8d9d-74722d776562/https/stackoverflow.com/questions/10608488/how-do-insert-row-into-child-table
+
+
+                //currentPerson.Finance.ID = currentPerson.id;
+                //currentPerson.Finance.dateEnd = d2;
+                //currentPerson.Finance.dateBegin = dateBegin;
+                //currentPerson.Finance.cash = cash;
+                //currentPerson.Finance.credit = credit;
+                //currentPerson.Finance.salary = salary;
+
+                currentPerson.Finance = new Finance(cash, credit,toSave, salary, dateBegin, d2, s);
+
+                _context.Update(currentPerson);
+                _context.SaveChanges();
+
+                //_context.Add<Finance>(currentPerson.Finance);
+                _context.SaveChanges();
+                return View("Index");//следующая форма
             }
-            else return View("userCreateForm");
+            else return View("createFinance");
         }
 
         public IActionResult LogonForm()
@@ -188,12 +193,15 @@ namespace myPet4.Controllers
         public IActionResult UserForm(int id)
         {
             List<Persons> p3 = _context.Persons.Where(p => p.id == id).Include(p => p.ItemPerson).ToList();
-            personIndex = p3.First().id;
-            foreach (ItemPerson item in p3.First().ItemPerson)
+            //personIndex = p3.First().id;
+            //foreach (ItemPerson item in p3.First().ItemPerson)
+            //foreach (ItemPerson item in p3.First().ItemPerson)
+            foreach (ItemPerson item in currentPerson.ItemPerson)
             {
                 item.Transactions = _context.Transactions.Where(p => p.summ > 1000).Where(p => p.item == item.id).ToList();
             }
-            ViewBag.personIndex = personIndex;
+            //ViewBag.personIndex = personIndex;
+            ViewBag.personIndex = currentPerson.id;
             return View("userForm");
         }
         

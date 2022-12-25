@@ -27,5 +27,19 @@ namespace myPet.Data
 
         [ForeignKey("id")]
         public virtual Persons Person { get; set; }
+
+
+        //public Finance(Persons person, int ID, decimal cash, decimal credit, decimal toSave, decimal salary, DateTime dateBegin, DateTime dateEnd, char step)
+        public Finance(decimal cash, decimal credit, decimal toSave, decimal salary, DateTime dateBegin, DateTime dateEnd, char step)
+        {
+            //this.Person= person;
+            this.cash = cash; 
+            this.credit = credit;
+            this.toSave = toSave;
+            this.salary = salary;
+            this.dateBegin = dateBegin;
+            this.dateEnd = dateEnd;
+            this.step = step;
+        }
     }
 }
