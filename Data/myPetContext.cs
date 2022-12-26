@@ -28,15 +28,24 @@ namespace myPet
             modelBuilder.Entity<income>().ToTable("income");
             modelBuilder.Entity<Transactions>().ToTable("Transactions");
             modelBuilder.Entity<ItemPerson>().ToTable("ItemPerson");
+            modelBuilder.Entity<Finance>().ToTable("Finance");
+
             modelBuilder.Entity<Persons>(b =>
             {
                 b.HasKey(e => e.id);
-                b.OwnsOne(e => e.Finance, md =>
-                {
-                    md.ToTable("Finance");
-                });
+                
                 b.ToTable("Persons");
             });
+
+            //modelBuilder.Entity<Persons>(b =>
+            //{
+            //    b.HasKey(e => e.id);
+            //    b.OwnsOne(e => e.Finance, md =>
+            //    {
+            //        md.ToTable("Finance");
+            //    });
+            //    b.ToTable("Persons");
+            //});
         }
     }
 }

@@ -157,22 +157,8 @@ namespace myPet4.Controllers
 
             if (ModelState.IsValid)
             {
-                https://translated.turbopages.org/proxy_u/en-ru.ru.45538a6c-63a8445d-095a8d9d-74722d776562/https/stackoverflow.com/questions/10608488/how-do-insert-row-into-child-table
-
-
-                //currentPerson.Finance.ID = currentPerson.id;
-                //currentPerson.Finance.dateEnd = d2;
-                //currentPerson.Finance.dateBegin = dateBegin;
-                //currentPerson.Finance.cash = cash;
-                //currentPerson.Finance.credit = credit;
-                //currentPerson.Finance.salary = salary;
-
-                currentPerson.Finance = new Finance(cash, credit,toSave, salary, dateBegin, d2, s);
-
-                _context.Update(currentPerson);
-                _context.SaveChanges();
-
-                //_context.Add<Finance>(currentPerson.Finance);
+                currentPerson.Finance = new Finance(currentPerson.id, cash, credit, toSave, salary, dateBegin, d2, s);
+                _context.Finance.Add(currentPerson.Finance);
                 _context.SaveChanges();
                 return View("Index");//следующая форма
             }
