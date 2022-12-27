@@ -11,11 +11,9 @@ namespace myPet.Data
         {
             this.Transactions = new HashSet<Transactions>();
         }
-
+        //[DatabaseGenerated(DatabaseGeneratedOption.Computed)]
         public int id { get; set; }
         public string nameOf { get; set; }
-        
-        
         public int person { get; set; }
         public decimal summ { get; set; }
         public decimal savings { get; set; }
@@ -24,5 +22,12 @@ namespace myPet.Data
         public virtual Persons Persons { get; set; }
         [System.Diagnostics.CodeAnalysis.SuppressMessage("Microsoft.Usage", "CA2227:CollectionPropertiesShouldBeReadOnly")]
         public virtual ICollection<Transactions> Transactions { get; set; }
+
+        public ItemPerson (int person, string nameOf, decimal summ)
+        {
+            this.nameOf = nameOf;
+            this.summ = summ;
+            this.person = person;
+        }
     }
 }

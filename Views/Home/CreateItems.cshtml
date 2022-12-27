@@ -1,0 +1,40 @@
+﻿@model myPet.Data.ItemPerson
+
+@{
+    ViewData["Title"] = "CreateItems";
+    Layout = "~/Views/Home/_Layout.cshtml";
+}
+
+<h1>CreateItems</h1>
+
+<h4>ItemPerson</h4>
+<hr />
+<div class="row">
+    <div class="col-md-4">
+        <form asp-action="CreateItems">
+            <div asp-validation-summary="ModelOnly" class="text-danger"></div>
+            <div class="form-group">
+                <label asp-for="nameOf" class="control-label"></label>
+                <input asp-for="nameOf" class="form-control" />
+                <span asp-validation-for="nameOf" class="text-danger"></span>
+            </div>
+            <div class="form-group">
+                <label asp-for="summ" class="control-label"></label>
+                <input asp-for="summ" class="form-control" />
+                <span asp-validation-for="summ" class="text-danger"></span>
+            </div>
+            <div class="form-group">
+                <input type="submit" value="Create" class="btn btn-primary" />
+                <input type="button" action="CreateItems" value="Next" class="btn btn-primary" />
+            </div>
+        </form>
+    </div>
+</div>
+
+<div>
+    <a asp-action="Index">Back to List</a>
+</div>
+
+@section Scripts {
+    @{await Html.RenderPartialAsync("_ValidationScriptsPartial");}
+}

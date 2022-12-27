@@ -14,8 +14,8 @@ namespace myPet.Data
         public decimal cash { get; set; }
         public decimal credit { get; set; }
         public decimal toSave { get; set; }
-        [ReadOnly(true)]
-        public Nullable<decimal> freeMoney { get; set; }
+        [DatabaseGenerated(DatabaseGeneratedOption.Computed)]
+        public Nullable<decimal> freeMoney { get; private set; }
         public decimal salary { get; set; }
         public DateTime dateBegin { get; set; }
         public DateTime dateEnd { get; set; }
@@ -37,5 +37,7 @@ namespace myPet.Data
             this.dateEnd = dateEnd;
             this.step = step;
         }
+
+        public Finance() { }
     }
 }
