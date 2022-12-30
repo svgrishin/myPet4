@@ -147,7 +147,6 @@ namespace myPet4.Controllers
         {
             currentPerson.ItemPerson.Add(new ItemPerson(currentPerson.id, nameof, summ));
             _context.Item.Add(currentPerson.ItemPerson.Last());
-            //_context.Update(currentPerson);
             _context.SaveChanges();
             
             return RedirectToAction();
