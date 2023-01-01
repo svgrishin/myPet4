@@ -1,10 +1,31 @@
-﻿@model myPet.Data.Persons
-@*
-    For more information on enabling MVC for empty projects, visit https://go.microsoft.com/fwlink/?LinkID=397860
-*@
+﻿@model myPet.Models.Data
+@using myPet4.Controllers
+
 @{
-    
+    ViewData["Title"] = "UserForm";
+    Layout = "~/Views/Home/_Layout.cshtml";
 }
-<div>
-    @ViewBag.personIndex;
-</div>
+<h1>UserForm</h1>
+
+<h4>@Model.Person.login</h4>
+<hr />
+        <form>
+            <div asp-validation-summary="ModelOnly" class="text-danger"></div>
+            <div class="form-group">
+                <label asp-for="cash" class="control-label"></label>
+                <span asp-validation-for="cash" class="text-danger"></span>
+            </div>
+            <div class="form-group">
+                <label asp-for="freeMoney" class="control-label"></label>
+                <span asp-validation-for="freeMoney" class="text-danger"></span>
+            </div>
+
+            <div class="form-group">
+                <label asp-for="credit" class="control-label"></label>
+                <span asp-validation-for="credit" class="text-danger"></span>
+            </div>
+            <div class="form-group">
+                <label asp-for="toSave" class="control-label"></label>
+                <span asp-validation-for="toSave" class="text-danger"></span>
+            </div>
+        </form>

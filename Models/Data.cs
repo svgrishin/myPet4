@@ -12,7 +12,7 @@ namespace myPet.Models
         public decimal cash { get; set; }
         public decimal freeMoney { get; set; }
         public decimal credit { get; set; }
-        public decimal savedMony { get; set; }
+        //public decimal savedMony { get; set; }
         public decimal toSave { get; set; }
         public List<Item> items { get; set; }
         public class Item
@@ -44,15 +44,15 @@ namespace myPet.Models
                 percentOf = (int)(p / item.summ);
             }            
         }
-        public Data(Persons person, DateTime dateBegin, DateTime dateEnd, decimal cash, decimal freeMoney, decimal credit, decimal savedMony, decimal toSave, List<ItemPerson> items)
+        public Data(Persons person, DateTime dateBegin, DateTime dateEnd, decimal cash, decimal credit, decimal toSave, ICollection<ItemPerson> items)
         {
             Person = person;
             this.dateBegin = dateBegin;
             this.dateEnd = dateEnd;
             this.cash = cash;
-            this.freeMoney = freeMoney;
+            //this.freeMoney = freeMoney;
             this.credit = credit;
-            this.savedMony = savedMony;
+            //this.savedMony = savedMony;
             this.toSave = toSave;
             
             foreach(ItemPerson i in items)
@@ -60,5 +60,10 @@ namespace myPet.Models
                 this.items.Add(new Item(i, dateBegin, dateEnd));
             }
         }
+        public Data()
+        {
+
+        }
     }
+
 }
