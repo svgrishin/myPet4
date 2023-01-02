@@ -128,15 +128,15 @@ namespace myPet4.Controllers
         [HttpPost]
         public IActionResult LogonForm(int id)
         {
-            currentPerson = _context.Persons.Where(p => p.id == id).First();
-            currentPerson.Finance=_context.Finance.Where(p=>p.ID== id).First();
-            currentPerson.ItemPerson = _context.Item.Where(p => p.person == currentPerson.id).ToList();
-            return View("UserForm");
+            currentPerson = _context.Persons.Where(p => p.id == id).Include(f=>f.Finance).First();
+            currentPerson.ItemPerson = _context.Item.Where(i=>i.person== currentPerson.id).Include(t=>t.Transactions).ToList();
+            currentPerson.income = _context.Income.Where(i => i.person == currentPerson.id).ToList();
+
+            return RedirectToAction("UserForm");
         }
 
         public IActionResult UserForm()
         {
-            //if (currentPerson==null) currentPerson = _context.Persons.Where(p => p.id == id) as Persons;
             Data d = new Data(currentPerson);
             return View("userForm",d);
         }

@@ -31,7 +31,7 @@ namespace myPet.Data
         public string login { get; set; }
         public virtual Finance? Finance { get; set; }
         [System.Diagnostics.CodeAnalysis.SuppressMessage("Microsoft.Usage", "CA2227:CollectionPropertiesShouldBeReadOnly")]
-        public virtual ICollection<income>? income { get; set; }
+        public virtual ICollection<income?> income { get; set; }
         [System.Diagnostics.CodeAnalysis.SuppressMessage("Microsoft.Usage", "CA2227:CollectionPropertiesShouldBeReadOnly")]
         public virtual ICollection<ItemPerson>? ItemPerson { get; set; }
     }

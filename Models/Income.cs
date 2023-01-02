@@ -11,6 +11,7 @@ namespace myPet.Data
         public decimal summ { get; set; }
         public System.DateTime dateOf { get; set; }
 
+        [ForeignKey("person")]
         public virtual Persons Persons { get; set; }
     }
 }
