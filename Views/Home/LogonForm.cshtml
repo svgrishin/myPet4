@@ -12,7 +12,7 @@
     </thead>
 <tbody>
 
-    <form asp-action="UserForm">
+    <form asp-action="LogonForm">
         @*@Html.DropDownListFor(m => m, ViewData["PersonsList"] as SelectList,"login", "--Select--")*@
         @Html.DropDownListFor(m => m.id, new SelectList(ViewBag.personList,"id","login"), "--Select--");
 

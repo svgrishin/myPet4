@@ -114,6 +114,7 @@ namespace myPet4.Controllers
             }
         }
 
+        [HttpGet]
         public IActionResult LogonForm()
         {
             var a = new List<Persons>(_context.Persons.ToList());
@@ -123,10 +124,19 @@ namespace myPet4.Controllers
 
             return View();
         }
-        
+
         [HttpPost]
-        public IActionResult UserForm(int id)
+        public IActionResult LogonForm(int id)
         {
+            currentPerson = _context.Persons.Where(p => p.id == id).First();
+            currentPerson.Finance=_context.Finance.Where(p=>p.ID== id).First();
+            currentPerson.ItemPerson = _context.Item.Where(p => p.person == currentPerson.id).ToList();
+            return View("UserForm");
+        }
+
+        public IActionResult UserForm()
+        {
+            //if (currentPerson==null) currentPerson = _context.Persons.Where(p => p.id == id) as Persons;
             Data d = new Data(currentPerson);
             return View("userForm",d);
         }

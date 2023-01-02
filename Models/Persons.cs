@@ -24,7 +24,7 @@ namespace myPet.Data
 
         public Persons()
         {
-            
+
         }
 
         public int id { get; set; }
