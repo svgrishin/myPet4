@@ -14,19 +14,33 @@
             <div class="form-group">
                 <label asp-for="Person.Finance.cash" class="control-label"></label>
                 <label>@Model.Person.Finance.cash</label>
-        <span asp-validation-for="Person.Finance.cash" class="text-danger"></span>
+                <span asp-validation-for="Person.Finance.cash" class="text-danger"></span>
             </div>
             <div class="form-group">
                 <label asp-for="Person.Finance.freeMoney" class="control-label"></label>
-        <span asp-validation-for="Person.Finance.freeMoney" class="text-danger"></span>
+                <label>@Model.Person.Finance.freeMoney</label>
+                <span asp-validation-for="Person.Finance.freeMoney" class="text-danger"></span>
             </div>
 
             <div class="form-group">
                 <label asp-for="Person.Finance.credit" class="control-label"></label>
-        <span asp-validation-for="Person.Finance.credit" class="text-danger"></span>
+                <label>@Model.Person.Finance.credit</label>
+                <span asp-validation-for="Person.Finance.credit" class="text-danger"></span>
             </div>
             <div class="form-group">
                 <label asp-for="Person.Finance.toSave" class="control-label"></label>
-        <span asp-validation-for="Person.Finance.toSave" class="text-danger"></span>
+                <label>@Model.Person.Finance.toSave</label>
+                <span asp-validation-for="Person.Finance.toSave" class="text-danger"></span>
             </div>
+
+            <div class="form-group">
+                <label asp-for="Person.ItemPerson" class="control-label"></label>
+                @foreach(myPet.Data.ItemPerson item in Model.Person.ItemPerson)
+                {
+                    <label>@item.nameOf</label>
+                }
+    
+                
+            </div>
+
         </form>

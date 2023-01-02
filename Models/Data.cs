@@ -7,13 +7,7 @@ namespace myPet.Models
     public class Data
     {
         public Persons Person { get; set; }
-        //public DateTime dateBegin { get; set; }
-        //public DateTime dateEnd { get; set; }
-        //public decimal cash { get; set; }
-        //public decimal freeMoney { get; set; }
-        //public decimal credit { get; set; }
-        //public decimal savedMony { get; set; }
-        //public decimal toSave { get; set; }
+
         public List<Item> items { get; set; }
         public class Item
         {
@@ -33,7 +27,7 @@ namespace myPet.Models
             public Item(ItemPerson item, DateTime dateBegin, DateTime dateEnd)
             {
                 this.item = item;
-                currentSumm = item.summ / dateEnd.CompareTo(DateTime.Today);
+                currentSumm = item.summ / dateEnd.Subtract(DateTime.Today).Days;
 
                 decimal d = 0;
                 try

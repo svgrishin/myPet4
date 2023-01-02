@@ -21,7 +21,7 @@ namespace myPet.Data
         [ForeignKey("person")]
         public virtual Persons Persons { get; set; }
         [System.Diagnostics.CodeAnalysis.SuppressMessage("Microsoft.Usage", "CA2227:CollectionPropertiesShouldBeReadOnly")]
-        public virtual ICollection<Transactions> Transactions { get; set; }
+        public virtual ICollection<Transactions>? Transactions { get; set; }
 
         public ItemPerson (int person, string nameOf, decimal summ)
         {

@@ -127,17 +127,7 @@ namespace myPet4.Controllers
         [HttpPost]
         public IActionResult UserForm(int id)
         {
-            //List<Persons> p3 = _context.Persons.Where(p => p.id == id).Include(p => p.ItemPerson).ToList();
-            //foreach (ItemPerson item in currentPerson.ItemPerson)
-            //{
-            //    item.Transactions = _context.Transactions.Where(p => p.summ > 1000).Where(p => p.item == item.id).ToList();
-            //}
-            //ViewBag.personIndex = currentPerson.id;
-
             Data d = new Data(currentPerson);
-
-
-
             return View("userForm",d);
         }
 
