@@ -7,25 +7,26 @@
 }
 <h1>UserForm</h1>
 
-<h4>@Model.Person.login</h4>
+<h4>@Model.Person.login.ToString()</h4>
 <hr />
         <form>
             <div asp-validation-summary="ModelOnly" class="text-danger"></div>
             <div class="form-group">
-                <label asp-for="cash" class="control-label"></label>
-                <span asp-validation-for="cash" class="text-danger"></span>
+                <label asp-for="Person.Finance.cash" class="control-label"></label>
+                <label>@Model.Person.Finance.cash</label>
+        <span asp-validation-for="Person.Finance.cash" class="text-danger"></span>
             </div>
             <div class="form-group">
-                <label asp-for="freeMoney" class="control-label"></label>
-                <span asp-validation-for="freeMoney" class="text-danger"></span>
+                <label asp-for="Person.Finance.freeMoney" class="control-label"></label>
+        <span asp-validation-for="Person.Finance.freeMoney" class="text-danger"></span>
             </div>
 
             <div class="form-group">
-                <label asp-for="credit" class="control-label"></label>
-                <span asp-validation-for="credit" class="text-danger"></span>
+                <label asp-for="Person.Finance.credit" class="control-label"></label>
+        <span asp-validation-for="Person.Finance.credit" class="text-danger"></span>
             </div>
             <div class="form-group">
-                <label asp-for="toSave" class="control-label"></label>
-                <span asp-validation-for="toSave" class="text-danger"></span>
+                <label asp-for="Person.Finance.toSave" class="control-label"></label>
+        <span asp-validation-for="Person.Finance.toSave" class="text-danger"></span>
             </div>
         </form>

@@ -134,11 +134,11 @@ namespace myPet4.Controllers
             //}
             //ViewBag.personIndex = currentPerson.id;
 
-            Data d = new Data(currentPerson, currentPerson.Finance.dateBegin, currentPerson.Finance.dateEnd, currentPerson.Finance.cash, currentPerson.Finance.credit, currentPerson.Finance.toSave, currentPerson.ItemPerson);
+            Data d = new Data(currentPerson);
 
 
 
-            return View("userForm");
+            return View("userForm",d);
         }
 
         [HttpGet]

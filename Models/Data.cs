@@ -18,10 +18,17 @@ namespace myPet.Models
         public class Item
         {
             public ItemPerson item { get; set; }
+            /// <summary>
+            /// Текущая норма в день
+            /// </summary>
             public decimal currentSumm { get; set; }
-            public decimal daySumm { get; set; }
-            public decimal spentByDay { get; set; }
-            public int percentOf { get; set; }
+            /// <summary>
+            /// Потрачено за день
+            /// </summary>
+            public decimal dailyBalance { get; set; }
+            /// <summary>
+            /// % исчерпания статьи расхода
+            /// </summary>
             public int loaded { get; set; }
             public Item(ItemPerson item, DateTime dateBegin, DateTime dateEnd)
             {
@@ -29,40 +36,40 @@ namespace myPet.Models
                 currentSumm = item.summ / dateEnd.CompareTo(DateTime.Today);
 
                 decimal d = 0;
-
-                foreach (Transactions t in item.Transactions.Where(p => p.dateOf == DateTime.Today))
+                try
                 {
-                    d += t.summ;
+                    foreach (Transactions t in item.Transactions.Where(p => p.dateOf == DateTime.Today))
+                    {
+                        d += t.summ;
+                    }
                 }
-                spentByDay = currentSumm - d;
-
+                catch {}
+                dailyBalance = currentSumm - d;
+                
                 decimal p = 0;
-                foreach (Transactions t in item.Transactions.Where(p => p.dateOf >= dateBegin))
+                try
                 {
-                    p += t.summ;
+                    foreach (Transactions t in item.Transactions.Where(p => p.dateOf >= dateBegin))
+                    {
+                        p += t.summ;
+                    }
+                    loaded = (int)(p / item.summ);                
                 }
-                percentOf = (int)(p / item.summ);
+                catch
+                {
+                    loaded = 0;
+                }
             }            
         }
         public Data(Persons person)
         {
-            //Person = person;
-            //this.dateBegin = dateBegin;
-            //this.dateEnd = dateEnd;
-            //this.cash = cash;
-            //this.freeMoney = freeMoney;
-            //this.credit = credit;
-            //this.savedMony = savedMony;
-            //this.toSave = toSave;
+            Person = person;
+            items = new List<Item>();
             
             foreach(ItemPerson i in person.ItemPerson)
             {
                 this.items.Add(new Item(i, person.Finance.dateBegin, person.Finance.dateEnd));
             }
-        }
-        public Data()
-        {
-
         }
     }
 
