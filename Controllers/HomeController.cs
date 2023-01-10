@@ -23,7 +23,6 @@ namespace myPet4.Controllers
             _context = context;
         }
 
-
         public async Task<IActionResult> Index()
         {
             return View();

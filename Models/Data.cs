@@ -7,7 +7,8 @@ namespace myPet.Models
     public class Data
     {
         public Persons Person { get; set; }
-
+        decimal toSaveByPeriod { get; set; }
+        decimal profit { get; set; }
         public List<Item> items { get; set; }
         public class Item
         {
@@ -58,6 +59,38 @@ namespace myPet.Models
         public Data(Persons person)
         {
             Person = person;
+
+            toSaveByPeriod = 0;
+
+            decimal currentIncomeSumm = 0;
+            List<income> currentIncomes = person.income.Where(i => i.dateOf >= person.Finance.dateBegin && i.dateOf <= person.Finance.dateEnd).ToList();
+            if(currentIncomes.Count > 0)
+            {
+                foreach(income i in currentIncomes) 
+                {
+                    currentIncomeSumm += i.summ;
+                }
+                toSaveByPeriod = currentIncomeSumm * (person.Finance.toSave / person.Finance.salary);    
+            }
+
+            decimal currentTransactionsSumm = 0;
+            foreach (ItemPerson i in person.ItemPerson)
+            {
+                foreach (Transactions t in i.Transactions)
+                {
+                    currentTransactionsSumm += t.summ;
+                }
+            }
+            
+            if (person.Finance.salary>currentIncomeSumm)
+            {
+                profit = person.Finance.salary - currentTransactionsSumm;
+            }
+            else
+            {
+                profit = currentIncomeSumm - currentTransactionsSumm;
+            }
+            
             items = new List<Item>();
             
             foreach(ItemPerson i in person.ItemPerson)
