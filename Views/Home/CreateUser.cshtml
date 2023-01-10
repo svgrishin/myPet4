@@ -2,13 +2,13 @@
 
 
 @{
-    ViewData["Title"] = "createUser";
+    ViewData["Title"] = "Создание профиля";
     Layout = "~/Views/Home/_Layout.cshtml";
 }
 
-<h1>createUser</h1>
+@*<h1>createUser</h1>*@
 
-<h4>Person</h4>
+@*<h4>Person</h4>*@
 <hr />
 <div class="row">
     <div class="col-md-4">
@@ -23,12 +23,6 @@
 
                 <label class="control-label">Начало расчётного периода</label>
                 <input type="date" name="DateBegin" class="form-control" />
-
-               @* <label id="select" class="control-label">Периодичность</label>
-                <div id="ss">
-                    @Html.DropDownList("step", new SelectList(new string[] { "Неделя", "Месяц", "Квартал", "Настраиваемый" }), "Выберите периодичность")       
-                </div>*@
-
                 
             </div>
             <div class="form-group">

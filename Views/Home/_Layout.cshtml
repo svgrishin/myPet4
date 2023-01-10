@@ -2,18 +2,20 @@
 
 <html>
 <head>
+    <link type="text/css" rel="stylesheet" href="/styles/StyleSheet.css" />
     <meta name="viewport" content="width=device-width" />
     <title>@ViewBag.Title</title>
 </head>
 <body>
+    <h1>@ViewBag.Title</h1>
     <div>
+        @RenderSection("Controls", required: false)
+                
+        @RenderSection("status", required: false)
 
         @RenderBody()
 
-
-
         @RenderSection("Scripts", required: false)
-
     </div>
 </body>
 </html>

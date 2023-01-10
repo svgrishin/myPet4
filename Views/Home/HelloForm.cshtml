@@ -2,12 +2,20 @@
     For more information on enabling MVC for empty projects, visit https://go.microsoft.com/fwlink/?LinkID=397860
 *@
 @{
-    ViewBag.Title = "Login";
+    ViewBag.Title = "Добро пожаловать";
+    Layout = "~/Views/Home/_Layout.cshtml";
 }
-<h1>Login</h1>
 <br />
+<link type="text/css" rel="stylesheet" href="/styles/StyleSheet.css" />
 
-<form>
-    <button asp-action="createUser">Создать профиль</button>
-    <button asp-action="LogonForm">Вход</button>
-</form>
+<h1 style="background-color:aqua">TEST</h1>
+@section Controls
+{
+    <div>
+    <form>
+        <button class="test" asp-action="createUser">Создать профиль</button>
+        <button asp-action="LogonForm">Вход</button>
+    </form>
+}
+</div>
+
