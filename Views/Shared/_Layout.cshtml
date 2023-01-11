@@ -2,12 +2,12 @@
 
 <html>
 <head>
-    <link type="text/css" rel="stylesheet" href="/styles/StyleSheet.css" />
     <meta name="viewport" content="width=device-width" />
     <title>@ViewBag.Title</title>
+    <link rel="stylesheet" type="text/css" href="@Url.Content("~/css/StyleSheet.css")" />
 </head>
 <body>
-    <h1>@ViewBag.Title</h1>
+    <h1 class="test">@ViewBag.Title</h1>
     <div>
         @RenderSection("Controls", required: false)
                 

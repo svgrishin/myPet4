@@ -3,19 +3,12 @@
 *@
 @{
     ViewBag.Title = "Добро пожаловать";
-    Layout = "~/Views/Home/_Layout.cshtml";
+    Layout = "~/Views/Shared/_Layout.cshtml";
 }
 <br />
-<link type="text/css" rel="stylesheet" href="/styles/StyleSheet.css" />
-
-<h1 style="background-color:aqua">TEST</h1>
-@section Controls
-{
     <div>
     <form>
-        <button class="test" asp-action="createUser">Создать профиль</button>
+        <button asp-action="createUser">Создать профиль</button>
         <button asp-action="LogonForm">Вход</button>
     </form>
-}
 </div>
-
