@@ -5,11 +5,13 @@
     ViewBag.Title = "Добро пожаловать";
     Layout = "~/Views/Shared/_Layout.cshtml";
 }
-<br />
-    <div>
-    <form>
-        
-        <button asp-action="createUser">Создать профиль</button>
-        <button asp-action="LogonForm">Вход</button>
-    </form>
-</div>
+@section interactiveForm {
+    @{
+        <form>
+            <div>
+                <button asp-action="createUser">Создать профиль</button>
+                <button asp-action="LogonForm">Вход</button>
+            </div>
+        </form>
+    }
+}

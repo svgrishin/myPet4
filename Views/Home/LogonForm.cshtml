@@ -5,21 +5,14 @@
     ViewData["Title"] = "Logon";
     Layout = "~/Views/Shared/_Layout.cshtml";
 }
-
-<h1>Logon</h1>
-    <thead>
-
-    </thead>
 <tbody>
-
     <form asp-action="LogonForm">
-        @*@Html.DropDownListFor(m => m, ViewData["PersonsList"] as SelectList,"login", "--Select--")*@
         @Html.DropDownListFor(m => m.id, new SelectList(ViewBag.personList,"id","login"), "--Select--");
 
-            <span asp-validation-for=@ViewData["err"], class="text-danger"></span>
+        <span asp-validation-for=@ViewData["err"], class="text-danger"></span>
 
         <input type="submit" value="Войти" />
-    </form>        
+    </form>
 </tbody>
 @section Scripts {
     @{

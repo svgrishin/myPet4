@@ -7,15 +7,11 @@
     <link rel="stylesheet" type="text/css" href="~/css/StyleSheet.css" />
 </head>
 <body>
-    <h1 class="test">@ViewBag.Title</h1>
-    <div>
-        @RenderSection("Controls", required: false)
-                
-        @RenderSection("status", required: false)
-
+    <div class="center">
+        <h1>@ViewBag.Title</h1>
+        @RenderSection("interactiveForm", required: false)
         @RenderBody()
-
-        @RenderSection("Scripts", required: false)
+        @RenderSection("scripts", required: false)
     </div>
 </body>
 </html>

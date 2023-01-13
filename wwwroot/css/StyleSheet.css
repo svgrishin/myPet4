@@ -1,11 +1,51 @@
-﻿body {
+﻿@import url("https://fonts.googleapis.com/css2?family=Sansita+Swashed:wght@600&display=swap");
 
+body {
+    margin: 0;
+    padding: 0;
+    box-sizing: border-box;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    height: 100vh;
+    background: linear-gradient(45deg, greenyellow, dodgerblue);
+    font-family: "Sansita Swashed", cursive;
 }
 
-button{
-    background-color: aqua
+.center {
+    position: relative;
+    padding: 50px 50px;
+    background: #fff;
+    border-radius: 10px;
 }
 
-.test {
-    background-color: aqua
-}
+    .center h1 {
+        font-size: 2em;
+        border-left: 5px solid dodgerblue;
+        padding: 10px;
+        color: #000;
+        letter-spacing: 5px;
+        margin-bottom: 60px;
+        font-weight: bold;
+        padding-left: 10px;
+    }
+
+    .center button {
+        background: dodgerblue;
+        color: #fff;
+        border: #fff;
+        height: 50px;
+        width: 49%;
+    }
+
+        .center button:hover {
+            background: linear-gradient(45deg, greenyellow, dodgerblue);
+        }
+
+    .center select {
+        background: dodgerblue;
+        color: #fff;
+        border: #fff;
+        height: 50px;
+        width: 49%;
+    }
