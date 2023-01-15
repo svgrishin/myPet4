@@ -28,6 +28,7 @@ namespace myPet.Data
         }
 
         public int id { get; set; }
+        [DisplayName("Имя пользователя")]
         public string login { get; set; }
         public virtual Finance? Finance { get; set; }
         [System.Diagnostics.CodeAnalysis.SuppressMessage("Microsoft.Usage", "CA2227:CollectionPropertiesShouldBeReadOnly")]

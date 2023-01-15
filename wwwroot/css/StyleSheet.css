@@ -9,7 +9,12 @@ body {
     align-items: center;
     height: 100vh;
     background: linear-gradient(45deg, greenyellow, dodgerblue);
-    font-family: "Sansita Swashed", cursive;
+    font-family:'Segoe UI'
+}
+
+label{
+    font-size: 22px;
+
 }
 
 .center {
@@ -27,7 +32,7 @@ body {
         color: #000;
         letter-spacing: 5px;
         margin-bottom: 60px;
-        font-weight: bold;
+        font-weight:normal;
         padding-left: 10px;
     }
 
@@ -40,7 +45,7 @@ body {
         border-radius: 10px;
     }
 
-    .center input {
+    .center input[type=submit]{
         background: dodgerblue;
         color: #fff;
         border: #fff;
@@ -49,11 +54,19 @@ body {
         border-radius: 10px;
     }
 
-        .center button:hover {
-            background: linear-gradient(45deg, greenyellow, dodgerblue);
-        }
+    .center input[type=text]{
+        color: #fff;
+        border-color: #000;
+        height: 50px;
+        width: 100%;
+        border-radius: 10px;
+    }
 
-    .center input:hover {
+    .center button:hover {
+        background: linear-gradient(45deg, greenyellow, dodgerblue);
+    }
+
+        .center input:hover[type=submit] {
         background: linear-gradient(45deg, greenyellow, dodgerblue);
     }
 
