@@ -1,25 +1,21 @@
 ﻿@model myPet.Data.Finance
 
 @{
-    ViewData["Title"] = "CreateFinance";
-    Layout = "~/Views/Home/_Layout.cshtml";
+    ViewData["Title"] = "Финансовые возможности";
+    Layout = "~/Views/Shared/_Layout.cshtml";
 }
-
-<h1>CreateFinance</h1>
-
-<h4>Finance</h4>
 <hr />
 <div class="row">
     <div class="col-md-4">
         <form asp-action="CreateFinance">
             <div asp-validation-summary="ModelOnly" class="text-danger"></div>
-            
+
             <div class="form-group">
                 <label asp-for="cash" class="control-label"></label>
                 <input asp-for="cash" class="form-control" />
                 <span asp-validation-for="cash" class="text-danger"></span>
             </div>
-            
+
             <div class="form-group">
                 <label asp-for="toSave" class="control-label"></label>
                 <input asp-for="toSave" class="form-control" />
@@ -37,7 +33,7 @@
 
                 <span asp-validation-for="dateBegin" class="text-danger"></span>
             </div>
-            
+
             <div class="form-group">
                 <label asp-for="step" class="control-label"></label>
                 @*<input asp-for="step" id="step" class="form-control" />*@
@@ -78,5 +74,7 @@
 
 
 @section Scripts {
-    @{await Html.RenderPartialAsync("_ValidationScriptsPartial");}
+    @{
+        await Html.RenderPartialAsync("_ValidationScriptsPartial");
+    }
 }

@@ -2,16 +2,16 @@
 @*@using myPet.Models*@
 
 @{
-    ViewData["Title"] = "Logon";
+    ViewData["Title"] = "Выбор профиля";
     Layout = "~/Views/Shared/_Layout.cshtml";
 }
 <tbody>
     <form asp-action="LogonForm">
-        @Html.DropDownListFor(m => m.id, new SelectList(ViewBag.personList,"id","login"), "--Select--");
+        @Html.DropDownListFor(m => m.id, new SelectList(ViewBag.personList,"id","login"), "--Список профилей--")
 
         <span asp-validation-for=@ViewData["err"], class="text-danger"></span>
 
-        <input type="submit" value="Войти" />
+        <input type="submit" value="Загрузка" />
     </form>
 </tbody>
 @section Scripts {

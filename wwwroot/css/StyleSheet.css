@@ -17,6 +17,7 @@ body {
     padding: 50px 50px;
     background: #fff;
     border-radius: 10px;
+    width: 400px;
 }
 
     .center h1 {
@@ -36,16 +37,33 @@ body {
         border: #fff;
         height: 50px;
         width: 49%;
+        border-radius: 10px;
+    }
+
+    .center input {
+        background: dodgerblue;
+        color: #fff;
+        border: #fff;
+        height: 50px;
+        width: 49%;
+        border-radius: 10px;
     }
 
         .center button:hover {
             background: linear-gradient(45deg, greenyellow, dodgerblue);
         }
 
+    .center input:hover {
+        background: linear-gradient(45deg, greenyellow, dodgerblue);
+    }
+
     .center select {
-        background: dodgerblue;
-        color: #fff;
-        border: #fff;
+        background: #fff;
+        color: #000;
+        font-size: 16px;
+        border-radius: 10px;
+        border-color: #4495fb;
         height: 50px;
+        min-height: 4vh;
         width: 49%;
     }
