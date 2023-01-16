@@ -9,12 +9,11 @@ body {
     align-items: center;
     height: 100vh;
     background: linear-gradient(45deg, greenyellow, dodgerblue);
-    font-family:'Segoe UI'
+    font-family: 'Segoe UI'
 }
 
-label{
+label {
     font-size: 22px;
-
 }
 
 .center {
@@ -32,7 +31,7 @@ label{
         color: #000;
         letter-spacing: 5px;
         margin-bottom: 60px;
-        font-weight:normal;
+        font-weight: normal;
         padding-left: 10px;
     }
 
@@ -45,7 +44,7 @@ label{
         border-radius: 10px;
     }
 
-    .center input[type=submit]{
+    .center input[type=submit] {
         background: dodgerblue;
         color: #fff;
         border: #fff;
@@ -54,19 +53,21 @@ label{
         border-radius: 10px;
     }
 
-    .center input[type=text]{
-        color: #fff;
+    .center input[type=text] {
+        color: #181e6f;
         border-color: #000;
         height: 50px;
         width: 100%;
         border-radius: 10px;
+        font-size: 20pt;
+        text-indent: 15px;
     }
 
     .center button:hover {
         background: linear-gradient(45deg, greenyellow, dodgerblue);
     }
 
-        .center input:hover[type=submit] {
+    .center input:hover[type=submit] {
         background: linear-gradient(45deg, greenyellow, dodgerblue);
     }
 
@@ -78,5 +79,6 @@ label{
         border-color: #4495fb;
         height: 50px;
         min-height: 4vh;
-        width: 49%;
+        width: 99%;
+        text-indent: 15px;
     }

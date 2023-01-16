@@ -10,7 +10,9 @@
         @Html.DropDownListFor(m => m.id, new SelectList(ViewBag.personList,"id","login"), "--Список профилей--")
 
         <span asp-validation-for=@ViewData["err"], class="text-danger"></span>
-
+        <br />
+        <br />
+        <button asp-action="HelloForm">Назад</button>
         <input type="submit" value="Загрузка" />
     </form>
 </tbody>
