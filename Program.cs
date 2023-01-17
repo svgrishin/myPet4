@@ -1,7 +1,7 @@
 using Microsoft.EntityFrameworkCore;
 using Microsoft.Extensions.Configuration;
 using Microsoft.Extensions.Options;
-using myPet;
+using myPet4.Data;
 using System.Configuration;
 
 
@@ -20,5 +20,5 @@ app.UseHttpsRedirection();
 app.UseRouting();
 app.MapControllerRoute(
     name: "default",
-    pattern: "{controller=Home}/{action=HelloForm}");
+    pattern: "{controller=Home}/{action=LogonForm}");
 app.Run();

@@ -1,5 +1,5 @@
-﻿@model myPet.Models.Data
-@using myPet4.Controllers
+﻿@model             Data
+@    using myPet4.Controllers
 
 @{
     ViewData["Title"] = Model.Person.login;
@@ -31,7 +31,7 @@
 
     <div class="form-group">
         <label asp-for="Person.ItemPerson" class="control-label"></label>
-        @foreach (myPet.Data.ItemPerson item in Model.Person.ItemPerson)
+        @foreach (ItemPerson item in Model.Person.ItemPerson)
         {
             <label>@item.nameOf</label>
         }

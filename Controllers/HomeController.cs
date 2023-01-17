@@ -2,8 +2,6 @@
 using Microsoft.Extensions.Diagnostics.HealthChecks;
 using System.Data.SqlClient;
 using Microsoft.EntityFrameworkCore;
-using myPet;
-using myPet.Data;
 using System.ComponentModel.DataAnnotations;
 using Microsoft.IdentityModel.Tokens;
 using myPet.Models;
@@ -11,6 +9,8 @@ using Microsoft.EntityFrameworkCore.Metadata.Internal;
 using Microsoft.AspNetCore.Mvc.Rendering;
 using System.Collections.Immutable;
 using Microsoft.AspNetCore.Http.Features;
+using myPet4.Models;
+using myPet4.Data;
 
 namespace myPet4.Controllers
 {
@@ -28,12 +28,6 @@ namespace myPet4.Controllers
             return View();
         }
 
-        public IActionResult HelloForm()
-        {
-            return View();
-        }
-
-
         [HttpGet]
         public IActionResult createUser()
         {
@@ -49,8 +43,6 @@ namespace myPet4.Controllers
                 if (persons.IsNullOrEmpty())
                 {
                     Persons person = new Persons(login);
-                    _context.Add<Persons>(person);
-                    _context.SaveChanges();
                     currentPerson = person;
                     return View("createFinance");
                 }
@@ -73,7 +65,7 @@ namespace myPet4.Controllers
         public IActionResult createFinance(int ID, decimal cash, decimal credit, decimal toSave, decimal salary, DateTime dateBegin, DateTime? dateEnd, string step)
         {
             DateTime d2 = dateBegin;
-            char s='c';
+            char s = 'c';
 
             switch (step)
             {
@@ -102,8 +94,6 @@ namespace myPet4.Controllers
             if (ModelState.IsValid)
             {
                 currentPerson.Finance = new Finance(currentPerson.id, cash, credit, toSave, salary, dateBegin, d2, s);
-                _context.Finance.Add(currentPerson.Finance);
-                _context.SaveChanges();
                 return View("CreateItems");
             }
             else
@@ -116,19 +106,17 @@ namespace myPet4.Controllers
         [HttpGet]
         public IActionResult LogonForm()
         {
-            var a = new List<Persons>(_context.Persons.ToList());
-
             List<Persons> persons = new List<Persons>(_context.Persons.OrderBy(p => p.login).ToList());
             ViewBag.personList = persons;
-
+            ViewData["firstPersonName"] = persons.First().login;
             return View();
         }
 
         [HttpPost]
         public IActionResult LogonForm(int id)
         {
-            currentPerson = _context.Persons.Where(p => p.id == id).Include(f=>f.Finance).First();
-            currentPerson.ItemPerson = _context.Item.Where(i=>i.person== currentPerson.id).Include(t=>t.Transactions).ToList();
+            currentPerson = _context.Persons.Where(p => p.id == id).Include(f => f.Finance).First();
+            currentPerson.ItemPerson = _context.Item.Where(i => i.person == currentPerson.id).Include(t => t.Transactions).ToList();
             currentPerson.income = _context.Income.Where(i => i.person == currentPerson.id).ToList();
 
             return RedirectToAction("UserForm");
@@ -137,7 +125,7 @@ namespace myPet4.Controllers
         public IActionResult UserForm()
         {
             Data d = new Data(currentPerson);
-            return View("userForm",d);
+            return View("UserForm", d);
         }
 
         [HttpGet]
@@ -150,10 +138,17 @@ namespace myPet4.Controllers
         public IActionResult CreateItems(string nameof, decimal summ)
         {
             currentPerson.ItemPerson.Add(new ItemPerson(currentPerson.id, nameof, summ));
+            return RedirectToAction();
+        }
+
+        public IActionResult saveProfile()
+        {
+            _context.Add(currentPerson);
+            _context.Finance.Add(currentPerson.Finance);
             _context.Item.Add(currentPerson.ItemPerson.Last());
             _context.SaveChanges();
-            
-            return RedirectToAction();
+
+            return RedirectToAction("UserForm");
         }
     }
 }

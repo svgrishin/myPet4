@@ -1,6 +1,4 @@
-﻿using myPet.Data;
-
-namespace myPet.Models
+﻿namespace myPet4.Models
 {
     public interface IData
     {

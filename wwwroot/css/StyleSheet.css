@@ -63,9 +63,16 @@ label {
         text-indent: 15px;
     }
 
-    .center button:hover {
+    /*    .center button:hover {
         background: linear-gradient(45deg, greenyellow, dodgerblue);
+    }*/
+    .center .systemButton {
+        background-color: #555;
     }
+
+        .center .systemButton:hover {
+            background: linear-gradient(90deg, #000,#555);
+        }
 
     .center input:hover[type=submit] {
         background: linear-gradient(45deg, greenyellow, dodgerblue);
@@ -82,3 +89,9 @@ label {
         width: 99%;
         text-indent: 15px;
     }
+
+.centerButton {
+    margin: 0 25% 0 25%;
+    width: 50%;
+    
+}

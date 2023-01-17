@@ -1,8 +1,8 @@
 ﻿using Microsoft.AspNetCore.Http.Features;
 using Microsoft.AspNetCore.Routing.Matching;
-using myPet.Data;
+using System.Linq.Expressions;
 
-namespace myPet.Models
+namespace myPet4.Models
 {
     public class Data
     {
@@ -38,9 +38,9 @@ namespace myPet.Models
                         d += t.summ;
                     }
                 }
-                catch {}
+                catch { }
                 dailyBalance = currentSumm - d;
-                
+
                 decimal p = 0;
                 try
                 {
@@ -48,13 +48,13 @@ namespace myPet.Models
                     {
                         p += t.summ;
                     }
-                    loaded = (int)(p / item.summ);                
+                    loaded = (int)(p / item.summ);
                 }
                 catch
                 {
                     loaded = 0;
                 }
-            }            
+            }
         }
         public Data(Persons person)
         {
@@ -64,25 +64,28 @@ namespace myPet.Models
 
             decimal currentIncomeSumm = 0;
             List<income> currentIncomes = person.income.Where(i => i.dateOf >= person.Finance.dateBegin && i.dateOf <= person.Finance.dateEnd).ToList();
-            if(currentIncomes.Count > 0)
+            if (currentIncomes.Count > 0)
             {
-                foreach(income i in currentIncomes) 
+                foreach (income i in currentIncomes)
                 {
                     currentIncomeSumm += i.summ;
                 }
-                toSaveByPeriod = currentIncomeSumm * (person.Finance.toSave / person.Finance.salary);    
+                toSaveByPeriod = currentIncomeSumm * (person.Finance.toSave / person.Finance.salary);
             }
 
             decimal currentTransactionsSumm = 0;
             foreach (ItemPerson i in person.ItemPerson)
             {
-                foreach (Transactions t in i.Transactions)
+                if (i.Transactions != null)
                 {
-                    currentTransactionsSumm += t.summ;
+                    foreach (Transactions t in i.Transactions)
+                    {
+                        currentTransactionsSumm += t.summ;
+                    }
                 }
             }
-            
-            if (person.Finance.salary>currentIncomeSumm)
+
+            if (person.Finance.salary > currentIncomeSumm)
             {
                 profit = person.Finance.salary - currentTransactionsSumm;
             }
@@ -90,12 +93,12 @@ namespace myPet.Models
             {
                 profit = currentIncomeSumm - currentTransactionsSumm;
             }
-            
+
             items = new List<Item>();
-            
-            foreach(ItemPerson i in person.ItemPerson)
+
+            foreach (ItemPerson i in person.ItemPerson)
             {
-                this.items.Add(new Item(i, person.Finance.dateBegin, person.Finance.dateEnd));
+                items.Add(new Item(i, person.Finance.dateBegin, person.Finance.dateEnd));
             }
         }
     }

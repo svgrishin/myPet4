@@ -1,16 +1,24 @@
-﻿using System.ComponentModel.DataAnnotations;
+﻿using System.ComponentModel;
+using System.ComponentModel.DataAnnotations;
 using System.ComponentModel.DataAnnotations.Schema;
 using System.Data.SqlTypes;
 
-namespace myPet.Data
+namespace myPet4.Models
 {
     public partial class Transactions
     {
         public int id { get; set; }
+        [DisplayName("Статья расхода")]
         public int item { get; set; }
-        public System.DateTime dateOf { get; set; }
+        [DisplayName("Дата")]
+        [Required(ErrorMessage = "Затраты без даты не учитываются")]
+        public DateTime dateOf { get; set; }
+        [DisplayName("Сумма")]
+        [Required(ErrorMessage = "Затраты без суммы не учитываются")]
         public decimal summ { get; set; }
+        [DisplayName("Оплачено кредитной картой")]
         public bool credit { get; set; }
+        [DisplayName("Комментарий")]
         public string? description { get; set; }
 
         [ForeignKey("item")]

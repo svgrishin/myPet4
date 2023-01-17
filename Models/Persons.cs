@@ -3,30 +3,29 @@ using System.ComponentModel;
 using System.ComponentModel.DataAnnotations;
 using System.ComponentModel.DataAnnotations.Schema;
 
-namespace myPet.Data
+namespace myPet4.Models
 {
     public partial class Persons
     {
         [System.Diagnostics.CodeAnalysis.SuppressMessage("Microsoft.Usage", "CA2214:DoNotCallOverridableMethodsInConstructors")]
         public Persons(string login)
         {
-            this.income = new HashSet<income>();
-            this.ItemPerson = new HashSet<ItemPerson>();
-            this.login= login;
+            income = new HashSet<income>();
+            ItemPerson = new HashSet<ItemPerson>();
+            this.login = login;
         }
 
         public Persons(Persons p)
         {
-            this.income = p.income;
-            this.ItemPerson = p.ItemPerson;
-            this.login = p.login;
+            income = p.income;
+            ItemPerson = p.ItemPerson;
+            login = p.login;
         }
 
         public Persons()
         {
 
         }
-
         public int id { get; set; }
         [DisplayName("Имя пользователя")]
         public string login { get; set; }
