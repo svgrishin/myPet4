@@ -4,7 +4,7 @@ using System.Linq.Expressions;
 
 namespace myPet4.Models
 {
-    public class Data
+    public class UserData
     {
         public Persons Person { get; set; }
         decimal toSaveByPeriod { get; set; }
@@ -56,7 +56,7 @@ namespace myPet4.Models
                 }
             }
         }
-        public Data(Persons person)
+        public UserData(Persons person)
         {
             Person = person;
 

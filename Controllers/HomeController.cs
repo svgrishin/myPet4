@@ -4,13 +4,13 @@ using System.Data.SqlClient;
 using Microsoft.EntityFrameworkCore;
 using System.ComponentModel.DataAnnotations;
 using Microsoft.IdentityModel.Tokens;
-using myPet.Models;
 using Microsoft.EntityFrameworkCore.Metadata.Internal;
 using Microsoft.AspNetCore.Mvc.Rendering;
 using System.Collections.Immutable;
 using Microsoft.AspNetCore.Http.Features;
 using myPet4.Models;
 using myPet4.Data;
+
 
 namespace myPet4.Controllers
 {
@@ -124,7 +124,7 @@ namespace myPet4.Controllers
 
         public IActionResult UserForm()
         {
-            Data d = new Data(currentPerson);
+            UserData d = new UserData(currentPerson);
             return View("UserForm", d);
         }
 
