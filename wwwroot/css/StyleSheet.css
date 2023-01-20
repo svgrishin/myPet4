@@ -16,7 +16,8 @@ label {
     font-size: 22px;
 }
 
-.center {
+form {
+    margin: 10px;
     position: relative;
     padding: 50px 50px;
     background: #fff;
@@ -24,74 +25,74 @@ label {
     width: 400px;
 }
 
-    .center h1 {
-        font-size: 2em;
-        border-left: 5px solid dodgerblue;
-        padding: 10px;
-        color: #000;
-        letter-spacing: 5px;
-        margin-bottom: 60px;
-        font-weight: normal;
-        padding-left: 10px;
+h1 {
+    font-size: 2em;
+    border-left: 5px solid dodgerblue;
+    padding: 10px;
+    color: #000;
+    letter-spacing: 5px;
+    margin-bottom: 60px;
+    font-weight: normal;
+    padding-left: 10px;
+}
+
+button {
+    background: dodgerblue;
+    color: #fff;
+    border: #fff;
+    height: 50px;
+    width: 49%;
+    border-radius: 10px;
+}
+
+input[type=submit] {
+    background: dodgerblue;
+    color: #fff;
+    border: #fff;
+    height: 50px;
+    width: 49%;
+    border-radius: 10px;
+}
+
+input[type=text] {
+    color: #181e6f;
+    border-color: #000;
+    height: 50px;
+    width: 100%;
+    border-radius: 10px;
+    font-size: 20pt;
+    text-indent: 15px;
+}
+
+.systemButton {
+    background-color: #555;
+}
+
+    .systemButton:hover {
+        background: linear-gradient(90deg, #000,#555);
     }
 
-    .center button {
-        background: dodgerblue;
-        color: #fff;
-        border: #fff;
-        height: 50px;
-        width: 49%;
-        border-radius: 10px;
-    }
+input:hover[type=submit] {
+    background: linear-gradient(45deg, greenyellow, dodgerblue);
+}
 
-    .center input[type=submit] {
-        background: dodgerblue;
-        color: #fff;
-        border: #fff;
-        height: 50px;
-        width: 49%;
-        border-radius: 10px;
-    }
-
-    .center input[type=text] {
-        color: #181e6f;
-        border-color: #000;
-        height: 50px;
-        width: 100%;
-        border-radius: 10px;
-        font-size: 20pt;
-        text-indent: 15px;
-    }
-
-    /*    .center button:hover {
-        background: linear-gradient(45deg, greenyellow, dodgerblue);
-    }*/
-    .center .systemButton {
-        background-color: #555;
-    }
-
-        .center .systemButton:hover {
-            background: linear-gradient(90deg, #000,#555);
-        }
-
-    .center input:hover[type=submit] {
-        background: linear-gradient(45deg, greenyellow, dodgerblue);
-    }
-
-    .center select {
-        background: #fff;
-        color: #000;
-        font-size: 16px;
-        border-radius: 10px;
-        border-color: #4495fb;
-        height: 50px;
-        min-height: 4vh;
-        width: 99%;
-        text-indent: 15px;
-    }
+select {
+    background: #fff;
+    color: #000;
+    font-size: 16px;
+    border-radius: 10px;
+    border-color: #4495fb;
+    height: 50px;
+    min-height: 4vh;
+    width: 99%;
+    text-indent: 15px;
+}
 
 .centerButton {
     margin: 0 25% 0 25%;
     width: 50%;
-    
+}
+
+.padding30{
+    padding:10px;
 }

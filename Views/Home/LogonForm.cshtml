@@ -4,24 +4,27 @@
     ViewData["Title"] = "Добро пожаловть!";
     Layout = "~/Views/Shared/_Layout.cshtml";
 }
-<tbody>
-    <form asp-action="LogonForm">
-        @*@Html.DropDownListFor(m => m.id, new SelectList(ViewBag.personList,"id","login"), new SelectList(ViewBag.personList,"id","login").First().Text)*@
-        <label>Пользователь</label>
-        @Html.DropDownListFor(m => m.id, new SelectList(ViewBag.personList,"id","login"), ViewData["firstPersonName"])
-        <br />
-        <br />
-        <input onclick="test()" class="centerButton" type="submit" value="Войти" />
-        <span asp-validation-for=@ViewData["err"], class="text-danger"></span>
-        <br />
-        <br />
-        <hr />
-        <br />
-        <button style="margin:0 25% 0 25%; width: 50%" class="systemButton" asp-action="createUser">
-            Создать профиль
-        </button>
-    </form>
-</tbody>
+
+@section interactiveForm {
+    <tbody>
+        <form asp-action="LogonForm">
+            <h1>@ViewBag.Title</h1>
+            <label>Пользователь</label>
+            @Html.DropDownListFor(m => m.id, new SelectList(ViewBag.personList,"id","login"), ViewData["firstPersonName"])
+            <br />
+            <br />
+            <input onclick="test()" class="centerButton" type="submit" value="Войти" />
+            <span asp-validation-for=@ViewData["err"], class="text-danger"></span>
+            <br />
+            <br />
+            <hr />
+            <br />
+            <button style="margin:0 25% 0 25%; width: 50%" class="systemButton" asp-action="createUser">
+                Создать профиль
+            </button>
+        </form>
+    </tbody>
+}
 
 @section Scripts {
     @{

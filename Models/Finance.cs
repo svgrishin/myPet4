@@ -11,7 +11,7 @@ namespace myPet4.Models
     public partial class Finance
     {
         public int ID { get; set; }
-        [DisplayName("Дебетовые средства")]
+        [DisplayName("Баланс:")]
         public decimal cash { get; set; }
         [DisplayName("Кредитный долг")]
         public decimal credit { get; set; }

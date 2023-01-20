@@ -33,6 +33,7 @@ namespace myPet4.Models
         [System.Diagnostics.CodeAnalysis.SuppressMessage("Microsoft.Usage", "CA2227:CollectionPropertiesShouldBeReadOnly")]
         public virtual ICollection<income?> income { get; set; }
         [System.Diagnostics.CodeAnalysis.SuppressMessage("Microsoft.Usage", "CA2227:CollectionPropertiesShouldBeReadOnly")]
+        [DisplayName("Статьи расходов")]
         public virtual ICollection<ItemPerson>? ItemPerson { get; set; }
     }
 }

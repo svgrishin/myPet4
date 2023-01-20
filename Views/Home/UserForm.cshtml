@@ -7,35 +7,44 @@
     Layout = "~/Views/Shared/_Layout.cshtml";
 }
 <form>
-    <div asp-validation-summary="ModelOnly" class="text-danger"></div>
-    <div class="form-group">
-        <label asp-for="Person.Finance.cash" class="control-label"></label>
-        <label>@Model.Person.Finance.cash</label>
-        <span asp-validation-for="Person.Finance.cash" class="text-danger"></span>
-    </div>
-    <div class="form-group">
-        <label asp-for="Person.Finance.freeMoney" class="control-label"></label>
-        <label>@Model.Person.Finance.freeMoney</label>
-        <span asp-validation-for="Person.Finance.freeMoney" class="text-danger"></span>
-    </div>
-
-    <div class="form-group">
-        <label asp-for="Person.Finance.credit" class="control-label"></label>
-        <label>@Model.Person.Finance.credit</label>
-        <span asp-validation-for="Person.Finance.credit" class="text-danger"></span>
-    </div>
-    <div class="form-group">
-        <label asp-for="Person.Finance.toSave" class="control-label"></label>
-        <label>@Model.Person.Finance.toSave</label>
-        <span asp-validation-for="Person.Finance.toSave" class="text-danger"></span>
-    </div>
-
-    <div class="form-group">
-        <label asp-for="Person.ItemPerson" class="control-label"></label>
-        @foreach (ItemPerson item in Model.Person.ItemPerson)
-        {
-            <label>@item.nameOf</label>
-        }
-    </div>
-
+    <input type="date" style="font-size:20pt; border-radius: 10px; padding: 10px" />
 </form>
+<div>
+    <div style="padding:10px; background-color: white; border-radius:10px; min-width:200px; margin:5px">
+        <label asp-for="Person.Finance.cash"></label>
+        <label style="float:right">@Model.Person.Finance.cash</label>
+    </div>
+    <div style="padding:10px; background-color: white; border-radius:10px; min-width:300px; margin:5px">
+        <label asp-for="Person.Finance.freeMoney"></label>
+        <label style="float:right">@Model.Person.Finance.freeMoney</label>
+    </div>
+    <div style="padding:10px; background-color: white; border-radius:10px; min-width:350px; margin:5px">
+        <label asp-for="profit"></label>
+        <label style="float:right">@Model.profit</label>
+    </div>
+</div>
+
+<div class="form-group">
+    <label asp-for="Person.Finance.freeMoney"></label>
+    <label>@Model.Person.Finance.freeMoney</label>
+    <span asp-validation-for="Person.Finance.freeMoney" class="text-danger"></span>
+</div>
+
+<div class="form-group">
+    <label asp-for="Person.Finance.credit"></label>
+    <label>@Model.Person.Finance.credit</label>
+    <span asp-validation-for="Person.Finance.credit" class="text-danger"></span>
+</div>
+<div class="form-group">
+    <label asp-for="Person.Finance.toSave"></label>
+    <label>@Model.Person.Finance.toSave</label>
+    <span asp-validation-for="Person.Finance.toSave" class="text-danger"></span>
+</div>
+
+<div class="form-group">
+    <label asp-for="Person.ItemPerson"></label>
+    @foreach (ItemPerson item in Model.Person.ItemPerson)
+    {
+        <label>@item.nameOf</label>
+    }
+</div>

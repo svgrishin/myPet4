@@ -1,5 +1,8 @@
 ﻿using Microsoft.AspNetCore.Http.Features;
 using Microsoft.AspNetCore.Routing.Matching;
+using NuGet.Packaging;
+using System;
+using System.ComponentModel;
 using System.Linq.Expressions;
 
 namespace myPet4.Models
@@ -7,9 +10,12 @@ namespace myPet4.Models
     public class UserData
     {
         public Persons Person { get; set; }
-        decimal toSaveByPeriod { get; set; }
-        decimal profit { get; set; }
-        public List<Item> items { get; set; }
+        public decimal toSaveByPeriod { get; set; }
+        [DisplayName("Расчётная прибыль")]
+        public decimal profit { get; set; }
+        public decimal currentIncome { get; set; }
+        private decimal currentTransactionsSumm { get; set; }
+        //public List<Item> items = new List<Item>();
         public class Item
         {
             public ItemPerson item { get; set; }
@@ -56,50 +62,67 @@ namespace myPet4.Models
                 }
             }
         }
+
+        //public void getCurrentIncome(Persons person)
+        //{
+        //    List<income> currentIncomes = person.income.Where(i => i.dateOf >= person.Finance.dateBegin & i.dateOf <= person.Finance.dateEnd).ToList();
+        //    if (currentIncomes.Count > 0)
+        //    {
+        //        foreach (income i in currentIncomes)
+        //        {
+        //            currentIncome += i.summ;
+        //        }
+        //    }
+        //    else
+        //    {
+        //        currentIncome = 0;
+        //    }
+        //}
         public UserData(Persons person)
         {
             Person = person;
-
             toSaveByPeriod = 0;
 
-            decimal currentIncomeSumm = 0;
+            currentIncome = 0;
             List<income> currentIncomes = person.income.Where(i => i.dateOf >= person.Finance.dateBegin && i.dateOf <= person.Finance.dateEnd).ToList();
             if (currentIncomes.Count > 0)
             {
                 foreach (income i in currentIncomes)
                 {
-                    currentIncomeSumm += i.summ;
+                    currentIncome += i.summ;
                 }
-                toSaveByPeriod = currentIncomeSumm * (person.Finance.toSave / person.Finance.salary);
+                toSaveByPeriod = currentIncome * (person.Finance.toSave / person.Finance.salary);
             }
 
-            decimal currentTransactionsSumm = 0;
+            currentTransactionsSumm = 0;
+            List<Transactions> currentTransactions = new List<Transactions>();
             foreach (ItemPerson i in person.ItemPerson)
             {
                 if (i.Transactions != null)
                 {
-                    foreach (Transactions t in i.Transactions)
+                    currentTransactions.AddRange(i.Transactions.Where(i => i.dateOf >= person.Finance.dateBegin && i.dateOf <= person.Finance.dateEnd));
+                    foreach (Transactions t in currentTransactions)
                     {
                         currentTransactionsSumm += t.summ;
                     }
                 }
             }
 
-            if (person.Finance.salary > currentIncomeSumm)
+            if (person.Finance.salary > currentIncome)
             {
                 profit = person.Finance.salary - currentTransactionsSumm;
             }
             else
             {
-                profit = currentIncomeSumm - currentTransactionsSumm;
+                profit = currentIncome - currentTransactionsSumm;
             }
 
-            items = new List<Item>();
+            //items = new List<Item>();
 
-            foreach (ItemPerson i in person.ItemPerson)
-            {
-                items.Add(new Item(i, person.Finance.dateBegin, person.Finance.dateEnd));
-            }
+            //foreach (ItemPerson i in person.ItemPerson)
+            //{
+            //    items.Add(new Item(i, person.Finance.dateBegin, person.Finance.dateEnd));
+            //}
         }
     }
 
