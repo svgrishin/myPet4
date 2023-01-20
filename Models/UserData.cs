@@ -15,6 +15,8 @@ namespace myPet4.Models
         public decimal profit { get; set; }
         public decimal currentIncome { get; set; }
         private decimal currentTransactionsSumm { get; set; }
+        [DisplayName("Сбережения")]
+        public decimal savedMoney { get; set; }
         //public List<Item> items = new List<Item>();
         public class Item
         {
@@ -82,6 +84,7 @@ namespace myPet4.Models
         {
             Person = person;
             toSaveByPeriod = 0;
+            savedMoney = 0;
 
             currentIncome = 0;
             List<income> currentIncomes = person.income.Where(i => i.dateOf >= person.Finance.dateBegin && i.dateOf <= person.Finance.dateEnd).ToList();
