@@ -1,8 +1,6 @@
 ﻿@import url("https://fonts.googleapis.com/css2?family=Sansita+Swashed:wght@600&display=swap");
 
 body {
-    margin: 0;
-    padding: 0;
     box-sizing: border-box;
     display: flex;
     justify-content: center;
@@ -10,20 +8,29 @@ body {
     height: 100vh;
     background: linear-gradient(45deg, greenyellow, dodgerblue);
     font-family: 'Segoe UI';
-    font-size: 22px;
-   
+    font-size: 20px;
 }
 
-button, input[type=submit], input[type=text] {
+form {
+    box-sizing: border-box;
+    background: #d8fef44b;
+    padding: 5%;
+    border-radius: 10px;
+    max-width:600px;
+}
+
+
+button, input, select {
+
     font-size: 18px;
     margin: 5px;
-    padding: 15px;
+    padding: 16px;
     border-radius: 10px;
     background: dodgerblue;
     color: #fff;
     border: #fff;
     height: 50px;
-    width: 49%;
+    width: 100%;
 }
 
     button:hover, input:hover[type=submit] {
@@ -32,8 +39,9 @@ button, input[type=submit], input[type=text] {
 
 .centerButton {
     margin: 0 25% 0 25%;
-    width: 100%;
+    width: 50%;
 }
+
 
 .systemButton {
     background: #555;
@@ -43,52 +51,34 @@ button, input[type=submit], input[type=text] {
         background: linear-gradient(90deg, #000,#555);
     }
 
-
-
-
-/*label {
-    font-size: 22px;
-}*/
-
-.common form {
-    position: relative;
-    /*padding: 50px 50px;*/
+select, input[type=text] {
     background: #fff;
-    width: 400px;
+    color: #000;
+    border: 3px solid #555555a2;
+    min-height: 3vh;
+    width: 100%;
+    text-indent: 15px;
+    padding: 10px;
 }
 
-
-
-
-
+input[type=text] {
+    width: 100%;
+    height: 25px;
+        padding: 0;
+}
 
 
 h1 {
     font-size: 2em;
-    border-left: 5px solid dodgerblue;
+    border-left: 4px solid dodgerblue;
     padding: 10px;
-    color: #000;
+    color: #171b2a;
     letter-spacing: 5px;
     margin-bottom: 60px;
-    font-weight: normal;
+    font-weight: 400;
     padding-left: 10px;
 }
 
-
-
-
-.centerButton select {
-    margin:unset;
-    background: #fff;
-    color: #000;
-    font-size: 16px;
-    border-radius: 10px;
-    border-color: #4495fb;
-    height: 50px;
-    min-height: 4vh;
-    width: 99%;
-    text-indent: 15px;
-}
 
 
 

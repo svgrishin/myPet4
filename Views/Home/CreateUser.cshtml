@@ -5,23 +5,31 @@
     ViewData["Title"] = "Создание профиля";
     Layout = "~/Views/Shared/_Layout.cshtml";
 }
+<body>
+    
+    <form asp-action="CreateUser">
+        <h1>@ViewBag.Title</h1>
+        <h3>Введите назваие профиля</h3>
+        <div asp-validation-summary="ModelOnly"></div>
 
-<form asp-action="CreateUser">
-    <div asp-validation-summary="ModelOnly"></div>
-    <div>
         <label asp-for="login"></label>
-    </div>
-    <div>
-        <input asp-for="login" />
+
+
+        <input asp-for="login" type="text" />
+        <input type="text" value="fjdsfdsafdsa" />
         <span asp-validation-for="login"></span>
         @Html.ValidationMessage("UserCreatingErr")
-    </div>
-    <br />
-    <div>
-        <input style="float:right" type="submit" value="Создать" />
-        <button class="systemButton" formmethod="get" asp-action="LogonForm">Назад</button>
-    </div>
-</form>
+        <br />
+        <br />
+        <input type="submit" class="centerButton" value="Создать" />
+        <br />
+        <br />
+        <hr />
+        <br />
+        <button class="systemButton centerButton" formmethod="get" asp-action="LogonForm">Назад</button>
+    </form>
+</body>
+
 
 @section Scripts {
     @{

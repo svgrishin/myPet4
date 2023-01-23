@@ -6,28 +6,24 @@
 }
 
 @section interactiveForm {
-    <tbody>
+    <body>
         <form asp-action="LogonForm">
             <h1>@ViewBag.Title</h1>
-            <div class="centerButton">
-                <label>Пользователь</label>
-                @Html.DropDownListFor(m => m.id, new SelectList(ViewBag.personList,"id","login"), ViewData["firstPersonName"])
-                <br />
-                <br />
-
-                <input type="submit" value="Войти" />
-                @*<span asp-validation-for=@ViewData["err"], class="text-danger"></span>*@
-                <br />
-                <br />
-                <hr />
-                <br />
-                <button class="systemButton" asp-action="createUser">
-                    Создать профиль
-                </button>
-            </div>
-
+            <label>Пользователь</label>
+            @Html.DropDownListFor(m => m.id, new SelectList(ViewBag.personList,"id","login"), ViewData["firstPersonName"])
+            <br />
+            <br />
+            <input type="submit" class="centerButton" value="Войти" />
+            <span asp-validation-for=@ViewData["err"], class="text-danger"></span>
+            <br />
+            <br />
+            <hr />
+            <br />
+            <button class="centerButton systemButton" asp-action="createUser">
+                Создать профиль
+            </button>
         </form>
-    </tbody>
+    </body>
 }
 
 @section Scripts {
