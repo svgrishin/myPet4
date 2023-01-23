@@ -9,21 +9,59 @@ body {
     align-items: center;
     height: 100vh;
     background: linear-gradient(45deg, greenyellow, dodgerblue);
-    font-family: 'Segoe UI'
-}
-
-label {
+    font-family: 'Segoe UI';
     font-size: 22px;
+   
 }
 
-form {
-    margin: 10px;
-    position: relative;
-    padding: 50px 50px;
-    background: #fff;
+button, input[type=submit], input[type=text] {
+    font-size: 18px;
+    margin: 5px;
+    padding: 15px;
     border-radius: 10px;
+    background: dodgerblue;
+    color: #fff;
+    border: #fff;
+    height: 50px;
+    width: 49%;
+}
+
+    button:hover, input:hover[type=submit] {
+        background: linear-gradient(45deg, greenyellow, dodgerblue);
+    }
+
+.centerButton {
+    margin: 0 25% 0 25%;
+    width: 100%;
+}
+
+.systemButton {
+    background: #555;
+}
+
+    .systemButton:hover {
+        background: linear-gradient(90deg, #000,#555);
+    }
+
+
+
+
+/*label {
+    font-size: 22px;
+}*/
+
+.common form {
+    position: relative;
+    /*padding: 50px 50px;*/
+    background: #fff;
     width: 400px;
 }
+
+
+
+
+
+
 
 h1 {
     font-size: 2em;
@@ -36,47 +74,11 @@ h1 {
     padding-left: 10px;
 }
 
-button {
-    background: dodgerblue;
-    color: #fff;
-    border: #fff;
-    height: 50px;
-    width: 49%;
-    border-radius: 10px;
-}
 
-input[type=submit] {
-    background: dodgerblue;
-    color: #fff;
-    border: #fff;
-    height: 50px;
-    width: 49%;
-    border-radius: 10px;
-}
 
-input[type=text] {
-    color: #181e6f;
-    border-color: #000;
-    height: 50px;
-    width: 100%;
-    border-radius: 10px;
-    font-size: 20pt;
-    text-indent: 15px;
-}
 
-.systemButton {
-    background-color: #555;
-}
-
-    .systemButton:hover {
-        background: linear-gradient(90deg, #000,#555);
-    }
-
-input:hover[type=submit] {
-    background: linear-gradient(45deg, greenyellow, dodgerblue);
-}
-
-select {
+.centerButton select {
+    margin:unset;
     background: #fff;
     color: #000;
     font-size: 16px;
@@ -88,11 +90,8 @@ select {
     text-indent: 15px;
 }
 
-.centerButton {
-    margin: 0 25% 0 25%;
-    width: 50%;
-}
 
-.padding30{
-    padding:10px;
+
+.padding30 {
+    padding: 10px;
 }
