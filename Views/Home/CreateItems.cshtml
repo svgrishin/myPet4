@@ -5,10 +5,10 @@
     ViewData["Title"] = "Добавление статей расходов";
     Layout = "~/Views/Shared/_Layout.cshtml";
 }
-<hr />
-<div class="row">
-    <div class="col-md-4">
-        <form asp-action="CreateItems">
+<body>
+    <form asp-action="CreateItems">
+        <h1>@ViewData["Title"]</h1>
+        <div class="leftItems">
             <div asp-validation-summary="ModelOnly" class="text-danger"></div>
             <div class="form-group">
                 <label asp-for="nameOf" class="control-label"></label>
@@ -21,14 +21,16 @@
                 <span asp-validation-for="summ" class="text-danger"></span>
             </div>
             <br />
-            <div class="form-group">
-                <input type="submit" value="Add" class="btn btn-primary" />
-                <input type="submit" asp-action="saveProfile" value="Готово" class="btn btn-primary" />
-            </div>
-        </form>
-    </div>
-</div>
-
+        </div>
+        <input type="submit" value="Add" class="centerButton" />
+        <br />
+        <br />
+        <hr />
+        <br />
+        <button class="systemButton" style="width:45%" formmethod="get" asp-action="CreateFinance">Назад</button>
+        <input type="submit" asp-action="saveProfile" value="Готово" style="width:45%" />
+    </form>
+</body>
 @section Scripts {
     @{
         await Html.RenderPartialAsync("_ValidationScriptsPartial");
