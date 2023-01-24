@@ -11,11 +11,11 @@ namespace myPet4.Models
     public partial class Finance
     {
         public int ID { get; set; }
-        [DisplayName("Баланс:")]
+        [DisplayName("Текущий баланс:")]
         public decimal cash { get; set; }
         [DisplayName("Кредитный долг")]
         public decimal credit { get; set; }
-        [DisplayName("Сумма сбережения")]
+        [DisplayName("Сумма сбережений")]
         public decimal toSave { get; set; }
         [DatabaseGenerated(DatabaseGeneratedOption.Computed)]
         [DisplayName("Свободные деньги")]

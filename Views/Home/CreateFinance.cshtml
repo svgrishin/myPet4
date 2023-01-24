@@ -1,51 +1,46 @@
 ﻿@model myPet4.Models.Finance
 
 @{
-    ViewData["Title"] = "Финансовые возможности";
+    ViewData["Title"] = "Данные о финансах";
     Layout = "~/Views/Shared/_Layout.cshtml";
 }
-<hr />
-<div class="row">
-    <div class="col-md-4">
-        <form asp-action="CreateFinance">
+<body>
+    <form asp-action="CreateFinance">
+        <h1>@ViewData["Title"]</h1>
+        <div class="leftItems">
             <div asp-validation-summary="ModelOnly" class="text-danger"></div>
+            <label asp-for="cash" class="rightItems"></label>
+            <br />
+            <input asp-for="cash" />
+            <span asp-validation-for="cash" class="text-danger"></span>
+            <br />
+            <label asp-for="toSave"></label>
+            <br />
+            <input asp-for="toSave" class="form-control" />
+            <span asp-validation-for="toSave" class="text-danger"></span>
+            <br />
+            <label asp-for="salary" class="control-label"></label>
+            <br />
+            <input asp-for="salary" class="form-control" />
+            <span asp-validation-for="salary" class="text-danger"></span>
+            <br />
+            <label asp-for="step" class="control-label"></label>
+            <br />
+            @Html.DropDownList("step", new SelectList(new string[] { "Неделя", "Месяц", "Квартал", "Настраиваемый" }), "Выберите периодичность")
+            <span asp-validation-for="step" class="text-danger"></span>
+            <br />
+            <label asp-for="dateBegin" class="control-label"></label>
+            <br />
+            <input asp-for="dateBegin" type="date" class="form-control" />
+            <span asp-validation-for="dateBegin" class="text-danger"></span>
 
-            <div class="form-group">
-                <label asp-for="cash" class="control-label"></label>
-                <input asp-for="cash" class="form-control" />
-                <span asp-validation-for="cash" class="text-danger"></span>
-            </div>
-
-            <div class="form-group">
-                <label asp-for="toSave" class="control-label"></label>
-                <input asp-for="toSave" class="form-control" />
-                <span asp-validation-for="toSave" class="text-danger"></span>
-            </div>
-
-            <div class="form-group">
-                <label asp-for="salary" class="control-label"></label>
-                <input asp-for="salary" class="form-control" />
-                <span asp-validation-for="salary" class="text-danger"></span>
-            </div>
-            <div class="form-group">
-                <label asp-for="dateBegin" class="control-label"></label>
-                <input asp-for="dateBegin" type="date" class="form-control" />
-
-                <span asp-validation-for="dateBegin" class="text-danger"></span>
-            </div>
-
-            <div class="form-group">
-                <label asp-for="step" class="control-label"></label>
-                @Html.DropDownList("step", new SelectList(new string[] { "Неделя", "Месяц", "Квартал", "Настраиваемый" }), "Выберите периодичность")
-                <span asp-validation-for="step" class="text-danger"></span>
-            </div>
-
-            <div id="dEnd" class="form-group" style="visibility:hidden">
+            <div id="dEnd" style="visibility:hidden">
                 <label asp-for="dateEnd" class="control-label"></label>
+                <br />
+
                 <input asp-for="dateEnd" type="date" class="form-control" />
                 <span asp-validation-for="dateEnd" class="text-danger"></span>
             </div>
-
             <script>
                 var c = document.getElementById("step");
                 var d = document.getElementById("dEnd");
@@ -56,19 +51,13 @@
                     else d.style.visibility = "hidden";
                 }
             </script>
-
-            <div class="form-group">
-                <input type="submit" value="Next" class="btn btn-primary" />
-            </div>
-        </form>
-    </div>
-</div>
-
-<div>
-    <a asp-action="Index">Back to List</a>
-</div>
-
-
+            <br />
+            <br />
+        </div>
+        <button class="systemButton" style="width:45%" formmethod="get" asp-action="CreateUser">Назад</button>
+        <input type="submit" value="Далее" style="width:45%" />
+    </form>
+</body>
 
 @section Scripts {
     @{
