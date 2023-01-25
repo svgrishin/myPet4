@@ -2,6 +2,7 @@
 
 body {
     box-sizing: border-box;
+    /*display: flex;*/
     display: flex;
     justify-content: center;
     align-items: center;
@@ -17,8 +18,8 @@ form {
     padding: 50px;
     border-radius: 10px;
     max-width: 720px;
-    min-width: 520px;
-    min-height: 520px;
+    /*min-width: 520px;*/
+    /*min-height: 520px;*/
     justify-content: center;
     align-items: center;
 }
@@ -27,7 +28,6 @@ form {
 button, input, select {
     font-size: 18px;
     margin: 3px;
-    /*padding: 0 0 0 10px;*/
     border-radius: 10px;
     background: dodgerblue;
     color: #fff;
@@ -95,6 +95,12 @@ h1 {
     padding-left: 10px;
 }
 
-.pairButtons{
+.pairButtons {
     width: 47%;
 }
+
+.topPanels form {
+    width: 40%;
+    padding: 10px;
+}
+https://html5book.ru/css-position/
