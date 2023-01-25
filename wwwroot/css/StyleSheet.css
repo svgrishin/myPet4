@@ -14,7 +14,7 @@ body {
 form {
     box-sizing: content-box;
     background: #d8fef44b;
-    padding: 60px;
+    padding: 50px;
     border-radius: 10px;
     max-width: 720px;
     min-width: 520px;
@@ -26,8 +26,8 @@ form {
 
 button, input, select {
     font-size: 18px;
-    margin: 10px;
-    padding: 0 0 0 10px;
+    margin: 3px;
+    /*padding: 0 0 0 10px;*/
     border-radius: 10px;
     background: dodgerblue;
     color: #fff;
@@ -46,12 +46,26 @@ button, input, select {
 
 .leftItems {
     width: 70%;
-    margin: 0 15% 0 11%;
+    margin: 0 15% 0 15%;
 }
 
-    .leftItems label {
-        margin: -5%;
+    .leftItems input[type=text] {
+        height: 35px;
     }
+
+    .leftItems select {
+        height: 35px;
+    }
+
+    .leftItems input[type=date] {
+        height: 35px;
+    }
+
+    .leftItems label {
+        width: 70%;
+        margin: 0 15% 0 -5%;
+    }
+
 
 .systemButton {
     background: #555;
@@ -65,7 +79,7 @@ select, input[type=text], input[type=date] {
     background: #fff;
     color: #000;
     border: 3px solid #555555a2;
-    min-height: 50px;
+    height: 50px;
     width: 100%;
     text-indent: 15px;
 }
@@ -79,4 +93,8 @@ h1 {
     margin-bottom: 60px;
     font-weight: 400;
     padding-left: 10px;
+}
+
+.pairButtons{
+    width: 47%;
 }

@@ -7,17 +7,17 @@
 }
 <body>
     <form asp-action="CreateItems">
-        <h1>@ViewData["Title"]</h1>
+        <h1 style="font-size:22pt">@ViewData["Title"]</h1>
         <div class="leftItems">
             <div asp-validation-summary="ModelOnly" class="text-danger"></div>
             <div class="form-group">
                 <label asp-for="nameOf" class="control-label"></label>
-                <input asp-for="nameOf" class="form-control" />
+                <input asp-for="nameOf" style="height:50px" />
                 <span asp-validation-for="nameOf" class="text-danger"></span>
             </div>
             <div class="form-group">
                 <label asp-for="summ" class="control-label"></label>
-                <input asp-for="summ" class="form-control" />
+                <input asp-for="summ" style="height:50px" />
                 <span asp-validation-for="summ" class="text-danger"></span>
             </div>
             <br />
@@ -27,8 +27,8 @@
         <br />
         <hr />
         <br />
-        <button class="systemButton" style="width:45%" formmethod="get" asp-action="CreateFinance">Назад</button>
-        <input type="submit" asp-action="saveProfile" value="Готово" style="width:45%" />
+        <button class="systemButton pairButtons" formmethod="get" asp-action="CreateFinance">Назад</button>
+        <input type="submit" asp-action="saveProfile" value="Готово" class="pairButtons" />
     </form>
 </body>
 @section Scripts {
