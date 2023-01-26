@@ -2,7 +2,6 @@
 
 body {
     box-sizing: border-box;
-    /*display: flex;*/
     display: flex;
     justify-content: center;
     align-items: center;
@@ -12,18 +11,30 @@ body {
     font-size: 20px;
 }
 
+table {
+    width: 100%;
+    /*border: 1px solid black;*/
+}
+
+td {
+    /*border: 1px solid black;*/
+    width: 33%;
+}
+
 form {
     box-sizing: content-box;
     background: #d8fef44b;
     padding: 50px;
     border-radius: 10px;
-    max-width: 720px;
-    /*min-width: 520px;*/
-    /*min-height: 520px;*/
     justify-content: center;
     align-items: center;
 }
 
+.test form {
+    box-sizing: unset;
+    padding: 10px;
+    width: 100%;
+}
 
 button, input, select {
     font-size: 18px;
@@ -99,8 +110,17 @@ h1 {
     width: 47%;
 }
 
-.topPanels form {
-    width: 40%;
-    padding: 10px;
+.topPanels {
+    width: 100%;
+    padding: 0;
+    height: 150px;
+    font-size: 14pt;
 }
+
+    .topPanels input {
+        font-size: 10px;
+        width: 90%;
+        height: 30px;
+    }
+
 https://html5book.ru/css-position/
