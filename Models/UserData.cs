@@ -10,14 +10,15 @@ namespace myPet4.Models
     public class UserData
     {
         public Persons Person { get; set; }
+        [DisplayName("Текущие сбережения")]
         public decimal toSaveByPeriod { get; set; }
         [DisplayName("Расчётная прибыль")]
         public decimal profit { get; set; }
+        [DisplayName("Доход")]
         public decimal currentIncome { get; set; }
         private decimal currentTransactionsSumm { get; set; }
-        [DisplayName("Сбережения")]
+        [DisplayName("Общие сбережения")]
         public decimal savedMoney { get; set; }
-        //public List<Item> items = new List<Item>();
         public class Item
         {
             public ItemPerson item { get; set; }
@@ -65,21 +66,6 @@ namespace myPet4.Models
             }
         }
 
-        //public void getCurrentIncome(Persons person)
-        //{
-        //    List<income> currentIncomes = person.income.Where(i => i.dateOf >= person.Finance.dateBegin & i.dateOf <= person.Finance.dateEnd).ToList();
-        //    if (currentIncomes.Count > 0)
-        //    {
-        //        foreach (income i in currentIncomes)
-        //        {
-        //            currentIncome += i.summ;
-        //        }
-        //    }
-        //    else
-        //    {
-        //        currentIncome = 0;
-        //    }
-        //}
         public UserData(Persons person)
         {
             Person = person;

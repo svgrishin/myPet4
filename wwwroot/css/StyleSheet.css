@@ -13,12 +13,15 @@ body {
 
 table {
     width: 100%;
-    /*border: 1px solid black;*/
+    max-width: 1700px;
 }
 
 td {
-    /*border: 1px solid black;*/
-    width: 33%;
+    width: 12%;
+}
+
+tr {
+    width: 100%;
 }
 
 form {
@@ -112,15 +115,27 @@ h1 {
 
 .topPanels {
     width: 100%;
-    padding: 0;
-    height: 150px;
+    padding: 0 0 5px 0;
     font-size: 14pt;
+    min-height: 10vh;
+    box-sizing: content-box;
+    position: relative;
 }
 
     .topPanels input {
         font-size: 10px;
-        width: 90%;
+        width: 85%;
         height: 30px;
+    }
+
+    .topPanels label {
+        display: inline-block;
+        background: white;
+        width: 85%;
+        margin: 5px 5% 0 5%;
+        padding: 5px;
+        border-radius: 5px;
+        font-size: 15px;
     }
 
 https://html5book.ru/css-position/
