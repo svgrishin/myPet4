@@ -138,4 +138,11 @@ h1 {
         font-size: 15px;
     }
 
+    .topPanels select {
+        height: 90%;
+        margin: 5px 3% 5px 3%;
+        width: 94%;
+        background: #d8fef44b;
+    }
+
 https://html5book.ru/css-position/

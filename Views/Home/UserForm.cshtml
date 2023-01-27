@@ -70,6 +70,14 @@
                     <td>
                         <form class="topPanels" style="height:400px">
                             <label style="background:none">@item.nameOf</label>
+                            @{
+                                List<string> s = new List<string>();
+                            }
+                            @foreach (Transactions transaction in item.Transactions)
+                            {
+                                s.Add(transaction.summ.ToString());
+                            }
+                            @Html.ListBox("fdafasf",new SelectList(s))
                         </form>
                     </td>
                 }
