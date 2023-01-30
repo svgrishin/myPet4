@@ -1,5 +1,21 @@
 ﻿@import url("https://fonts.googleapis.com/css2?family=Sansita+Swashed:wght@600&display=swap");
 
+::-webkit-scrollbar {
+    width: 10px;
+}
+
+::-webkit-scrollbar-track {
+    -webkit-box-shadow: inset 0 0 6px rgba(0,0,0,0.3);
+    border-radius: 10px;
+}
+
+::-webkit-scrollbar-thumb {
+    border-radius: 10px;
+    -webkit-box-shadow: inset 0 0 6px rgba(0,0,0,0.5);
+}
+
+
+
 body {
     box-sizing: border-box;
     display: flex;
@@ -47,7 +63,10 @@ button, input, select {
     color: #fff;
     border: #fff;
     height: 50px;
+    /*scrollbar-width: none;*/
 }
+
+
 
     button:hover, input:hover[type=submit] {
         background: linear-gradient(45deg, greenyellow, dodgerblue);
@@ -72,7 +91,8 @@ button, input, select {
     }
 
     .leftItems input[type=date] {
-        height: 35px;
+        height: 25px;
+        padding: 0;
     }
 
     .leftItems label {
@@ -141,22 +161,61 @@ h1 {
     .topPanels select {
         height: 88%;
         margin: 0 0 0 3%;
-        
-        /*margin:*/ 
         width: 94%;
         background: #d8fef44b;
-        overflow: hidden;
+        scrollbar-width: thin;
+        scrollbar-color: blue orange;
         font-size: 12px;
         border: none;
     }
 
-    .itemAddButton{
-        height:25px;
-        width:25px;
-        background: #4bbd4a;
-        border-radius:5px;
-        font-size:14px;
-        margin: 5px;
+.itemButton {
+    height: 25px;
+    width: 15%;
+    background-color: #1e90ff4e;
+    background-image: url("../icon/edit_small.png");
+    border-radius: 5px;
+    font-size: 14px;
+    margin-top: 5px;
+    margin-left: 1px;
+    margin-right: 5px;
+    background-position: center;
+    background-repeat: no-repeat;
+}
+
+#editItem {
+    background-color: #08711b4e;
+    background-image: url("../icon/edit_small.png");
+}
+
+    #editItem:hover {
+        background: url("../icon/edit_small.png"), linear-gradient(45deg, greenyellow, #afe3ef);
+        background-position: center;
+        background-repeat: no-repeat;
     }
+
+#addItem {
+    width: 25%;
+    background-image: url("../icon/add_small.png");
+}
+
+    #addItem:hover {
+        background: url("../icon/add_small.png"), linear-gradient(45deg, #00fff7, #afe3ef);
+        background-position: center;
+        background-repeat: no-repeat;
+    }
+
+#deleteItem {
+    background-color: #e2b3307c;
+    background-image: url("../icon/delete_small.png");
+}
+
+    #deleteItem:hover {
+        background: url("../icon/delete_small.png"), linear-gradient(45deg, red, #efe0af);
+        background-position: center;
+        background-repeat: no-repeat;
+    }
+
+
 
 https://html5book.ru/css-position/
