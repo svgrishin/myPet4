@@ -14,7 +14,24 @@
     -webkit-box-shadow: inset 0 0 6px rgba(0,0,0,0.5);
 }
 
+::-webkit-progress-bar {
+    background-color: #fff0;
+    border-radius: 10px;
+    border-color: #007fc8e6;
+    border-style: solid;
+}
 
+::-webkit-progress-value {
+    background-color: #fff200ff;
+    border-radius: 10px;
+}
+
+progress {
+    -webkit-appearance: none;
+    width: 100%;
+    height: 12px;
+    margin-bottom:5px;
+}
 
 body {
     box-sizing: border-box;
@@ -22,7 +39,7 @@ body {
     justify-content: center;
     align-items: center;
     height: 100vh;
-    background: linear-gradient(45deg, greenyellow, dodgerblue);
+    background: linear-gradient(45deg, #adff2fdb, dodgerblue);
     font-family: 'Segoe UI';
     font-size: 20px;
 }
@@ -63,10 +80,7 @@ button, input, select {
     color: #fff;
     border: #fff;
     height: 50px;
-    /*scrollbar-width: none;*/
 }
-
-
 
     button:hover, input:hover[type=submit] {
         background: linear-gradient(45deg, greenyellow, dodgerblue);
@@ -150,7 +164,7 @@ h1 {
 
     .topPanels label {
         display: inline-block;
-        background: white;
+        background: #ffffff7c;
         width: 85%;
         margin: 5px 5% 0 5%;
         padding: 5px;
@@ -159,8 +173,8 @@ h1 {
     }
 
     .topPanels select {
-        height: 88%;
-        margin: 0 0 0 3%;
+        height: 85%;
+        margin: 5px 0 0 3%;
         width: 94%;
         background: #d8fef44b;
         scrollbar-width: thin;
@@ -168,6 +182,7 @@ h1 {
         font-size: 12px;
         border: none;
     }
+
 
 .itemButton {
     height: 25px;

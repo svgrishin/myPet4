@@ -68,7 +68,7 @@
                 @foreach (ItemPerson item in Model.Person.ItemPerson)
                 {
                     <td>
-
+                        <progress value="50" max="100"></progress>
                         <form class="topPanels" style="height:300px">
                             <div style="display:flex">
                                 <label style="background:none; width: 55%; display: inline-block">@item.nameOf</label>
@@ -83,15 +83,22 @@
                             {
                                 s.Add(transaction.summ.ToString());
                             }
-
-                            @Html.ListBox("fdafasf",new SelectList(s))
+                            @Html.ListBox("itemTransactions",new SelectList(s));
                         </form>
                     </td>
                 }
             </tr>
         </table>
     </div>
+
 </body>
+<script>
+    {
+        var s = document.getElementsByName("itemTransactions");
+        s.forEach(p => p.removeAttribute("multiple"));
+        s.forEach(p => p.setAttribute("size", 2));
+    }
+</script>
 
 @*<form form style="padding:15px;margin:5px">
     <input type="date" style="padding:5px; background-color: white; border-radius:10px; min-width:250px; margin:5px; font-size:20px" />
