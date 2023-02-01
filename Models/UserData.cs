@@ -10,16 +10,31 @@ namespace myPet4.Models
     public class UserData
     {
         public Persons Person { get; set; }
+        /// <summary>
+        /// Сбережения текущего расчётного периода
+        /// </summary>
         [DisplayName("Текущие сбережения")]
-        public decimal toSaveByPeriod { get; set; }
+        public int toSaveByPeriod { get; set; }
+        /// <summary>
+        /// Прибыль в текущем периоде
+        /// </summary>
         [DisplayName("Расчётная прибыль")]
-        public decimal profit { get; set; }
+        public int profit { get; set; }
+        /// <summary>
+        /// Весь доход в текущем периоде
+        /// </summary>
         [DisplayName("Доход")]
-        public decimal currentIncome { get; set; }
-        private decimal currentTransactionsSumm { get; set; }
+        public int currentIncome { get; set; }
+        /// <summary>
+        /// Общий расход
+        /// </summary>
+        private int currentTransactionsSumm { get; set; }
+        /// <summary>
+        /// Общие сбережения
+        /// </summary>
         [DisplayName("Общие сбережения")]
-        public decimal savedMoney { get; set; }
-        public class Item
+        public int savedMoney { get; set; }
+        public class UserItem
         {
             public ItemPerson item { get; set; }
             /// <summary>
@@ -27,14 +42,14 @@ namespace myPet4.Models
             /// </summary>
             public decimal currentSumm { get; set; }
             /// <summary>
-            /// Потрачено за день
+            /// Дневной остаток по статье расхода
             /// </summary>
             public decimal dailyBalance { get; set; }
             /// <summary>
             /// % исчерпания статьи расхода
             /// </summary>
             public int loaded { get; set; }
-            public Item(ItemPerson item, DateTime dateBegin, DateTime dateEnd)
+            public UserItem(ItemPerson item, DateTime dateBegin, DateTime dateEnd)
             {
                 this.item = item;
                 currentSumm = item.summ / dateEnd.Subtract(DateTime.Today).Days;
@@ -66,11 +81,22 @@ namespace myPet4.Models
             }
         }
 
+        /// <summary>
+        /// Статьи расходов для приложения. Содержит дополнительные параметры к EF ItemPerson
+        /// </summary>
+        public List<UserItem> userItems;
+
         public UserData(Persons person)
         {
             Person = person;
             toSaveByPeriod = 0;
             savedMoney = 0;
+
+            userItems = new List<UserItem>();
+            foreach(ItemPerson item in person.ItemPerson)
+            {
+                userItems.Add(new UserItem(item, person.Finance.dateBegin, person.Finance.dateEnd));
+            }
 
             currentIncome = 0;
             List<income> currentIncomes = person.income.Where(i => i.dateOf >= person.Finance.dateBegin && i.dateOf <= person.Finance.dateEnd).ToList();
@@ -105,13 +131,6 @@ namespace myPet4.Models
             {
                 profit = currentIncome - currentTransactionsSumm;
             }
-
-            //items = new List<Item>();
-
-            //foreach (ItemPerson i in person.ItemPerson)
-            //{
-            //    items.Add(new Item(i, person.Finance.dateBegin, person.Finance.dateEnd));
-            //}
         }
     }
 

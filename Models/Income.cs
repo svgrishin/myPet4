@@ -11,7 +11,7 @@ namespace myPet4.Models
         public int person { get; set; }
         [DisplayName("Сумма")]
         [Required(ErrorMessage = "Доход без суммы не засчитывается")]
-        public decimal summ { get; set; }
+        public int summ { get; set; }
         [DisplayName("Дата")]
         [Required(ErrorMessage = "Доход без даты не засчитывается")]
         public DateTime dateOf { get; set; }

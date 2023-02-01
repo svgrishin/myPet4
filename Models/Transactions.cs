@@ -15,7 +15,7 @@ namespace myPet4.Models
         public DateTime dateOf { get; set; }
         [DisplayName("Сумма")]
         [Required(ErrorMessage = "Затраты без суммы не учитываются")]
-        public decimal summ { get; set; }
+        public int summ { get; set; }
         [DisplayName("Оплачено кредитной картой")]
         public bool credit { get; set; }
         [DisplayName("Комментарий")]

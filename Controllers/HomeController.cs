@@ -62,7 +62,7 @@ namespace myPet4.Controllers
         }
 
         [HttpPost]
-        public IActionResult createFinance(int ID, decimal cash, decimal credit, decimal toSave, decimal salary, DateTime dateBegin, DateTime? dateEnd, string step)
+        public IActionResult createFinance(int ID, int cash, int credit, int toSave, int salary, DateTime dateBegin, DateTime? dateEnd, string step)
         {
             DateTime d2 = dateBegin;
             char s = 'c';
@@ -135,7 +135,7 @@ namespace myPet4.Controllers
         }
 
         [HttpPost]
-        public IActionResult CreateItems(string nameof, decimal summ)
+        public IActionResult CreateItems(string nameof, int summ)
         {
             currentPerson.ItemPerson.Add(new ItemPerson(currentPerson.id, nameof, summ));
             return RedirectToAction();

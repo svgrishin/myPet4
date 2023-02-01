@@ -15,16 +15,18 @@ namespace myPet4.Models
         public int person { get; set; }
         [DisplayName("Сумма")]
         [Required(ErrorMessage = "У статьи расходов должно быть сумма")]
-        public decimal summ { get; set; }
+        public int summ { get; set; }
         [DisplayName("Сбережения")]
-        public decimal savings { get; set; }
+        public int savings { get; set; }
 
         [ForeignKey("person")]
         public virtual Persons Persons { get; set; }
         [System.Diagnostics.CodeAnalysis.SuppressMessage("Microsoft.Usage", "CA2227:CollectionPropertiesShouldBeReadOnly")]
         public virtual ICollection<Transactions>? Transactions { get; set; }
 
-        public ItemPerson(int person, string nameOf, decimal summ)
+
+
+        public ItemPerson(int person, string nameOf, int summ)
         {
             this.nameOf = nameOf;
             this.summ = summ;
@@ -35,5 +37,7 @@ namespace myPet4.Models
         {
             Transactions = new HashSet<Transactions>();
         }
+
+        
     }
 }

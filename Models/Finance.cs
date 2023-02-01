@@ -14,16 +14,16 @@ namespace myPet4.Models
     {
         public int ID { get; set; }
         [DisplayName("Текущий баланс:")]
-        public decimal cash { get; set; }
+        public int cash { get; set; }
         [DisplayName("Кредитный долг")]
-        public decimal credit { get; set; }
+        public int credit { get; set; }
         [DisplayName("Сумма сбережений")]
-        public decimal toSave { get; set; }
+        public int toSave { get; set; }
         [DatabaseGenerated(DatabaseGeneratedOption.Computed)]
         [DisplayName("Свободные деньги")]
-        public decimal? freeMoney { get; private set; }
+        public int? freeMoney { get; private set; }
         [DisplayName("Стабильный доход")]
-        public decimal salary { get; set; }
+        public int salary { get; set; }
         [DisplayName("Начало расчётного периода")]
         [Required(ErrorMessage = "Необходимо указать дату начала расчётного периода")]
         public DateTime dateBegin { get; set; }
@@ -35,7 +35,7 @@ namespace myPet4.Models
         [ForeignKey("ID")]
         public virtual Persons Person { get; set; }
 
-        public Finance(int ID, decimal cash, decimal credit, decimal toSave, decimal salary, DateTime dateBegin, DateTime dateEnd, char step)
+        public Finance(int ID, int cash, int credit, int toSave, int salary, DateTime dateBegin, DateTime dateEnd, char step)
         {
             this.ID = ID;
             this.cash = cash;
