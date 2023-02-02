@@ -45,6 +45,7 @@ namespace myPet4.Models
             this.dateBegin = dateBegin;
             this.dateEnd = dateEnd;
             this.step = step;
+            //this.freeMoney = 0;
         }
         public Finance() { }
     }

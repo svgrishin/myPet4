@@ -80,11 +80,15 @@ namespace myPet4.Models
                 }
             }
         }
-
         /// <summary>
         /// Статьи расходов для приложения. Содержит дополнительные параметры к EF ItemPerson
         /// </summary>
         public List<UserItem> userItems;
+
+        public void Add(ItemPerson item, Transactions transaction)
+        {
+            item.Transactions.Add(transaction);
+        }
 
         public UserData(Persons person)
         {
@@ -123,6 +127,7 @@ namespace myPet4.Models
                 }
             }
 
+            profit = 0;
             if (person.Finance.salary > currentIncome)
             {
                 profit = person.Finance.salary - currentTransactionsSumm;
@@ -132,6 +137,7 @@ namespace myPet4.Models
                 profit = currentIncome - currentTransactionsSumm;
             }
         }
+        public UserData(){}
     }
 
 }

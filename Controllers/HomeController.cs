@@ -16,7 +16,8 @@ namespace myPet4.Controllers
 {
     public class HomeController : Controller
     {
-        public static Persons currentPerson;
+        //public static Persons currentPerson;
+        public static UserData currentUser = new UserData();
         private readonly myPetContext _context;
         public HomeController(myPetContext context)
         {
@@ -43,7 +44,8 @@ namespace myPet4.Controllers
                 if (persons.IsNullOrEmpty())
                 {
                     Persons person = new Persons(login);
-                    currentPerson = person;
+                    //currentPerson = person;
+                    currentUser.Person = person;
                     return View("createFinance");
                 }
                 else
@@ -58,11 +60,13 @@ namespace myPet4.Controllers
         [HttpGet]
         public IActionResult createFinance()
         {
+            currentUser.Person.Finance = new Finance();
             return View();
         }
 
         [HttpPost]
         public IActionResult createFinance(int ID, int cash, int credit, int toSave, int salary, DateTime dateBegin, DateTime? dateEnd, string step)
+        //public IActionResult createFinance(string step)
         {
             DateTime d2 = dateBegin;
             char s = 'c';
@@ -72,7 +76,6 @@ namespace myPet4.Controllers
                 case "Неделя":
                     s = 'd';
                     d2 = d2.AddDays(7);
-
                     break;
 
                 case "Месяц":
@@ -93,7 +96,9 @@ namespace myPet4.Controllers
 
             if (ModelState.IsValid)
             {
-                currentPerson.Finance = new Finance(currentPerson.id, cash, credit, toSave, salary, dateBegin, d2, s);
+                ////currentPerson.Finance = new Finance(currentPerson.id, cash, credit, toSave, salary, dateBegin, d2, s);
+                currentUser.Person.Finance = new Finance(currentUser.Person.id, cash, credit, toSave, salary, dateBegin, d2, s);
+
                 return View("CreateItems");
             }
             else
@@ -115,40 +120,65 @@ namespace myPet4.Controllers
         [HttpPost]
         public IActionResult LogonForm(int id)
         {
-            currentPerson = _context.Persons.Where(p => p.id == id).Include(f => f.Finance).First();
-            currentPerson.ItemPerson = _context.Item.Where(i => i.person == currentPerson.id).Include(t => t.Transactions).ToList();
-            currentPerson.income = _context.Income.Where(i => i.person == currentPerson.id).ToList();
+            Persons person = _context.Persons.Where(p => p.id == id).Include(f => f.Finance).First();
+            person.ItemPerson = _context.Item.Where(i => i.person == id).Include(t => t.Transactions).ToList();
+            person.income = _context.Income.Where(i => i.person == id).ToList();
+
+            //currentPerson = _context.Persons.Where(p => p.id == id).Include(f => f.Finance).First();
+            //currentPerson.ItemPerson = _context.Item.Where(i => i.person == currentPerson.id).Include(t => t.Transactions).ToList();
+            //currentPerson.income = _context.Income.Where(i => i.person == currentPerson.id).ToList();
+
+            
+
+            currentUser = new UserData(person);
+            
+            
 
             return RedirectToAction("UserForm");
         }
 
         public IActionResult UserForm()
         {
-            UserData d = new UserData(currentPerson);
-            return View("UserForm", d);
+            //UserData d = new UserData(currentPerson);
+            currentUser = new UserData(currentUser.Person);
+            return View("UserForm", currentUser);
         }
 
         [HttpGet]
         public IActionResult CreateItems()
         {
-            return View();
+            //if (currentUser.Person.ItemPerson.IsNullOrEmpty()) currentUser.Person.ItemPerson = new List<ItemPerson>();
+            //currentUser.Person.ItemPerson.Add(new ItemPerson());
+            return View("CreateItems");
         }
 
         [HttpPost]
         public IActionResult CreateItems(string nameof, int summ)
         {
-            currentPerson.ItemPerson.Add(new ItemPerson(currentPerson.id, nameof, summ));
+            ////currentPerson.ItemPerson.Add(new ItemPerson(currentPerson.id, nameof, summ));
+            //currentUser.Person.ItemPerson.Add(new ItemPerson(currentUser.Person.id, nameof, summ));
+            currentUser.Person.ItemPerson.Add(new ItemPerson(currentUser.Person.id, nameof, summ));
             return RedirectToAction();
         }
 
         public IActionResult saveProfile()
         {
-            _context.Add(currentPerson);
-            _context.Finance.Add(currentPerson.Finance);
-            _context.Item.Add(currentPerson.ItemPerson.Last());
+            //_context.Add(currentPerson);
+            //_context.Finance.Add(currentPerson.Finance);
+            //_context.Item.Add(currentPerson.ItemPerson.Last());
+
+            _context.Add(currentUser.Person);
+            _context.Finance.Add(currentUser.Person.Finance);
+            _context.Item.Add(currentUser.Person.ItemPerson.Last());
+            
             _context.SaveChanges();
 
             return RedirectToAction("UserForm");
+        }
+
+        public IActionResult AddTransaction(ItemPerson item, Transactions transaction)
+        {
+            return View("UserForm");
         }
     }
 }
