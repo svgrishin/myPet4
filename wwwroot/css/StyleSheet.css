@@ -97,7 +97,7 @@ button, input, select {
 }
 
     .leftItems input[type=text] {
-        height: 35px;
+        height: 35px; 
     }
 
     .leftItems select {
