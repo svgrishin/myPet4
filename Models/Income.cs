@@ -5,7 +5,7 @@ using System.Data.SqlTypes;
 
 namespace myPet4.Models
 {
-    public partial class income
+    public partial class Income
     {
         public int id { get; set; }
         public int person { get; set; }
@@ -17,6 +17,14 @@ namespace myPet4.Models
         public DateTime dateOf { get; set; }
 
         [ForeignKey("person")]
-        public virtual Persons Persons { get; set; }
+        public virtual Persons incomePerson { get; set; }
+
+        public Income(DateTime dateOf, Persons person)
+        {
+            this.person = person.id;
+            this.dateOf = dateOf;
+            this.incomePerson = person;
+        }
+        public Income() { }
     }
 }

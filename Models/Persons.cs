@@ -10,30 +10,32 @@ namespace myPet4.Models
         [System.Diagnostics.CodeAnalysis.SuppressMessage("Microsoft.Usage", "CA2214:DoNotCallOverridableMethodsInConstructors")]
         public Persons(string login)
         {
-            income = new HashSet<income>();
-            ItemPerson = new HashSet<ItemPerson>();
+            income = new HashSet<Income>();
+            itemPerson = new HashSet<ItemPerson>();
             this.login = login;
         }
 
-        public Persons(Persons p)
-        {
-            income = p.income;
-            ItemPerson = p.ItemPerson;
-            login = p.login;
-        }
+        //public Persons(Persons p)
+        //{
+        //    income = p.income;
+        //    itemPerson = p.itemPerson;
+        //    login = p.login;
+            
+        //}
 
         public Persons()
         {
-
+            
         }
+
         public int id { get; set; }
         [DisplayName("Имя пользователя")]
         public string login { get; set; }
         public virtual Finance? Finance { get; set; }
         [System.Diagnostics.CodeAnalysis.SuppressMessage("Microsoft.Usage", "CA2227:CollectionPropertiesShouldBeReadOnly")]
-        public virtual ICollection<income?> income { get; set; }
+        public virtual ICollection<Income?> income { get; set; }
         [System.Diagnostics.CodeAnalysis.SuppressMessage("Microsoft.Usage", "CA2227:CollectionPropertiesShouldBeReadOnly")]
         [DisplayName("Статьи расходов")]
-        public virtual ICollection<ItemPerson>? ItemPerson { get; set; }
+        public virtual ICollection<ItemPerson>? itemPerson { get; set; }
     }
 }

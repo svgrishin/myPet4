@@ -57,7 +57,7 @@ namespace myPet4.Models
                 decimal d = 0;
                 try
                 {
-                    foreach (Transactions t in item.Transactions.Where(p => p.dateOf == DateTime.Today))
+                    foreach (Transactions t in item.transactions.Where(p => p.dateOf == DateTime.Today))
                     {
                         d += t.summ;
                     }
@@ -68,7 +68,7 @@ namespace myPet4.Models
                 decimal p = 0;
                 try
                 {
-                    foreach (Transactions t in item.Transactions.Where(p => p.dateOf >= dateBegin))
+                    foreach (Transactions t in item.transactions.Where(p => p.dateOf >= dateBegin))
                     {
                         p += t.summ;
                     }
@@ -87,7 +87,7 @@ namespace myPet4.Models
 
         public void Add(ItemPerson item, Transactions transaction)
         {
-            item.Transactions.Add(transaction);
+            item.transactions.Add(transaction);
         }
 
         public UserData(Persons person)
@@ -97,16 +97,16 @@ namespace myPet4.Models
             savedMoney = 0;
 
             userItems = new List<UserItem>();
-            foreach(ItemPerson item in person.ItemPerson)
+            foreach(ItemPerson item in person.itemPerson)
             {
                 userItems.Add(new UserItem(item, person.Finance.dateBegin, person.Finance.dateEnd));
             }
 
             currentIncome = 0;
-            List<income> currentIncomes = person.income.Where(i => i.dateOf >= person.Finance.dateBegin && i.dateOf <= person.Finance.dateEnd).ToList();
+            List<Income> currentIncomes = person.income.Where(i => i.dateOf >= person.Finance.dateBegin && i.dateOf <= person.Finance.dateEnd).ToList();
             if (currentIncomes.Count > 0)
             {
-                foreach (income i in currentIncomes)
+                foreach (Income i in currentIncomes)
                 {
                     currentIncome += i.summ;
                 }
@@ -115,11 +115,11 @@ namespace myPet4.Models
 
             currentTransactionsSumm = 0;
             List<Transactions> currentTransactions = new List<Transactions>();
-            foreach (ItemPerson i in person.ItemPerson)
+            foreach (ItemPerson i in person.itemPerson)
             {
-                if (i.Transactions != null)
+                if (i.transactions != null)
                 {
-                    currentTransactions.AddRange(i.Transactions.Where(i => i.dateOf >= person.Finance.dateBegin && i.dateOf <= person.Finance.dateEnd));
+                    currentTransactions.AddRange(i.transactions.Where(i => i.dateOf >= person.Finance.dateBegin && i.dateOf <= person.Finance.dateEnd));
                     foreach (Transactions t in currentTransactions)
                     {
                         currentTransactionsSumm += t.summ;
@@ -139,5 +139,4 @@ namespace myPet4.Models
         }
         public UserData(){}
     }
-
 }

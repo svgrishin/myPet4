@@ -1,4 +1,6 @@
-﻿using Microsoft.EntityFrameworkCore;
+﻿using Microsoft.CodeAnalysis.FlowAnalysis;
+using Microsoft.EntityFrameworkCore;
+using Microsoft.IdentityModel.Tokens;
 using System.ComponentModel;
 using System.ComponentModel.DataAnnotations;
 using System.ComponentModel.DataAnnotations.Schema;
@@ -20,24 +22,22 @@ namespace myPet4.Models
         public int savings { get; set; }
 
         [ForeignKey("person")]
-        public virtual Persons Persons { get; set; }
+        public virtual Persons personItem { get; set; }
         [System.Diagnostics.CodeAnalysis.SuppressMessage("Microsoft.Usage", "CA2227:CollectionPropertiesShouldBeReadOnly")]
-        public virtual ICollection<Transactions>? Transactions { get; set; }
+        public virtual ICollection<Transactions>? transactions { get; set; }
 
-
-
-        public ItemPerson(int person, string nameOf, int summ)
+        public ItemPerson(Persons person, string nameOf, int summ)
         {
             this.nameOf = nameOf;
             this.summ = summ;
-            this.person = person;
+            this.person = person.id;
+            personItem = person;
+            if (transactions.IsNullOrEmpty()) transactions = new HashSet<Transactions>();
         }
 
         public ItemPerson()
         {
-            Transactions = new HashSet<Transactions>();
+            transactions = new HashSet<Transactions>();
         }
-
-        
     }
 }

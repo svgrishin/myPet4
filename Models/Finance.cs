@@ -33,11 +33,12 @@ namespace myPet4.Models
         [Required(ErrorMessage = "Необходимо указать периодичность")]
         public char step { get; set; }
         [ForeignKey("ID")]
-        public virtual Persons Person { get; set; }
+        public virtual Persons person { get; set; }
 
-        public Finance(int ID, int cash, int credit, int toSave, int salary, DateTime dateBegin, DateTime dateEnd, char step)
+        public Finance(Persons person, int cash, int credit, int toSave, int salary, DateTime dateBegin, DateTime dateEnd, char step)
         {
-            this.ID = ID;
+            this.person=person;
+            ID = person.id;
             this.cash = cash;
             this.credit = credit;
             this.toSave = toSave;
@@ -45,7 +46,6 @@ namespace myPet4.Models
             this.dateBegin = dateBegin;
             this.dateEnd = dateEnd;
             this.step = step;
-            //this.freeMoney = 0;
         }
         public Finance() { }
     }

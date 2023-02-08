@@ -59,11 +59,12 @@ namespace myPet4.Controllers
         public IActionResult createFinance()
         {
             currentUser.Person.Finance = new Finance();
+            currentUser.Person.Finance.person = currentUser.Person;
             return View();
         }
 
         [HttpPost]
-        public IActionResult createFinance(int ID, int cash, int credit, int toSave, int salary, DateTime dateBegin, DateTime? dateEnd, string step)
+        public IActionResult createFinance(int cash, int credit, int toSave, int salary, DateTime dateBegin, DateTime? dateEnd, string step)
         {
             DateTime d2 = dateBegin;
             char s = 'c';
@@ -93,8 +94,7 @@ namespace myPet4.Controllers
 
             if (ModelState.IsValid)
             {
-                currentUser.Person.Finance = new Finance(currentUser.Person.id, cash, credit, toSave, salary, dateBegin, d2, s);
-
+                currentUser.Person.Finance = new Finance(currentUser.Person, cash, credit, toSave, salary, dateBegin, d2, s);
                 return View("CreateItems");
             }
             else
@@ -117,7 +117,7 @@ namespace myPet4.Controllers
         public IActionResult LogonForm(int id)
         {
             Persons person = _context.Persons.Where(p => p.id == id).Include(f => f.Finance).First();
-            person.ItemPerson = _context.Item.Where(i => i.person == id).Include(t => t.Transactions).ToList();
+            person.itemPerson = _context.Item.Where(i => i.person == id).Include(t => t.transactions).ToList();
             person.income = _context.Income.Where(i => i.person == id).ToList();
 
             //currentPerson = _context.Persons.Where(p => p.id == id).Include(f => f.Finance).First();
@@ -148,7 +148,7 @@ namespace myPet4.Controllers
         [HttpPost]
         public IActionResult CreateItems(string nameof, int summ)
         {
-            currentUser.Person.ItemPerson.Add(new ItemPerson(currentUser.Person.id, nameof, summ));
+            currentUser.Person.itemPerson.Add(new ItemPerson(currentUser.Person, nameof, summ));
             return RedirectToAction();
         }
 
@@ -156,7 +156,7 @@ namespace myPet4.Controllers
         {
             _context.Add(currentUser.Person);
             _context.Finance.Add(currentUser.Person.Finance);
-            _context.Item.Add(currentUser.Person.ItemPerson.Last());
+            _context.Item.Add(currentUser.Person.itemPerson.Last());
             
             _context.SaveChanges();
 
@@ -167,5 +167,12 @@ namespace myPet4.Controllers
         {
             return View("UserForm");
         }
+
+        //public IActionResult DeleteTransaction(int id)
+        //{
+        //    Transactions t = _context.Transactions.Find(id);
+        //    _context.Remove(t);
+        //    currentUser.Person
+        //}
     }
 }

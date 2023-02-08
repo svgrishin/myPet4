@@ -8,8 +8,8 @@
         Persons GetCurrentPersonByID(int ID);
         List<ItemPerson> Items { get; set; }
         List<ItemPerson> InicializeItems(int ID);
-        List<income> Incomes { get; set; }
-        List<income> InicializeIncomes(int ID, DateOnly dateBegin, DateOnly dateEnd);
+        List<Income> Incomes { get; set; }
+        List<Income> InicializeIncomes(int ID, DateOnly dateBegin, DateOnly dateEnd);
         Finance Finance { get; set; }
         Finance InicializeFinance(int ID);
     }

@@ -23,5 +23,15 @@ namespace myPet4.Models
 
         [ForeignKey("item")]
         public virtual ItemPerson ItemPerson { get; set; }
+
+        public Transactions(ItemPerson item, DateTime dateOf, int summ, bool credit, string? description)
+        {
+            this.item = item.id;
+            this.dateOf = dateOf;
+            this.summ = summ;
+            this.credit = credit;
+            this.description = description;
+            ItemPerson= item;
+        }
     }
 }

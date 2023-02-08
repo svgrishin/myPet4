@@ -65,8 +65,12 @@
         <br />
         <table>
             <tr>
+                @{
+                    int i = 0;
+                }
                 @foreach (UserData.UserItem userItem in Model.userItems)
                 {
+
                     <td>
                         <progress value=@userItem.loaded max="100"></progress>
                         <form class="topPanels" style="height:300px">
@@ -81,63 +85,25 @@
                                 <button id="deleteItem" class="itemButton"></button>
                             </div>
                             @{
-                                List<string> s = new List<string>();
+                                List<Transactions> s = new List<Transactions>();
                             }
-                            @foreach (Transactions transaction in userItem.item.Transactions)
+                            @foreach (Transactions transaction in userItem.item.transactions)
                             {
-                                s.Add(transaction.summ.ToString() + " " + Convert.ToChar(8381).ToString());
+                                s.Add(transaction);
                             }
-                            @Html.ListBox("itemTransactions",new SelectList(s))
+                            @*@Html.ListBox(String.Concat("item", i++) ,new SelectList(s, "id","summ"))*@
+                            @Html.ListBoxFor(m=>userItem.item.transactions ,new SelectList(s, "id","summ"))
                         </form>
                     </td>
                 }
             </tr>
         </table>
     </div>
-
 </body>
 <script>
     {
-        var s = document.getElementsByName("itemTransactions");
+        var s = document.getElementsByName("userItem.item.Transactions");
         s.forEach(p => p.removeAttribute("multiple"));
         s.forEach(p => p.setAttribute("size", 2));
     }
 </script>
-
-@*<form form style="padding:15px;margin:5px">
-    <input type="date" style="padding:5px; background-color: white; border-radius:10px; min-width:250px; margin:5px; font-size:20px" />
-</form>
-
-<form style="padding:10px;margin:5px">
-    <label asp-for="Person.Finance.cash"></label>
-    <br />
-    <label style="float:right">@Model.Person.Finance.cash</label>
-</form>
-
-<form style="padding:10px;margin:5px">
-    <label asp-for="Person.Finance.freeMoney"></label>
-    <br />
-    <label style="float:right">@Model.Person.Finance.freeMoney</label>
-</form>
-<form>
-    <div style="padding:10px; background-color: white; border-radius:10px; min-width:350px; margin:5px">
-        <label asp-for="Person.Finance.credit"></label>
-        <label style="float:right">@Model.Person.Finance.credit</label>
-    </div>
-    <div style="padding:10px; background-color: white; border-radius:10px; min-width:350px; margin:5px">
-        <label asp-for="savedMoney"></label>
-        <label style="float:right">@Model.savedMoney</label>
-    </div>
-    <div style="padding:10px; background-color: white; border-radius:10px; min-width:350px; margin:5px">
-        <label asp-for="profit"></label>
-        <label style="float:right">@Model.profit</label>
-    </div>
-</form>
-<br />
-<div style="padding:10px; background-color: white; border-radius:10px; min-width:350px; margin:5px" class="form-group">
-    <label asp-for="Person.ItemPerson"></label>
-    @foreach (ItemPerson item in Model.Person.ItemPerson)
-    {
-        <label>@item.nameOf</label>
-    }
-</div>*@
