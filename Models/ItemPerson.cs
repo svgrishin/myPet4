@@ -39,5 +39,16 @@ namespace myPet4.Models
         {
             transactions = new HashSet<Transactions>();
         }
+
+        public ItemPerson(ItemPerson item)
+        {
+            this.person = item.person;
+            this.nameOf = item.nameOf;
+            this.summ = item.summ;
+            this.savings = item.savings;
+            this.id= item.id;
+            this.transactions = item.transactions;
+            this.personItem = item.personItem;
+        }
     }
 }

@@ -82,7 +82,7 @@
                                 <label style="background:none; width: 55%; display: inline-block">@userItem.item.nameOf</label>
                                 <button id="editItem" class="itemButton"></button>
                                 <button id="addItem" class="itemButton"></button>
-                                <button id="deleteItem" class="itemButton"></button>
+                                <button asp-action="DeleteTransaction" id="deleteItem" class="itemButton"></button>
                             </div>
                             @{
                                 List<Transactions> s = new List<Transactions>();
@@ -91,13 +91,17 @@
                             {
                                 s.Add(transaction);
                             }
-                            @*@Html.ListBox(String.Concat("item", i++) ,new SelectList(s, "id","summ"))*@
-                            @Html.ListBoxFor(m=>userItem.item.transactions ,new SelectList(s, "id","summ"))
+                            @*@Html.ListBoxFor(m=>m.Person.itemPerson.Select(m=>m.id) ,new SelectList(s, "id","summ"))*@
+                            @Html.ListBoxFor(m=>userItem.item.transactions, new SelectList(s, "id","summ"))
+                            @*<iframe src="@Url.Action("Test", "HomeController")"></iframe>        *@
+                            <iframe src="@Url.Action("Test", new {id = userItem.item.id})"></iframe>
+
                         </form>
                     </td>
                 }
             </tr>
         </table>
+        @*<iframe src="@Url.Action("Test", new {t = 5})"></iframe>*@
     </div>
 </body>
 <script>

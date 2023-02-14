@@ -33,5 +33,6 @@ namespace myPet4.Models
             this.description = description;
             ItemPerson= item;
         }
+        public Transactions() { }
     }
 }

@@ -10,6 +10,7 @@ using System.Collections.Immutable;
 using Microsoft.AspNetCore.Http.Features;
 using myPet4.Models;
 using myPet4.Data;
+using static myPet4.Models.UserData;
 
 
 namespace myPet4.Controllers
@@ -168,11 +169,29 @@ namespace myPet4.Controllers
             return View("UserForm");
         }
 
-        //public IActionResult DeleteTransaction(int id)
-        //{
-        //    Transactions t = _context.Transactions.Find(id);
-        //    _context.Remove(t);
-        //    currentUser.Person
-        //}
+        public IActionResult DeleteTransaction(int id)
+        {
+            var t = _context.Transactions.Find(id);
+            _context.Transactions.Remove(t);
+            var item = _context.Item.Find(t.item);
+           
+            //t.ItemPerson.transactions.Remove(t);
+            _context.SaveChanges();
+            return RedirectToAction("Test", new { id = item.id });
+        }
+
+        public IActionResult Test(int id)
+        {
+            //ItemPerson item = _context.Item.Find(id);
+            //UserData.UserItem userItem = currentUser.userItems.Find(x => x.item.id== id);
+            ItemPerson item = _context.Item.Where(m => m.id == id).Include(t => t.transactions).First();
+            List<Transactions> transactions = new List<Transactions>();
+            foreach (Transactions transaction in item.transactions)
+            {
+                transactions.Add(transaction);
+            }
+            ViewBag.Transactions = transactions;
+            return View("Test", transactions.First());
+        }
     }
 }

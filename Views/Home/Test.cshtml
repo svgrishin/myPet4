@@ -1,0 +1,16 @@
+﻿@model myPet4.Models.Transactions
+@using myPet4.Controllers
+
+@{
+    //ViewData["Title"] = "Добро пожаловть!";
+
+    Layout = "~/Views/Shared/_Layout.cshtml";
+}
+<body>
+    <form>
+        @Html.ListBoxFor(m=>m.id, new SelectList(ViewBag.Transactions, "id","summ"))
+        <input type="submit" asp-action="deleteTransaction" value="Удалить" />
+    </form>
+    @*<button asp-action="deleteTransaction" asp-route-transaction="@Model.id">Delete</button>*@
+    @*<button onclick="@Url.Action("deleteTransaction", new {id=Model.id})">Delete</button>*@
+</body>

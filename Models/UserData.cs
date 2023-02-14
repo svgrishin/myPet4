@@ -97,7 +97,7 @@ namespace myPet4.Models
             savedMoney = 0;
 
             userItems = new List<UserItem>();
-            foreach(ItemPerson item in person.itemPerson)
+            foreach (ItemPerson item in person.itemPerson)
             {
                 userItems.Add(new UserItem(item, person.Finance.dateBegin, person.Finance.dateEnd));
             }
@@ -137,6 +137,6 @@ namespace myPet4.Models
                 profit = currentIncome - currentTransactionsSumm;
             }
         }
-        public UserData(){}
+        public UserData() { }
     }
 }
