@@ -119,13 +119,7 @@ namespace myPet4.Controllers
         {
             Persons person = _context.Persons.Where(p => p.id == id).Include(f => f.Finance).First();
             person.itemPerson = _context.Item.Where(i => i.person == id).Include(t => t.transactions).ToList();
-            person.income = _context.Income.Where(i => i.person == id).ToList();
-
-            //currentPerson = _context.Persons.Where(p => p.id == id).Include(f => f.Finance).First();
-            //currentPerson.ItemPerson = _context.Item.Where(i => i.person == currentPerson.id).Include(t => t.Transactions).ToList();
-            //currentPerson.income = _context.Income.Where(i => i.person == currentPerson.id).ToList();
-
-            
+            person.income = _context.Income.Where(i => i.person == id).ToList();          
 
             currentUser = new UserData(person);
             
@@ -174,24 +168,17 @@ namespace myPet4.Controllers
             var t = _context.Transactions.Find(id);
             _context.Transactions.Remove(t);
             var item = _context.Item.Find(t.item);
-           
-            //t.ItemPerson.transactions.Remove(t);
+
             _context.SaveChanges();
-            return RedirectToAction("Test", new { id = item.id });
+            return RedirectToAction("TransactionsForm", new { id = item.id });
         }
 
-        public IActionResult Test(int id)
+        public IActionResult TransactionsForm(int id)
         {
-            //ItemPerson item = _context.Item.Find(id);
-            //UserData.UserItem userItem = currentUser.userItems.Find(x => x.item.id== id);
             ItemPerson item = _context.Item.Where(m => m.id == id).Include(t => t.transactions).First();
-            List<Transactions> transactions = new List<Transactions>();
-            foreach (Transactions transaction in item.transactions)
-            {
-                transactions.Add(transaction);
-            }
+            List<Transactions> transactions = new List<Transactions>(item.transactions);
             ViewBag.Transactions = transactions;
-            return View("Test", transactions.First());
+            return View("TransactionsForm");
         }
     }
 }

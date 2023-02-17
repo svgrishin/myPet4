@@ -16,11 +16,6 @@ namespace myPet4.Data
         public DbSet<ItemPerson> Item { get; set; }
         public DbSet<Income> Income { get; set; }
         public DbSet<Finance> Finance { get; set; }
-        //public Persons currentPerson { get; set; }
-        //public void SetCurrentPerson(Persons person)
-        //{
-        //    currentPerson = person;
-        //}
 
         protected override void OnModelCreating(ModelBuilder modelBuilder)
         {

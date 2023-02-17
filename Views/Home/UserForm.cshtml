@@ -70,10 +70,9 @@
                 }
                 @foreach (UserData.UserItem userItem in Model.userItems)
                 {
-
                     <td>
                         <progress value=@userItem.loaded max="100"></progress>
-                        <form class="topPanels" style="height:300px">
+                       @* <form class="topPanels" style="height:300px">
                             <div class="itemLabel" style="display:flex">
                                 <label>@userItem.currentSumm &#8381</label>
                                 <label style="background:none; color: grey; text-align:right; font-weight:600">@userItem.dailyBalance &#8381</label>
@@ -83,25 +82,22 @@
                                 <button id="editItem" class="itemButton"></button>
                                 <button id="addItem" class="itemButton"></button>
                                 <button asp-action="DeleteTransaction" id="deleteItem" class="itemButton"></button>
-                            </div>
-                            @{
+                            </div>*@
+                            <iframe src="@Url.Action("TransactionsForm", new {id = userItem.item.id})"></iframe>
+                            @*@{
                                 List<Transactions> s = new List<Transactions>();
                             }
                             @foreach (Transactions transaction in userItem.item.transactions)
                             {
                                 s.Add(transaction);
                             }
-                            @*@Html.ListBoxFor(m=>m.Person.itemPerson.Select(m=>m.id) ,new SelectList(s, "id","summ"))*@
-                            @Html.ListBoxFor(m=>userItem.item.transactions, new SelectList(s, "id","summ"))
-                            @*<iframe src="@Url.Action("Test", "HomeController")"></iframe>        *@
-                            <iframe src="@Url.Action("Test", new {id = userItem.item.id})"></iframe>
-
-                        </form>
+                            @Html.ListBoxFor(m=>userItem.item.transactions, new SelectList(s, "id","summ"))*@
+                            
+                        @*</form>*@
                     </td>
                 }
             </tr>
         </table>
-        @*<iframe src="@Url.Action("Test", new {t = 5})"></iframe>*@
     </div>
 </body>
 <script>

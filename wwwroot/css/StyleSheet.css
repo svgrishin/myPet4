@@ -30,7 +30,7 @@ progress {
     -webkit-appearance: none;
     width: 100%;
     height: 12px;
-    margin-bottom:5px;
+    margin-bottom: 5px;
 }
 
 body {
@@ -42,6 +42,26 @@ body {
     background: linear-gradient(45deg, #adff2fdb, dodgerblue);
     font-family: 'Segoe UI';
     font-size: 20px;
+}
+
+iframe {
+    background: none;
+    height: 350px;
+    width: 100%;
+    border: none;
+}
+
+#bodyTransactions {
+    border: initial;
+    box-sizing: initial;
+    justify-content: initial;
+    background: none;
+    height:auto;
+}
+
+.transactionsForm {
+    border-radius: 10px;
+    background: #d8fef44b;
 }
 
 table {
@@ -97,7 +117,7 @@ button, input, select {
 }
 
     .leftItems input[type=text] {
-        height: 35px; 
+        height: 35px;
     }
 
     .leftItems select {
@@ -231,12 +251,11 @@ h1 {
         background-repeat: no-repeat;
     }
 
-.itemLabel label{
-    font-size:13px;
+.itemLabel label {
+    font-size: 13px;
     margin: 5px 10px 5px 10px;
-    border-radius:10px;
+    border-radius: 10px;
     padding: 3px 5% 3px 5%;
-    
 }
 
 https://html5book.ru/css-position/
