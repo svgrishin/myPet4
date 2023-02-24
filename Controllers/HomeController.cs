@@ -98,7 +98,6 @@ namespace myPet4.Controllers
                 currentUser.Person.Finance = new Finance(currentUser.Person, cash, credit, toSave, salary, dateBegin, d2, s);
                 return View("CreateItems");
             }
-            else
             {
                 ModelState.AddModelError("UserCreatingErr", "Ошибка заполнения полей");
                 return View("createFinance");
@@ -179,6 +178,20 @@ namespace myPet4.Controllers
             List<Transactions> transactions = new List<Transactions>(item.transactions);
             ViewBag.Transactions = transactions;
             return View("TransactionsForm");
+        }
+
+        [HttpGet]
+        public IActionResult EditTransaction(int id)
+        {
+            Transactions transaction = _context.Transactions.Find(id);
+            return View(transaction);
+        }
+
+        [HttpPost]
+        public IActionResult SaveTransaction(Transactions transaction)
+        {
+            
+            return RedirectToAction("TransactionForm", transaction.item);
         }
     }
 }

@@ -1,0 +1,26 @@
+﻿@model myPet4.Models.Transactions
+@{
+    ViewData["Title"] = "Редактирование";
+    Layout = "~/Views/Shared/_Layout.cshtml";
+}
+<body>
+    <form>
+        <h1>@ViewBag.Title</h1>
+        <div asp-validation-summary="ModelOnly"></div>
+        <label asp-for = "summ" />
+        <input asp-for = "summ" />
+        <label asp-for="dateOf" />
+        <input asp-for="dateOf" />
+        <label asp-for="credit" />
+        <input asp-for="credit" />
+        <label asp-for="description" />
+        <input asp-for="description" />
+        <input type="submit" class="centerButton" value="Сохранить" />
+    </form>
+</body>
+
+@section Scripts {
+    @{
+        await Html.RenderPartialAsync("_ValidationScriptsPartial");
+    }
+}
