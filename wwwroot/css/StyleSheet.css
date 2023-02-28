@@ -56,7 +56,8 @@ iframe {
     box-sizing: initial;
     justify-content: initial;
     background: none;
-    height:auto;
+    background-color:none;
+    height: auto;
 }
 
 .transactionsForm {
@@ -133,6 +134,7 @@ button, input, select {
         width: 70%;
         margin: 0 15% 0 -5%;
     }
+
 
 
 .systemButton {
@@ -258,4 +260,57 @@ h1 {
     padding: 3px 5% 3px 5%;
 }
 
-https://html5book.ru/css-position/
+#transactionForm {
+    width: 100%;
+    height: 80%;
+    box-sizing: content-box;
+    background-color: #d8fef44b;
+    padding: 0;
+    margin: 0;
+    border-radius: 10px;
+    /*justify-self:right;*/
+    margin-left:auto;
+    margin-right:0;
+    align-items: center;  
+    min-height:none;
+    min-width:none;
+}
+
+    #transactionForm input[type=text] {
+        height: 15px;
+        width: 50%;
+        margin-right:0;
+        margin-left:auto;
+        font-size: 11px;
+    }
+
+    #transactionForm input[type=date] {
+        height: 15px;
+        width: 50%;
+        margin-right: 0;
+        margin-left: auto;
+        font-size: 11px;
+    }
+
+    #transactionForm input[type=checkbox] {
+        height: 15px;
+        width: 50%;
+        margin-right: 0;
+        margin-left: auto;
+        font-size: 11px;
+    }
+
+    #transactionForm label {
+        height: 15px;
+        width: 15%;
+        font-size: 11px;
+        margin-right: 0;
+        margin-left: auto;
+    }
+
+    #transactionForm input[type=submit] {
+        height: 30px;
+        width: 50%;
+        font-size: 11px;
+        position:center;
+    }

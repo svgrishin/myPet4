@@ -3,7 +3,7 @@
     ViewData["Title"] = "Новый профиль";
     Layout = "~/Views/Shared/_Layout.cshtml";
 }
-<body>
+
     <form asp-action="CreateUser">
         <h1>@ViewBag.Title</h1>
         <div asp-validation-summary="ModelOnly"></div>
@@ -21,7 +21,7 @@
         <br />
         <button class="systemButton centerButton" formmethod="get" asp-action="LogonForm">Назад</button>
     </form>
-</body>
+
 
 @section Scripts {
     @{

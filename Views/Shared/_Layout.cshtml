@@ -1,16 +1,13 @@
 ﻿<!DOCTYPE html>
 
-<html>
+
 <head>
     <meta name="viewport" content="width=device-width" />
     <title>@ViewBag.Title</title>
     <link rel="stylesheet" type="text/css" href="~/css/StyleSheet.css" />
 </head>
-<body>
     @RenderSection("interactiveForm", required: false)
     <br />
     @RenderBody()
     <br />
     @RenderSection("scripts", required: false)
-</body>
-</html>

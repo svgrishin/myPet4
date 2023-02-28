@@ -1,23 +1,26 @@
 ﻿@model myPet4.Models.Transactions
 @{
-    ViewData["Title"] = "Редактирование";
-    Layout = "~/Views/Shared/_Layout.cshtml";
+    Layout = "~/Views/Shared/_Transaction_layout.cshtml";
 }
-<body>
-    <form>
-        <h1>@ViewBag.Title</h1>
+    <form id="transactionForm" class="leftItems">
+      
         <div asp-validation-summary="ModelOnly"></div>
-        <label asp-for = "summ" />
-        <input asp-for = "summ" />
-        <label asp-for="dateOf" />
-        <input asp-for="dateOf" />
-        <label asp-for="credit" />
-        <input asp-for="credit" />
-        <label asp-for="description" />
-        <input asp-for="description" />
+        
+        <label asp-for="@Model.summ"></label>
+        <input type="text" asp-for="@Model.summ" />
+        <br />        
+        <label asp-for="@Model.dateOf"></label>
+        <input type="date" asp-for="@Model.dateOf" />
+        <br />
+        <label asp-for="@Model.credit"></label>
+        <input asp-for="@Model.credit" />
+        <br />
+        <label asp-for="@Model.description"></label>
+        <textarea asp-for="@Model.description"></textarea>
+        <br />
+        
         <input type="submit" class="centerButton" value="Сохранить" />
     </form>
-</body>
 
 @section Scripts {
     @{
