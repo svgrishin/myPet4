@@ -2,25 +2,63 @@
 @{
     Layout = "~/Views/Shared/_Transaction_layout.cshtml";
 }
-    <form id="transactionForm" class="leftItems">
-      
-        <div asp-validation-summary="ModelOnly"></div>
-        
-        <label asp-for="@Model.summ"></label>
-        <input type="text" asp-for="@Model.summ" />
-        <br />        
-        <label asp-for="@Model.dateOf"></label>
-        <input type="date" asp-for="@Model.dateOf" />
-        <br />
-        <label asp-for="@Model.credit"></label>
-        <input asp-for="@Model.credit" />
-        <br />
-        <label asp-for="@Model.description"></label>
-        <textarea asp-for="@Model.description"></textarea>
-        <br />
-        
+<form id="transactionForm" class="leftItems">
+    <div asp-validation-summary="ModelOnly"></div>
+    @*<table style="border:solid;border-color:black; width:stretch">
+    <tr>
+    <td style="width:100%">
+    <label asp-for="@Model.summ"></label>
+    </td>
+    <td style="width:100%">
+    <input type="text" asp-for="@Model.summ" />
+    </td>
+    </tr>
+    <tr>
+    <td style="width:100%">
+    <label asp-for="@Model.dateOf"></label>
+    </td>
+    <td style="width:100%">
+    <input type="date" asp-for="@Model.dateOf" />
+    </td>
+    </tr>
+    <tr>
+    <td style="width:70%">
+    <label asp-for="@Model.credit"></label>
+    </td>
+    <td style="width:30%">
+    <input asp-for="@Model.credit" />
+    </td>
+    </tr>
+    </table>*@
+
+
+    <label asp-for="@Model.summ"></label>
+
+    <input type="text" asp-for="@Model.summ" />
+    <br />
+
+    <label asp-for="@Model.dateOf"></label>
+
+    <input type="date" asp-for="@Model.dateOf" />
+    <br />
+
+    <input asp-for="@Model.credit" style="width:15%" />
+
+    <label asp-for="@Model.credit" style="width:75%"></label>
+
+    <br />
+
+    <label asp-for="@Model.description"></label>
+    <br />
+    <textarea asp-for="@Model.description"></textarea>
+    <br />
+    <div>
         <input type="submit" class="centerButton" value="Сохранить" />
-    </form>
+        <button>Отмена</button>
+
+    </div>
+
+</form>
 
 @section Scripts {
     @{
