@@ -2,49 +2,23 @@
 @{
     Layout = "~/Views/Shared/_Transaction_layout.cshtml";
 }
-<form id="transactionForm" class="leftItems">
+<form asp-action="SaveTransaction" id="transactionForm" class="leftItems">
     <div asp-validation-summary="ModelOnly"></div>
-    @*<table style="border:solid;border-color:black; width:stretch">
-    <tr>
-    <td style="width:100%">
+
+    <input asp-for="@Model.item" style="visibility:hidden" />
+    <br />
     <label asp-for="@Model.summ"></label>
-    </td>
-    <td style="width:100%">
+
     <input type="text" asp-for="@Model.summ" />
-    </td>
-    </tr>
-    <tr>
-    <td style="width:100%">
+    <br />
+
     <label asp-for="@Model.dateOf"></label>
-    </td>
-    <td style="width:100%">
+
     <input type="date" asp-for="@Model.dateOf" />
-    </td>
-    </tr>
-    <tr>
-    <td style="width:70%">
-    <label asp-for="@Model.credit"></label>
-    </td>
-    <td style="width:30%">
+    <br />
     <input asp-for="@Model.credit" />
-    </td>
-    </tr>
-    </table>*@
 
-
-    <label asp-for="@Model.summ"></label>
-
-    <input type="text" asp-for="@Model.summ" />
-    <br />
-
-    <label asp-for="@Model.dateOf"></label>
-
-    <input type="date" asp-for="@Model.dateOf" />
-    <br />
-
-    <input asp-for="@Model.credit" style="width:15%" />
-
-    <label asp-for="@Model.credit" style="width:75%"></label>
+    <label asp-for="@Model.credit" style="width:80%"></label>
 
     <br />
 
@@ -52,10 +26,10 @@
     <br />
     <textarea asp-for="@Model.description"></textarea>
     <br />
+    <hr />
     <div>
         <input type="submit" class="centerButton" value="Сохранить" />
-        <button>Отмена</button>
-
+        <button class="systemButton">Отмена</button>
     </div>
 
 </form>

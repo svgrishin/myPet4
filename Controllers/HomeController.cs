@@ -184,14 +184,14 @@ namespace myPet4.Controllers
         public IActionResult EditTransaction(int id)
         {
             Transactions transaction = _context.Transactions.Find(id);
+            ViewBag.item = transaction.item;
             return View(transaction);
         }
 
         [HttpPost]
         public IActionResult SaveTransaction(Transactions transaction)
         {
-            
-            return RedirectToAction("TransactionForm", transaction.item);
+            return RedirectToAction("TransactionForm", new { id = transaction.item });
         }
     }
 }

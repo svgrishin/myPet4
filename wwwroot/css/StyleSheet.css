@@ -280,18 +280,19 @@ h1 {
         margin-right: 0;
         margin-left: auto;
         font-size: 11px;
-        width:60%;
+        width: 60%;
+        background: #ffffff7c;
     }
 
     #transactionForm textarea {
-        height: 55px;
+        height: 30px;
         margin-right: 5%;
         margin-left: 5%;
         font-size: 11px;
         width: 88%;
         resize: none;
         border-radius: 10px;
-        background-color: #ffffff4a;
+        background: #ffffff7c;
     }
 
     #transactionForm input[type=date] {
@@ -299,37 +300,37 @@ h1 {
         margin-right: 0;
         margin-left: auto;
         font-size: 11px;
-        width:60%;
+        width: 60%;
+        background: #ffffff7c;
     }
 
     #transactionForm input[type=checkbox] {
         height: 15px;
-        margin-left: 0;
-        position:center;
+        margin-left: 10px;
+        position: center;
     }
 
     #transactionForm label {
         height: 15px;
         font-size: 11px;
         margin-left: 5px;
-        margin-right:0;
-        display:inline-block;
-        width:25%;
-        
+        margin-right: 0;
+        display: inline-block;
+        width: 25%;
     }
 
     #transactionForm input[type=submit] {
         height: 30px;
         width: 35%;
         font-size: 11px;
-        margin-left:15%;
-        margin-right:unset;
+        margin-left: 15%;
+        margin-right: unset;
     }
 
     #transactionForm button {
         height: 30px;
         width: 35%;
         font-size: 11px;
-        margin-right:10%;
-        margin-left:unset;
+        margin-right: 10%;
+        margin-left: unset;
     }
