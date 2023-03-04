@@ -5,7 +5,7 @@
 <form asp-action="SaveTransaction" id="transactionForm" class="leftItems">
     <div asp-validation-summary="ModelOnly"></div>
 
-    <input asp-for="@Model.item" style="visibility:hidden" />
+    @*<input asp-for="@Model.item" style="visibility:hidden" />*@
     <br />
     <label asp-for="@Model.summ"></label>
 
@@ -31,6 +31,10 @@
         <input type="submit" class="centerButton" value="Сохранить" />
         <button class="systemButton">Отмена</button>
     </div>
+
+
+    @*<button asp-action="@Url.Action("Test", "HomeController", new {id = 4, x = 5}))" class="systemButton">test</button>*@
+    <button asp-action="Test" asp-route-id = "4" class="systemButton">test</button>
 
 </form>
 

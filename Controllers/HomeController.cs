@@ -193,5 +193,11 @@ namespace myPet4.Controllers
         {
             return RedirectToAction("TransactionForm", new { id = transaction.item });
         }
+
+        //public IActionResult Test(int id, int x)
+        public IActionResult Test(int id)
+        {
+            return View("Index");
+        }
     }
 }
