@@ -189,9 +189,11 @@ namespace myPet4.Controllers
         }
 
         [HttpPost]
-        public IActionResult SaveTransaction(Transactions transaction)
+        public IActionResult SaveTransaction(Transactions newTransaction)
         {
-            return RedirectToAction("TransactionForm", new { id = transaction.item });
+            _context.Transactions.Update(newTransaction);
+            _context.SaveChanges();
+            return RedirectToAction("TransactionsForm", new { id = newTransaction.item });
         }
 
         //public IActionResult Test(int id, int x)
