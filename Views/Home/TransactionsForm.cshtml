@@ -1,4 +1,5 @@
-﻿@model myPet4.Models.Transactions
+﻿@page
+@model myPet4.Models.Transactions
 @using myPet4.Models
 @using myPet4.Controllers
 
@@ -15,7 +16,9 @@
             <label style="background:none; width: 55%; display: inline-block">@ViewBag.itemName</label>
             <button id="addItem" class="itemButton"></button>
             <button id="editItem" asp-action="EditTransaction" class="itemButton"></button>
-            <button id="deleteItem" asp-action="deleteTransaction" class="itemButton"></button>
+            @*<button id="deleteItem" asp-action="DeleteTransaction" class="itemButton"></button>*@
+            
+            <button id="deleteItem" asp-action="DeleteTransaction" class="itemButton"></button>
         </div>
         @Html.ListBoxFor(m=>m.id, new SelectList(ViewBag.Transactions, "id","summ"))
     </form>

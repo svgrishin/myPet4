@@ -162,21 +162,12 @@ namespace myPet4.Controllers
             return View("UserForm");
         }
 
-        public IActionResult DeleteTransaction(int id)
-        {
-            var t = _context.Transactions.Find(id);
-            _context.Transactions.Remove(t);
-            var item = _context.Item.Find(t.item);
-
-            _context.SaveChanges();
-            return RedirectToAction("TransactionsForm", new { id = item.id });
-        }
-
         public IActionResult TransactionsForm(int id)
         {
             ItemPerson item = _context.Item.Where(m => m.id == id).Include(t => t.transactions).First();
             List<Transactions> transactions = new List<Transactions>(item.transactions);
             ViewBag.Transactions = transactions;
+            
             return View("TransactionsForm");
         }
 
@@ -196,10 +187,14 @@ namespace myPet4.Controllers
             return RedirectToAction("TransactionsForm", new { id = newTransaction.item });
         }
 
-        //public IActionResult Test(int id, int x)
-        public IActionResult Test(int id)
+        public IActionResult DeleteTransaction(int id)
         {
-            return View("Index");
+            Transactions transaction = _context.Transactions.Find(id);
+
+            _context.Transactions.Remove(transaction);
+            _context.SaveChanges();
+
+            return RedirectToAction("TransactionsForm", new { id = transaction.item });
         }
     }
 }
