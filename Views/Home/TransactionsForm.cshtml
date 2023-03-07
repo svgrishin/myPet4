@@ -1,26 +1,27 @@
-﻿@page
-@model myPet4.Models.Transactions
+﻿@model myPet4.Models.ItemPerson
 @using myPet4.Models
 @using myPet4.Controllers
 
 @{
     Layout = "~/Views/Shared/_Layout.cshtml";
 }
+
+
+
 <body id="bodyTransactions">
-    <form class="topPanels" style="height:300px; background:none">
+    <form asp-action="AddTransaction" class="topPanels" style="height:300px; background:none">
+        <var itemscope id="4"></var>
         <div class="itemLabel" style="display:flex">
             <label>@ViewBag.currentSumm &#8381</label>
             <label style="background:none; color: grey; text-align:right; font-weight:600">@ViewBag.dailyBalance &#8381</label>
         </div>
         <div style="display:flex">
             <label style="background:none; width: 55%; display: inline-block">@ViewBag.itemName</label>
-            <button id="addItem" class="itemButton"></button>
+            <input type="submit" id="addItem" asp-action="AddTransaction" asp-route-id="@Model.id" class="itemButton" />
             <button id="editItem" asp-action="EditTransaction" class="itemButton"></button>
-            @*<button id="deleteItem" asp-action="DeleteTransaction" class="itemButton"></button>*@
-            
             <button id="deleteItem" asp-action="DeleteTransaction" class="itemButton"></button>
         </div>
-        @Html.ListBoxFor(m=>m.id, new SelectList(ViewBag.Transactions, "id","summ"))
+        @Html.ListBox("transactionId", new SelectList(ViewBag.Transactions, "id","summ"))
     </form>
 </body>
 

@@ -157,24 +157,29 @@ namespace myPet4.Controllers
             return RedirectToAction("UserForm");
         }
 
-        public IActionResult AddTransaction(ItemPerson item, Transactions transaction)
+        public IActionResult AddTransaction(int id)
         {
+            
             return View("UserForm");
         }
 
-        public IActionResult TransactionsForm(int id)
+        public IActionResult TransactionsForm(int i)
         {
-            ItemPerson item = _context.Item.Where(m => m.id == id).Include(t => t.transactions).First();
-            List<Transactions> transactions = new List<Transactions>(item.transactions);
-            ViewBag.Transactions = transactions;
+            //ItemPerson item = new ItemPerson(_context.Item.Where(m => m.id == id).Include(t => t.transactions).First());
             
-            return View("TransactionsForm");
+            List<Transactions> transactions = new List<Transactions>(currentUser.userItems[i].item.transactions);
+
+            //SelectList transactions = new SelectList(transactionsList, "id", "summ");
+
+            ViewBag.Transactions = transactions;
+
+            return View("TransactionsForm", currentUser.userItems[i].item);
         }
 
         [HttpGet]
-        public IActionResult EditTransaction(int id)
+        public IActionResult EditTransaction(int transactionId)
         {
-            Transactions transaction = _context.Transactions.Find(id);
+            Transactions transaction = _context.Transactions.Find(transactionId);
             ViewBag.item = transaction.item;
             return View(transaction);
         }
@@ -187,9 +192,9 @@ namespace myPet4.Controllers
             return RedirectToAction("TransactionsForm", new { id = newTransaction.item });
         }
 
-        public IActionResult DeleteTransaction(int id)
+        public IActionResult DeleteTransaction(int transactionId)
         {
-            Transactions transaction = _context.Transactions.Find(id);
+            Transactions transaction = _context.Transactions.Find(transactionId);
 
             _context.Transactions.Remove(transaction);
             _context.SaveChanges();
