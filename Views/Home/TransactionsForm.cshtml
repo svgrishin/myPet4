@@ -15,7 +15,7 @@
             <label style="background:none; color: grey; text-align:right; font-weight:600">@ViewBag.dailyBalance &#8381</label>
         </div>
         <div style="display:flex">
-            <label style="background:none; width: 55%; display: inline-block">@ViewBag.itemName</label>
+            <label style="background:none; width: 55%; display: inline-block">@Model.nameOf</label>
             <input value="" type="submit" id="addItem" asp-action="AddTransaction" asp-route-id="@Model.id" class="itemButton" />
             <button id="editItem" asp-action="EditTransaction" class="itemButton"></button>
             <button id="deleteItem" asp-action="DeleteTransaction" class="itemButton"></button>
@@ -26,7 +26,7 @@
 
 <script>
     {
-        var s = document.getElementsByName("id");
+        var s = document.getElementsByName("transactionId");
         s.forEach(p => p.removeAttribute("multiple"));
         s.forEach(p => p.setAttribute("size", 2));
     }
