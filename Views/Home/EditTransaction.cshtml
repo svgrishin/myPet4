@@ -26,7 +26,7 @@
     <hr />
     <div>
         <input asp-action="SaveTransaction" asp-route-id = "@Model.id" asp-route-item="@Model.item" type="submit" class="centerButton" value="Сохранить" />
-        <button class="systemButton">Отмена</button>
+        <button class="systemButton" asp-action="TransactionsForm" asp-route-id="@Model.item">Отмена</button>
     </div>
 </form>
 

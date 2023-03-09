@@ -20,7 +20,6 @@
             <button id="editItem" asp-action="EditTransaction" class="itemButton"></button>
             <button id="deleteItem" asp-action="DeleteTransaction" class="itemButton"></button>
         </div>
-        @*@Html.ListBox("transactionId", new SelectList(ViewBag.Transactions, "id","summ"))*@
         @Html.ListBox("transactionId", new SelectList(Model.transactions, "id","summ"))
     </form>
 </body>

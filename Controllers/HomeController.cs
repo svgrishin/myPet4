@@ -164,28 +164,11 @@ namespace myPet4.Controllers
             return View("EditTransaction", newTransaction);
         }
 
-        //public IActionResult TransactionsForm(int i)
         public IActionResult TransactionsForm(int id)
         {
             ItemPerson item = new ItemPerson(_context.Item.Where(m => m.id == id).Include(t => t.transactions).First());
-
-            //<Transactions> transactions = new List<Transactions>(currentUser.userItems[i].item.transactions);
-
-            //SelectList transactions = new SelectList(transactionsList, "id", "summ");
-
-            //ViewBag.Transactions = transactions;
-
-            //return View("TransactionsForm", currentUser.userItems[i].item);
-            
             return View("TransactionsForm", item);
         }
-
-        //[HttpPost]
-        //public IActionResult TransactionFrom(int transactionId)
-        //{
-        //    Transactions transaction = _context.Transactions.Find(transactionId);
-        //    return View("TransactionForm",transaction);
-        //}
 
         public IActionResult EditTransaction(int transactionId)
         {
