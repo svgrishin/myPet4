@@ -118,11 +118,11 @@ namespace myPet4.Controllers
         {
             Persons person = _context.Persons.Where(p => p.id == id).Include(f => f.Finance).First();
             person.itemPerson = _context.Item.Where(i => i.person == id).Include(t => t.transactions).ToList();
-            person.income = _context.Income.Where(i => i.person == id).ToList();          
+            person.income = _context.Income.Where(i => i.person == id).ToList();
 
             currentUser = new UserData(person);
-            
-            
+
+
 
             return RedirectToAction("UserForm");
         }
@@ -151,7 +151,7 @@ namespace myPet4.Controllers
             _context.Add(currentUser.Person);
             _context.Finance.Add(currentUser.Person.Finance);
             _context.Item.Add(currentUser.Person.itemPerson.Last());
-            
+
             _context.SaveChanges();
 
             return RedirectToAction("UserForm");
@@ -159,28 +159,37 @@ namespace myPet4.Controllers
 
         public IActionResult AddTransaction(int id)
         {
-            
-            return View("UserForm");
+            Transactions newTransaction = new Transactions();
+            newTransaction.item = id;
+            return View("EditTransaction", newTransaction);
         }
 
-        public IActionResult TransactionsForm(int i)
+        //public IActionResult TransactionsForm(int i)
+        public IActionResult TransactionsForm(int id)
         {
-            //ItemPerson item = new ItemPerson(_context.Item.Where(m => m.id == id).Include(t => t.transactions).First());
-            
-            List<Transactions> transactions = new List<Transactions>(currentUser.userItems[i].item.transactions);
+            ItemPerson item = new ItemPerson(_context.Item.Where(m => m.id == id).Include(t => t.transactions).First());
+
+            //<Transactions> transactions = new List<Transactions>(currentUser.userItems[i].item.transactions);
 
             //SelectList transactions = new SelectList(transactionsList, "id", "summ");
 
-            ViewBag.Transactions = transactions;
+            //ViewBag.Transactions = transactions;
 
-            return View("TransactionsForm", currentUser.userItems[i].item);
+            //return View("TransactionsForm", currentUser.userItems[i].item);
+            
+            return View("TransactionsForm", item);
         }
 
-        [HttpGet]
+        //[HttpPost]
+        //public IActionResult TransactionFrom(int transactionId)
+        //{
+        //    Transactions transaction = _context.Transactions.Find(transactionId);
+        //    return View("TransactionForm",transaction);
+        //}
+
         public IActionResult EditTransaction(int transactionId)
         {
             Transactions transaction = _context.Transactions.Find(transactionId);
-            ViewBag.item = transaction.item;
             return View(transaction);
         }
 

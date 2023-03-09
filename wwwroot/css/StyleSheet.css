@@ -234,6 +234,7 @@ h1 {
 #addItem {
     width: 25%;
     background-image: url("../icon/add_small.png");
+    height: 25px;
 }
 
     #addItem:hover {
