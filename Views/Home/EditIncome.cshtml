@@ -1,0 +1,25 @@
+﻿@model myPet4.Models.Income
+@{
+    Layout = "~/Views/Shared/_Transaction_layout.cshtml";
+}
+<form asp-action="SaveIncome" id="interactiveForm" class="leftItems">
+    <div asp-validation-summary="ModelOnly"></div>
+    
+    <label asp-for="@Model.summ"></label>
+    <input type="text" asp-for="@Model.summ" />
+    <br />
+    <label asp-for="@Model.dateOf"></label>
+    <input type="date" asp-for="@Model.dateOf" />
+    <br />
+    <hr />
+    <div>
+        <input asp-action="SaveIncome" asp-route-id="@Model.id" asp-route-item="@Model.person" type="submit" class="centerButton" value="Сохранить" />
+        <button class="systemButton" asp-action="IncomeForm" asp-route-id="@Model.person">Отмена</button>
+    </div>
+</form>
+
+@section Scripts {
+    @{
+        await Html.RenderPartialAsync("_ValidationScriptsPartial");
+    }
+}

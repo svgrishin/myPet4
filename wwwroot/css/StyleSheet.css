@@ -261,7 +261,7 @@ h1 {
     padding: 3px 5% 3px 5%;
 }
 
-#transactionForm {
+#interactiveForm {
     width: 100%;
     box-sizing: content-box;
     background-color: #d8fef44b;
@@ -276,7 +276,7 @@ h1 {
     max-height: 65vh;
 }
 
-    #transactionForm input[type=text] {
+    #interactiveForm input[type=text] {
         height: 15px;
         margin-right: 0;
         margin-left: auto;
@@ -285,7 +285,7 @@ h1 {
         background: #ffffff7c;
     }
 
-    #transactionForm textarea {
+    #interactiveForm textarea {
         height: 30px;
         margin-right: 5%;
         margin-left: 5%;
@@ -296,7 +296,7 @@ h1 {
         background: #ffffff7c;
     }
 
-    #transactionForm input[type=date] {
+    #interactiveForm input[type=date] {
         height: 15px;
         margin-right: 0;
         margin-left: auto;
@@ -305,13 +305,13 @@ h1 {
         background: #ffffff7c;
     }
 
-    #transactionForm input[type=checkbox] {
+    #interactiveForm input[type=checkbox] {
         height: 15px;
         margin-left: 10px;
         position: center;
     }
 
-    #transactionForm label {
+    #interactiveForm label {
         height: 15px;
         font-size: 11px;
         margin-left: 5px;
@@ -320,7 +320,7 @@ h1 {
         width: 25%;
     }
 
-    #transactionForm input[type=submit] {
+    #interactiveForm input[type=submit] {
         height: 30px;
         width: 35%;
         font-size: 11px;
@@ -328,7 +328,7 @@ h1 {
         margin-right: unset;
     }
 
-    #transactionForm button {
+    #interactiveForm button {
         height: 30px;
         width: 35%;
         font-size: 11px;

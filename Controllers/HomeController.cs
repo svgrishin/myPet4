@@ -122,8 +122,6 @@ namespace myPet4.Controllers
 
             currentUser = new UserData(person);
 
-
-
             return RedirectToAction("UserForm");
         }
 
@@ -165,6 +163,14 @@ namespace myPet4.Controllers
             return View("EditTransaction", newTransaction);
         }
 
+        public IActionResult AddIncome(int id)
+        {
+            Income newIncome = new Income();
+            newIncome.person = id;
+            newIncome.dateOf = DateTime.Now.Date;
+            return View("EditIncome", newIncome);
+        }
+
         public IActionResult TransactionsForm(int id)
         {
             ItemPerson item = new ItemPerson(_context.Item.Where(m => m.id == id).Include(t => t.transactions).First());
@@ -174,10 +180,26 @@ namespace myPet4.Controllers
             return View(userItem);
         }
 
+        public IActionResult IncomeForm()
+        {
+            //ItemPerson item = new ItemPerson(_context.Item.Where(m => m.id == id).Include(t => t.transactions).First());
+            //Income income = new Income(currentUser.Person.income.Where(income => income.person ==id).First());
+            //UserItem userItem = currentUser.userItems.Find(userItem => userItem.item.id == item.id);
+            //userItem.item = item;
+
+            return View(currentUser);
+        }
+
         public IActionResult EditTransaction(int transactionId)
         {
             Transactions transaction = _context.Transactions.Find(transactionId);
             return View(transaction);
+        }
+        public IActionResult EditIncome(int incomeId)
+        {
+            //Transactions transaction = _context.Transactions.Find(transactionId);
+            Income income = currentUser.Person.income.Where(income=>income.id==incomeId).First();
+            return View(income);
         }
 
         [HttpPost]
@@ -186,6 +208,16 @@ namespace myPet4.Controllers
             _context.Transactions.Update(newTransaction);
             _context.SaveChanges();
             return RedirectToAction("TransactionsForm", new { id = newTransaction.item });
+        }
+
+        [HttpPost]
+        public IActionResult SaveIncome(Income newIncome)
+        {
+            newIncome.person = currentUser.Person.id;
+            _context.Income.Update(newIncome);
+            _context.SaveChanges();
+            currentUser.Person.income.Add(newIncome);
+            return RedirectToAction("IncomeForm");
         }
 
         public IActionResult DeleteTransaction(int transactionId)

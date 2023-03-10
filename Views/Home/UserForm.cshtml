@@ -9,7 +9,7 @@
 
 <body>
     <div>
-        <table style="border:solid;border-color:black">
+        <table>
             <tr>
                 <td>
                     <form class="topPanels" style="vertical-align:bottom">
@@ -65,6 +65,10 @@
         <br />
         <table>
             <tr>
+                <td style="min-width: 210px">
+                    <progress value=@Model.currentIncome max=@Model.Person.Finance.salary></progress>
+                    <iframe src="@Url.Action("IncomeForm", new{id=Model.Person.id})"></iframe>
+                </td>
                 @foreach (UserData.UserItem userItem in Model.userItems)
                 {
                     <td style="min-width: 210px">
