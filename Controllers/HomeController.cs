@@ -167,12 +167,11 @@ namespace myPet4.Controllers
 
         public IActionResult TransactionsForm(int id)
         {
-            
             ItemPerson item = new ItemPerson(_context.Item.Where(m => m.id == id).Include(t => t.transactions).First());
             UserItem userItem = currentUser.userItems.Find(userItem => userItem.item.id == item.id);
-            ViewBag.dailyBalance = userItem.dailyBalance;
+            userItem.item = item;
 
-            return View("TransactionsForm", item);
+            return View(userItem);
         }
 
         public IActionResult EditTransaction(int transactionId)
