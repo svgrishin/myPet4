@@ -173,7 +173,7 @@ namespace myPet4.Controllers
 
         public IActionResult TransactionsForm(int id)
         {
-            ItemPerson item = new ItemPerson(_context.Item.Where(m => m.id == id).Include(t => t.transactions).First());
+            ItemPerson item = new ItemPerson(_context.Item.Where(m => m.id == id).Include(t => t.transactions.Where(d=>d.dateOf>=currentUser.Person.Finance.dateBegin)).First());
             UserItem userItem = currentUser.userItems.Find(userItem => userItem.item.id == item.id);
             userItem.item = item;
 
@@ -182,11 +182,6 @@ namespace myPet4.Controllers
 
         public IActionResult IncomeForm()
         {
-            //ItemPerson item = new ItemPerson(_context.Item.Where(m => m.id == id).Include(t => t.transactions).First());
-            //Income income = new Income(currentUser.Person.income.Where(income => income.person ==id).First());
-            //UserItem userItem = currentUser.userItems.Find(userItem => userItem.item.id == item.id);
-            //userItem.item = item;
-
             return View(currentUser);
         }
 
@@ -207,6 +202,13 @@ namespace myPet4.Controllers
         {
             _context.Transactions.Update(newTransaction);
             _context.SaveChanges();
+
+            //ItemPerson p = _context.Item.Find(newTransaction.item);
+            
+
+            //var v = currentUser.userItems.Where(m=>m.item==p).FirstOrDefault();
+
+
             return RedirectToAction("TransactionsForm", new { id = newTransaction.item });
         }
 

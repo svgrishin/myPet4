@@ -46,18 +46,23 @@ namespace myPet4.Models
             /// </summary>
             public decimal dailyBalance { get; set; }
             /// <summary>
-            /// % исчерпания статьи расхода
+            /// сумма расхода по статье за период
             /// </summary>
             public int loaded { get; set; }
             public UserItem(ItemPerson item, DateTime dateBegin, DateTime dateEnd)
             {
-                this.item = item;
-                currentSumm = item.summ / dateEnd.Subtract(DateTime.Today).Days;
+                DateTime date1 = new DateTime(2023, 3, 12);
 
-                decimal d = 0;
+                this.item = item;
+
+                //currentSumm = item.summ / dateEnd.Subtract(DateTime.Today).Days;
+                currentSumm = (item.summ) / dateEnd.Subtract(date1).Days + 1;
+
+                int d = 0;
                 try
                 {
-                    foreach (Transactions t in item.transactions.Where(p => p.dateOf == DateTime.Today))
+                    //foreach (Transactions t in item.transactions.Where(p => p.dateOf == DateTime.Today))
+                    foreach (Transactions t in item.transactions.Where(transaction=>transaction.dateOf == date1))
                     {
                         d += t.summ;
                     }
@@ -65,19 +70,22 @@ namespace myPet4.Models
                 catch { }
                 dailyBalance = currentSumm - d;
 
-                decimal p = 0;
+                //int p = 0;
                 try
                 {
-                    foreach (Transactions t in item.transactions.Where(p => p.dateOf >= dateBegin))
+                    foreach (Transactions t in item.transactions.Where(transaction=>transaction.dateOf >= dateBegin))
                     {
-                        p += t.summ;
+                        loaded += t.summ;
                     }
-                    loaded = (int)(p / item.summ);
+                    //loaded = (int)(p / item.summ);
+                    //loaded = p;
                 }
                 catch
                 {
                     loaded = 0;
                 }
+
+                
             }
         }
         /// <summary>
