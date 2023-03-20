@@ -4,6 +4,7 @@ using NuGet.Packaging;
 using System;
 using System.ComponentModel;
 using System.Linq.Expressions;
+using static myPet4.Models.UserData;
 
 namespace myPet4.Models
 {
@@ -51,24 +52,11 @@ namespace myPet4.Models
             public int loaded { get; set; }
             public UserItem(ItemPerson item, DateTime dateBegin, DateTime dateEnd)
             {
+                loaded= 0;
+                
                 DateTime date1 = new DateTime(2023, 3, 12);
 
                 this.item = item;
-
-                //currentSumm = item.summ / dateEnd.Subtract(DateTime.Today).Days;
-                currentSumm = (item.summ) / dateEnd.Subtract(date1).Days + 1;
-
-                int d = 0;
-                try
-                {
-                    //foreach (Transactions t in item.transactions.Where(p => p.dateOf == DateTime.Today))
-                    foreach (Transactions t in item.transactions.Where(transaction=>transaction.dateOf == date1))
-                    {
-                        d += t.summ;
-                    }
-                }
-                catch { }
-                dailyBalance = currentSumm - d;
 
                 //int p = 0;
                 try
@@ -77,15 +65,30 @@ namespace myPet4.Models
                     {
                         loaded += t.summ;
                     }
-                    //loaded = (int)(p / item.summ);
-                    //loaded = p;
                 }
                 catch
                 {
                     loaded = 0;
                 }
 
-                
+                ////currentSumm = item.summ / dateEnd.Subtract(DateTime.Today).Days;
+                //currentSumm = (item.summ-loaded) / dateEnd.Subtract(date1).Days + 1;
+
+                int d = 0;
+                try
+                {
+                    //foreach (Transactions t in item.transactions.Where(p => p.dateOf == DateTime.Today))
+                    foreach (Transactions t in item.transactions.Where(transaction => transaction.dateOf == date1))
+                    {
+                        d += t.summ;
+                    }
+                }
+                catch { }
+
+                int balanceIncToday = item.summ - loaded;
+                int balanceExcToday = balanceIncToday + d;
+                currentSumm = (balanceIncToday) / (dateEnd.Subtract(date1).Days + 1);
+                dailyBalance = (balanceExcToday) / (dateEnd.Subtract(date1).Days + 1) - d;
             }
         }
         /// <summary>
@@ -147,31 +150,42 @@ namespace myPet4.Models
         }
         public UserData() { }
         
-        public void UpdateUser()
+        public void UpdateItem(UserItem userItem)
         {
-            List<Income> currentIncomes = Person.income.Where(i => i.dateOf >= Person.Finance.dateBegin && i.dateOf <= Person.Finance.dateEnd).ToList();
-            if (currentIncomes.Count > 0)
+            DateTime date1 = new DateTime(2023, 3, 12);
+
+
+            userItem.loaded = 0;
+            try
             {
-                foreach (Income i in currentIncomes)
+                foreach (Transactions t in userItem.item.transactions.Where(transaction => transaction.dateOf >= Person.Finance.dateBegin))
                 {
-                    currentIncome += i.summ;
+                    userItem.loaded += t.summ;
                 }
-                toSaveByPeriod = currentIncome * (Person.Finance.toSave / Person.Finance.salary);
+            }
+            catch
+            {
+                userItem.loaded = 0;
             }
 
-            currentTransactionsSumm = 0;
-            List<Transactions> currentTransactions = new List<Transactions>();
-            foreach (ItemPerson i in Person.itemPerson)
+            int d = 0;
+            try
             {
-                if (i.transactions != null)
+                //foreach (Transactions t in item.transactions.Where(p => p.dateOf == DateTime.Today))
+                foreach (Transactions t in userItem.item.transactions.Where(transaction => transaction.dateOf == date1))
                 {
-                    currentTransactions.AddRange(i.transactions.Where(i => i.dateOf >= Person.Finance.dateBegin && i.dateOf <= Person.Finance.dateEnd));
-                    foreach (Transactions t in currentTransactions)
-                    {
-                        currentTransactionsSumm += t.summ;
-                    }
+                    d += t.summ;
                 }
             }
+            catch { }
+
+            //currentSumm = item.summ / dateEnd.Subtract(DateTime.Today).Days;
+
+
+            int balanceIncToday = userItem.item.summ - userItem.loaded;
+            int balanceExcToday = balanceIncToday + d;
+            userItem.currentSumm = (balanceIncToday) / (Person.Finance.dateEnd.Subtract(date1).Days + 1);
+            userItem.dailyBalance = (balanceExcToday) / (Person.Finance.dateEnd.Subtract(date1).Days + 1) - d;
         }
     }
 

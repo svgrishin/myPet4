@@ -10,6 +10,7 @@
 
 <body id="bodyTransactions">
     <form asp-action="AddIncome" class="topPanels" style="height:300px; background:none">
+        <progress value=@Model.currentIncome max=@Model.Person.Finance.salary></progress>
         <div class="itemLabel" style="display:flex">
             <label>@Model.currentIncome &#8381</label>
             <label style="background:none; color: grey; text-align:right; font-weight:600">@Model.Person.Finance.freeMoney &#8381</label>

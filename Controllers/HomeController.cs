@@ -175,7 +175,6 @@ namespace myPet4.Controllers
         {
             ItemPerson item = new ItemPerson(_context.Item.Where(m => m.id == id).Include(t => t.transactions.Where(d=>d.dateOf>=currentUser.Person.Finance.dateBegin)).First());
             UserItem userItem = currentUser.userItems.Find(userItem => userItem.item.id == item.id);
-            //userItem.item = new ItemPerson(item);
             userItem.item = item;
 
             return View(userItem);
@@ -193,7 +192,6 @@ namespace myPet4.Controllers
         }
         public IActionResult EditIncome(int incomeId)
         {
-            //Transactions transaction = _context.Transactions.Find(transactionId);
             Income income = currentUser.Person.income.Where(income=>income.id==incomeId).First();
             return View(income);
         }
@@ -205,11 +203,11 @@ namespace myPet4.Controllers
             _context.SaveChanges();
 
             currentUser.userItems.Where(m => m.item.id == newTransaction.item).First().item.transactions.Add(newTransaction);
+            
+            //Подумать, может просто прирастить значение по событию сохранения
+            currentUser.UpdateItem(currentUser.userItems.Where(m => m.item.id == newTransaction.item).First());
 
-
-
-
-            return RedirectToAction("TransactionsForm", new { id = newTransaction.item });
+            return View("TransactionsForm", currentUser.userItems.Where(m => m.item.id == newTransaction.item).First());
         }
 
         [HttpPost]
@@ -229,7 +227,7 @@ namespace myPet4.Controllers
             _context.Transactions.Remove(transaction);
             _context.SaveChanges();
 
-            
+            //добавить механизм обновления UserData. Подумать, может просто отнять значения
 
             return RedirectToAction("TransactionsForm", new { id = transaction.item });
         }
