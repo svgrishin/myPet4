@@ -175,6 +175,7 @@ namespace myPet4.Controllers
         {
             ItemPerson item = new ItemPerson(_context.Item.Where(m => m.id == id).Include(t => t.transactions.Where(d=>d.dateOf>=currentUser.Person.Finance.dateBegin)).First());
             UserItem userItem = currentUser.userItems.Find(userItem => userItem.item.id == item.id);
+            //userItem.item = new ItemPerson(item);
             userItem.item = item;
 
             return View(userItem);
@@ -203,10 +204,9 @@ namespace myPet4.Controllers
             _context.Transactions.Update(newTransaction);
             _context.SaveChanges();
 
-            //ItemPerson p = _context.Item.Find(newTransaction.item);
-            
+            currentUser.userItems.Where(m => m.item.id == newTransaction.item).First().item.transactions.Add(newTransaction);
 
-            //var v = currentUser.userItems.Where(m=>m.item==p).FirstOrDefault();
+
 
 
             return RedirectToAction("TransactionsForm", new { id = newTransaction.item });
@@ -229,7 +229,14 @@ namespace myPet4.Controllers
             _context.Transactions.Remove(transaction);
             _context.SaveChanges();
 
+            
+
             return RedirectToAction("TransactionsForm", new { id = transaction.item });
+        }
+
+        public IActionResult TopView()
+        {
+            return View(currentUser);
         }
     }
 }

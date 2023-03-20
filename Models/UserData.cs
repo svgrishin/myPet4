@@ -146,5 +146,34 @@ namespace myPet4.Models
             }
         }
         public UserData() { }
+        
+        public void UpdateUser()
+        {
+            List<Income> currentIncomes = Person.income.Where(i => i.dateOf >= Person.Finance.dateBegin && i.dateOf <= Person.Finance.dateEnd).ToList();
+            if (currentIncomes.Count > 0)
+            {
+                foreach (Income i in currentIncomes)
+                {
+                    currentIncome += i.summ;
+                }
+                toSaveByPeriod = currentIncome * (Person.Finance.toSave / Person.Finance.salary);
+            }
+
+            currentTransactionsSumm = 0;
+            List<Transactions> currentTransactions = new List<Transactions>();
+            foreach (ItemPerson i in Person.itemPerson)
+            {
+                if (i.transactions != null)
+                {
+                    currentTransactions.AddRange(i.transactions.Where(i => i.dateOf >= Person.Finance.dateBegin && i.dateOf <= Person.Finance.dateEnd));
+                    foreach (Transactions t in currentTransactions)
+                    {
+                        currentTransactionsSumm += t.summ;
+                    }
+                }
+            }
+        }
     }
+
+
 }

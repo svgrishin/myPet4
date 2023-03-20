@@ -9,58 +9,11 @@
 
 <body>
     <div>
-        <table>
-            <tr>
-                <td>
-                    <form class="topPanels" style="vertical-align:bottom">
-                        <label style="background:none">Просмотр по дате</label>
-                        <input style="margin: 0 5% 0 5%" type="date" />
-                    </form>
-                </td>
-                <td>
-                    <form class="topPanels">
-                        <label style="background:none" asp-for="Person.Finance.cash"></label>
-                        <label style="margin: 0 5% 0 5%">@Model.Person.Finance.cash &#8381</label>
-                    </form>
-                </td>
-                <td>
-                    <form class="topPanels">
-                        <label style="background:none" asp-for="Person.Finance.freeMoney"></label>
-                        <label style="margin: 0 5% 0 5%">@Model.Person.Finance.freeMoney &#8381</label>
-                    </form>
-                </td>
-                <td>
-                    <form class="topPanels">
-                        <label style="background:none" asp-for="currentIncome"></label>
-                        <label style="margin: 0 5% 0 5%">@Model.currentIncome &#8381</label>
-                    </form>
-                </td>
-                <td>
-                    <form class="topPanels">
-                        <label style="background:none" asp-for="profit"></label>
-                        <label style="margin: 0 5% 0 5%">@Model.profit &#8381</label>
-                    </form>
-                </td>
-                <td>
-                    <form class="topPanels">
-                        <label style="background:none" asp-for="Person.Finance.credit"></label>
-                        <label style="margin: 0 5% 0 5%">@Model.Person.Finance.credit &#8381</label>
-                    </form>
-                </td>
-                <td>
-                    <form class="topPanels">
-                        <label style="background:none" asp-for="toSaveByPeriod"></label>
-                        <label style="margin: 0 5% 0 5%">@Model.toSaveByPeriod &#8381</label>
-                    </form>
-                </td>
-                <td>
-                    <form class="topPanels">
-                        <label style="background:none" asp-for="savedMoney"></label>
-                        <label style="margin: 0 5% 0 5%">@Model.savedMoney &#8381</label>
-                    </form>
-                </td>
-            </tr>
-        </table>
+        
+
+        @*<iframe id="test" src="@Url.Action("TopView", new{userData = Model})"></iframe>*@
+        <iframe id="test" src="@Url.Action("TopView")"></iframe>
+
         <br />
         <br />
         <table>
@@ -73,10 +26,16 @@
                 {
                     <td style="min-width: 210px">
                         <progress value=@userItem.loaded max=@userItem.item.summ></progress>
-                        <iframe src="@Url.Action("TransactionsForm", new{id=userItem.item.id})"></iframe>
+                        <iframe src="@Url.Action("TransactionsForm", new{id=userItem.item.id})" onload="FrameUpdate();"></iframe>
                     </td>
                 }
             </tr>
         </table>
     </div>
+    <button onclick="FrameUpdate();">testBtn</button>
 </body>
+<script>
+    function FrameUpdate(){
+        document.getElementById('test').contentWindow.location.reload();
+    }    
+</script>
