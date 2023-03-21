@@ -52,16 +52,21 @@ namespace myPet4.Models
             public int loaded { get; set; }
             public UserItem(ItemPerson item, DateTime dateBegin, DateTime dateEnd)
             {
-                loaded= 0;
-                
+                loaded = 0;
+
                 DateTime date1 = new DateTime(2023, 3, 12);
 
                 this.item = item;
+            }
 
-                //int p = 0;
+            public void UpdateItem(DateTime dateBegin, DateTime dateEnd)
+            {
+                DateTime date1 = new DateTime(2023, 3, 12);
+
+                loaded = 0;
                 try
                 {
-                    foreach (Transactions t in item.transactions.Where(transaction=>transaction.dateOf >= dateBegin))
+                    foreach (Transactions t in item.transactions.Where(transaction => transaction.dateOf >= dateBegin))
                     {
                         loaded += t.summ;
                     }
@@ -70,9 +75,6 @@ namespace myPet4.Models
                 {
                     loaded = 0;
                 }
-
-                ////currentSumm = item.summ / dateEnd.Subtract(DateTime.Today).Days;
-                //currentSumm = (item.summ-loaded) / dateEnd.Subtract(date1).Days + 1;
 
                 int d = 0;
                 try
@@ -85,11 +87,17 @@ namespace myPet4.Models
                 }
                 catch { }
 
+                //currentSumm = item.summ / dateEnd.Subtract(DateTime.Today).Days;
+
+
                 int balanceIncToday = item.summ - loaded;
                 int balanceExcToday = balanceIncToday + d;
                 currentSumm = (balanceIncToday) / (dateEnd.Subtract(date1).Days + 1);
                 dailyBalance = (balanceExcToday) / (dateEnd.Subtract(date1).Days + 1) - d;
             }
+
+
+
         }
         /// <summary>
         /// Статьи расходов для приложения. Содержит дополнительные параметры к EF ItemPerson
@@ -110,6 +118,7 @@ namespace myPet4.Models
             userItems = new List<UserItem>();
             foreach (ItemPerson item in person.itemPerson)
             {
+                //userItems.Add(new UserItem(item, person.Finance.dateBegin, person.Finance.dateEnd));
                 userItems.Add(new UserItem(item, person.Finance.dateBegin, person.Finance.dateEnd));
             }
 
@@ -149,44 +158,6 @@ namespace myPet4.Models
             }
         }
         public UserData() { }
-        
-        public void UpdateItem(UserItem userItem)
-        {
-            DateTime date1 = new DateTime(2023, 3, 12);
-
-
-            userItem.loaded = 0;
-            try
-            {
-                foreach (Transactions t in userItem.item.transactions.Where(transaction => transaction.dateOf >= Person.Finance.dateBegin))
-                {
-                    userItem.loaded += t.summ;
-                }
-            }
-            catch
-            {
-                userItem.loaded = 0;
-            }
-
-            int d = 0;
-            try
-            {
-                //foreach (Transactions t in item.transactions.Where(p => p.dateOf == DateTime.Today))
-                foreach (Transactions t in userItem.item.transactions.Where(transaction => transaction.dateOf == date1))
-                {
-                    d += t.summ;
-                }
-            }
-            catch { }
-
-            //currentSumm = item.summ / dateEnd.Subtract(DateTime.Today).Days;
-
-
-            int balanceIncToday = userItem.item.summ - userItem.loaded;
-            int balanceExcToday = balanceIncToday + d;
-            userItem.currentSumm = (balanceIncToday) / (Person.Finance.dateEnd.Subtract(date1).Days + 1);
-            userItem.dailyBalance = (balanceExcToday) / (Person.Finance.dateEnd.Subtract(date1).Days + 1) - d;
-        }
     }
 
 

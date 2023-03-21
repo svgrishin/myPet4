@@ -11,6 +11,7 @@ using Microsoft.AspNetCore.Http.Features;
 using myPet4.Models;
 using myPet4.Data;
 using static myPet4.Models.UserData;
+using static System.Runtime.InteropServices.JavaScript.JSType;
 
 
 namespace myPet4.Controllers
@@ -174,9 +175,12 @@ namespace myPet4.Controllers
         public IActionResult TransactionsForm(int id)
         {
             ItemPerson item = new ItemPerson(_context.Item.Where(m => m.id == id).Include(t => t.transactions.Where(d=>d.dateOf>=currentUser.Person.Finance.dateBegin)).First());
+
             UserItem userItem = currentUser.userItems.Find(userItem => userItem.item.id == item.id);
             userItem.item = item;
 
+            userItem.UpdateItem(currentUser.Person.Finance.dateBegin, currentUser.Person.Finance.dateEnd);
+            
             return View(userItem);
         }
 
@@ -203,11 +207,8 @@ namespace myPet4.Controllers
             _context.SaveChanges();
 
             currentUser.userItems.Where(m => m.item.id == newTransaction.item).First().item.transactions.Add(newTransaction);
-            
-            //Подумать, может просто прирастить значение по событию сохранения
-            currentUser.UpdateItem(currentUser.userItems.Where(m => m.item.id == newTransaction.item).First());
 
-            return View("TransactionsForm", currentUser.userItems.Where(m => m.item.id == newTransaction.item).First());
+            return RedirectToAction("TransactionsForm", new { id = newTransaction.item });
         }
 
         [HttpPost]
@@ -226,8 +227,6 @@ namespace myPet4.Controllers
 
             _context.Transactions.Remove(transaction);
             _context.SaveChanges();
-
-            //добавить механизм обновления UserData. Подумать, может просто отнять значения
 
             return RedirectToAction("TransactionsForm", new { id = transaction.item });
         }
