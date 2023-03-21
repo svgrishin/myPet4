@@ -206,9 +206,11 @@ namespace myPet4.Controllers
             _context.Transactions.Update(newTransaction);
             _context.SaveChanges();
 
-            currentUser.userItems.Where(m => m.item.id == newTransaction.item).First().item.transactions.Add(newTransaction);
-
-            return RedirectToAction("TransactionsForm", new { id = newTransaction.item });
+            UserItem userItem = currentUser.userItems.Where(m => m.item.id == newTransaction.item).First();
+            userItem.item.transactions.Add(newTransaction);
+            userItem.UpdateItem(currentUser.Person.Finance.dateBegin, currentUser.Person.Finance.dateEnd);
+            
+            return View("TransactionsForm", userItem);
         }
 
         [HttpPost]
@@ -218,7 +220,8 @@ namespace myPet4.Controllers
             _context.Income.Update(newIncome);
             _context.SaveChanges();
             currentUser.Person.income.Add(newIncome);
-            return RedirectToAction("IncomeForm");
+            //return RedirectToAction("IncomeForm");
+            return View("IncomeForm", currentUser);
         }
 
         public IActionResult DeleteTransaction(int transactionId)
@@ -229,6 +232,17 @@ namespace myPet4.Controllers
             _context.SaveChanges();
 
             return RedirectToAction("TransactionsForm", new { id = transaction.item });
+        }
+
+        public IActionResult DeleteIncome(int incomeId)
+        {
+            Income income = _context.Income.Find(incomeId);
+            _context.Income.Remove(income);
+            _context.SaveChanges();
+
+            currentUser.Person.income.Remove(income);
+
+            return View("IncomeForm", currentUser);
         }
 
         public IActionResult TopView()
