@@ -12,7 +12,7 @@ using myPet4.Models;
 using myPet4.Data;
 using static myPet4.Models.UserData;
 using static System.Runtime.InteropServices.JavaScript.JSType;
-
+using System.Diagnostics.CodeAnalysis;
 
 namespace myPet4.Controllers
 {
@@ -174,13 +174,13 @@ namespace myPet4.Controllers
 
         public IActionResult TransactionsForm(int id)
         {
-            ItemPerson item = new ItemPerson(_context.Item.Where(m => m.id == id).Include(t => t.transactions.Where(d=>d.dateOf>=currentUser.Person.Finance.dateBegin)).First());
+            ItemPerson item = new ItemPerson(_context.Item.Where(m => m.id == id).Include(t => t.transactions.Where(d => d.dateOf >= currentUser.Person.Finance.dateBegin)).First());
 
             UserItem userItem = currentUser.userItems.Find(userItem => userItem.item.id == item.id);
             userItem.item = item;
 
             userItem.UpdateItem(currentUser.Person.Finance.dateBegin, currentUser.Person.Finance.dateEnd);
-            
+
             return View(userItem);
         }
 
@@ -196,7 +196,7 @@ namespace myPet4.Controllers
         }
         public IActionResult EditIncome(int incomeId)
         {
-            Income income = currentUser.Person.income.Where(income=>income.id==incomeId).First();
+            Income income = currentUser.Person.income.Where(income => income.id == incomeId).First();
             return View(income);
         }
 
@@ -204,12 +204,58 @@ namespace myPet4.Controllers
         public IActionResult SaveTransaction(Transactions newTransaction)
         {
             _context.Transactions.Update(newTransaction);
-            _context.SaveChanges();
 
             UserItem userItem = currentUser.userItems.Where(m => m.item.id == newTransaction.item).First();
+
+            Transactions oldTransaction = null;
+            try
+            {
+                oldTransaction = userItem.item.transactions.Where(m => m.id == newTransaction.id).First();
+            }
+            catch
+            { }
+
+            Finance finance = _context.Finance.Find(currentUser.Person.id);
+
+            if (oldTransaction != null)
+            {
+                userItem.item.transactions.Remove(oldTransaction);
+
+                switch (oldTransaction.credit)
+                {
+                    case true:
+                        currentUser.Person.Finance.credit -= oldTransaction.summ;
+                        finance.credit = currentUser.Person.Finance.credit;
+
+                        break;
+                    case false:
+                        currentUser.Person.Finance.cash += oldTransaction.summ;
+                        finance.cash = currentUser.Person.Finance.cash;
+
+                        break;
+                }
+
+            }
             userItem.item.transactions.Add(newTransaction);
+
             userItem.UpdateItem(currentUser.Person.Finance.dateBegin, currentUser.Person.Finance.dateEnd);
-            
+
+            switch (newTransaction.credit)
+            {
+                case true:
+                    currentUser.Person.Finance.credit += newTransaction.summ;
+                    finance.credit = currentUser.Person.Finance.credit;
+
+                    break;
+                case false:
+                    currentUser.Person.Finance.cash -= newTransaction.summ;
+                    finance.cash = currentUser.Person.Finance.cash;
+
+                    break;
+            }
+            _context.SaveChanges();
+
+
             return View("TransactionsForm", userItem);
         }
 
@@ -220,6 +266,7 @@ namespace myPet4.Controllers
             _context.Income.Update(newIncome);
             _context.SaveChanges();
             currentUser.Person.income.Add(newIncome);
+
             //return RedirectToAction("IncomeForm");
             return View("IncomeForm", currentUser);
         }
@@ -229,6 +276,20 @@ namespace myPet4.Controllers
             Transactions transaction = _context.Transactions.Find(transactionId);
 
             _context.Transactions.Remove(transaction);
+
+            Finance finance = _context.Finance.Find(currentUser.Person.id);
+            switch (transaction.credit)
+            {
+                case true:
+                    currentUser.Person.Finance.credit -= transaction.summ;
+                    finance.credit = currentUser.Person.Finance.credit;
+                    break;
+                case false:
+                    currentUser.Person.Finance.cash += transaction.summ;
+                    finance.cash = currentUser.Person.Finance.cash;
+                    break;
+            }
+            _context.Finance.Update(finance);
             _context.SaveChanges();
 
             return RedirectToAction("TransactionsForm", new { id = transaction.item });

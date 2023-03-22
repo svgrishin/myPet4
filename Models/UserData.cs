@@ -29,7 +29,7 @@ namespace myPet4.Models
         /// <summary>
         /// Общий расход
         /// </summary>
-        private int currentTransactionsSumm { get; set; }
+        public int currentTransactionsSumm { get; set; }
         /// <summary>
         /// Общие сбережения
         /// </summary>
@@ -96,6 +96,8 @@ namespace myPet4.Models
                 dailyBalance = (balanceExcToday) / (dateEnd.Subtract(date1).Days + 1) - d;
             }
 
+            
+
 
 
         }
@@ -157,6 +159,13 @@ namespace myPet4.Models
                 profit = currentIncome - currentTransactionsSumm;
             }
         }
+
+        public void UpdateIncome(int income)
+        {
+            currentIncome += income;
+            profit = currentIncome - currentTransactionsSumm;
+        }
+
         public UserData() { }
     }
 
