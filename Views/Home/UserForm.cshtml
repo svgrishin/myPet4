@@ -7,31 +7,27 @@
     Layout = "~/Views/Shared/_Layout.cshtml";
 }
 
-<body>
-    <div>
-        <iframe id="test" src="@Url.Action("TopView")"></iframe>
+<body id="userFormBody">
 
-        <br />
-        <br />
-        <table>
-            <tr>
+    <iframe style="height:fit-content; margin-left:5%;margin-right:5%;width:90%; min-width:1500px" id="test" src="@Url.Action("TopView")"></iframe>
+
+    <table>
+        <tr>
+            <td style="min-width: 210px">
+                <iframe src="@Url.Action("IncomeForm", new{id=Model.Person.id})"></iframe>
+            </td>
+            @foreach (UserData.UserItem userItem in Model.userItems)
+            {
                 <td style="min-width: 210px">
-                    <iframe src="@Url.Action("IncomeForm", new{id=Model.Person.id})"></iframe>
+                    <iframe src="@Url.Action("TransactionsForm", new{id=userItem.item.id})" onload="FrameUpdate();"></iframe>
                 </td>
-                @foreach (UserData.UserItem userItem in Model.userItems)
-                {
-                    <td style="min-width: 210px">
-                        
-                        <iframe src="@Url.Action("TransactionsForm", new{id=userItem.item.id})" onload="FrameUpdate();"></iframe>
-                    </td>
-                }
-            </tr>
-        </table>
-    </div>
-    <button onclick="FrameUpdate();">testBtn</button>
+            }
+        </tr>
+    </table>
+    @*<button onclick="FrameUpdate();">testBtn</button>*@
 </body>
 <script>
-    function FrameUpdate(){
+    function FrameUpdate() {
         document.getElementById('test').contentWindow.location.reload();
-    }    
+    }
 </script>

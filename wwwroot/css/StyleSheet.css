@@ -33,7 +33,25 @@ progress {
     margin-bottom: 5px;
 }
 
-body {
+body 
+{
+    font-family: 'Segoe UI';
+    font-size: 20px;
+}
+
+#userFormBody {
+    /*box-sizing: content-box;*/
+    /*display: flex;*/
+    display: flow;
+    justify-content: center;
+    /*align-items: center;*/
+    /*height:100vh;*/
+    height: 98vh;
+    background: linear-gradient(45deg, #adff2fdb, dodgerblue);
+
+}
+
+#formBody {
     box-sizing: border-box;
     display: flex;
     justify-content: center;
@@ -44,11 +62,23 @@ body {
     font-size: 20px;
 }
 
+    #formBody form {
+        box-sizing: content-box;
+        background: #d8fef44b;
+        padding: 50px;
+        border-radius: 10px;
+        justify-content: center;
+        align-items: center;
+    }
+
 iframe {
     background: none;
-    height: 350px;
+    background-color:none;
+    height: 40vh;
+    /*height:fit-content;*/
     width: 100%;
-    border: none;
+    border: hidden;
+    /*border-color: black;*/
 }
 
 #bodyTransactions {
@@ -66,32 +96,30 @@ iframe {
 }
 
 table {
-    width: 100%;
+    width: 90%;
     max-width: 1700px;
+    margin-left:5%;
+    margin-right:5%;
 }
 
 td {
     width: 12%;
 }
 
-tr {
-    width: 100%;
-}
-
 form {
-    box-sizing: content-box;
+    /*box-sizing: content-box;*/
     background: #d8fef44b;
-    padding: 50px;
+    /*padding: 50px;*/
     border-radius: 10px;
-    justify-content: center;
-    align-items: center;
+    /*justify-content: center;*/
+    /*align-items: center;*/
 }
 
-.test form {
+/*.test form {
     box-sizing: unset;
     padding: 10px;
     width: 100%;
-}
+}*/
 
 button, input, select {
     font-size: 18px;

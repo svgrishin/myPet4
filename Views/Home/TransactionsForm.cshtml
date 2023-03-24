@@ -5,11 +5,8 @@
 @{
     Layout = "~/Views/Shared/_Layout.cshtml";
 }
-
-
-
-<body id="bodyTransactions">
-    <form asp-action="AddTransaction" class="topPanels" style="height:300px; background:none">
+<body>
+    <form asp-action="AddTransaction" class="topPanels" style="height:300px; background:none; padding:0">
         <progress value=@Model.loaded max=@Model.item.summ></progress>
         <div class="itemLabel" style="display:flex">
             <label>@Model.currentSumm &#8381</label>
@@ -24,6 +21,7 @@
         @Html.ListBox("transactionId", new SelectList(Model.item.transactions, "id","summ"))
     </form>
 </body>
+
 
 <script>
     {
