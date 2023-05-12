@@ -13,10 +13,19 @@
     <br />
     <hr />
     <div>
-        <input asp-action="SaveIncome" asp-route-id="@Model.id" asp-route-item="@Model.person" type="submit" class="centerButton" value="Сохранить" />
+        <input asp-action="SaveIncome" asp-route-id="@Model.id" asp-route-item="@Model.person" type="submit" class="centerButton" value="Сохранить" onclick="FrameUpdate();" />
         <button class="systemButton" asp-action="IncomeForm" asp-route-id="@Model.person">Отмена</button>
     </div>
 </form>
+
+<script>
+    {
+        function FrameUpdate() {
+            //window.parent.postMessage({ message: 'Hello world' }, 'http://localhost:56385/Home/TransactionsForm?id=2');
+            window.parent.postMessage({ message: 'FrameUpdate' });
+        };
+    }
+</script>
 
 @section Scripts {
     @{

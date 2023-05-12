@@ -19,7 +19,8 @@
             @foreach (UserData.UserItem userItem in Model.userItems)
             {
                 <td style="min-width: 210px">
-                    <iframe src="@Url.Action("TransactionsForm", new{id=userItem.item.id})" onload="FrameUpdate();"></iframe>
+                    @*<iframe src="@Url.Action("TransactionsForm", new{id=userItem.item.id})" onload="FrameUpdate();"></iframe>*@
+                    <iframe src="@Url.Action("TransactionsForm", new{id=userItem.item.id})" ></iframe>
                 </td>
             }
         </tr>
@@ -30,4 +31,20 @@
     function FrameUpdate() {
         document.getElementById('test').contentWindow.location.reload();
     }
+
+    window.addEventListener('message', function (event) {
+        //if (event.origin === 'http://localhost/') {
+        //    alert('Received message: ' + event.data.message);
+        //}
+        //else {
+        //    alert('Origin not allowed!');
+        //}
+        if (event.data.message === 'FrameUpdate') {
+            alert('Received message: ' + event.data.message);
+            FrameUpdate();
+        }
+        
+
+    }, false);
+
 </script>

@@ -15,11 +15,14 @@
         <div style="display:flex">
             <label style="background:none; width: 55%; display: inline-block">@Model.item.nameOf</label>
             <input value="" type="submit" id="addItem" asp-action="AddTransaction" asp-route-id="@Model.item.id" class="itemButton" />
-            <button id="editItem" asp-action="EditTransaction" class="itemButton"></button>
+            <button id="editItem" asp-action="EditTransaction" class="itemButton" onclick="testt();"></button>
             <button id="deleteItem" asp-action="DeleteTransaction" class="itemButton"></button>
+
         </div>
+
         @Html.ListBox("transactionId", new SelectList(Model.item.transactions, "id","summ"))
     </form>
+    <button type="submit" id="submit" onclick="testt();">testt</button>
 </body>
 
 
@@ -28,5 +31,12 @@
         var s = document.getElementsByName("transactionId");
         s.forEach(p => p.removeAttribute("multiple"));
         s.forEach(p => p.setAttribute("size", 2));
+
+        function testt() {
+            //window.parent.postMessage({ message: 'Hello world' }, 'http://localhost:56385/Home/TransactionsForm?id=2');
+            window.parent.postMessage({ message: 'Hello world' });
+        };
+
+
     }
 </script>
