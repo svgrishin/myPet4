@@ -19,9 +19,9 @@
             <label style="background:none; width: 55%; display: inline-block">Доходы</label>
             <input value="" type="submit" id="addItem" asp-action="AddIncome" asp-route-id="@Model.Person.id" class="itemButton" />
             <button id="editItem" asp-action="EditIncome" class="itemButton"></button>
-            <button id="deleteItem" asp-action="DeleteIncome" class="itemButton"></button>
+            <button id="deleteItem" asp-action="DeleteIncome" class="itemButton" onclick="FrameUpdate();"></button>
         </div>
-        @Html.ListBox("incomeId", new SelectList(Model.Person.income, "id","summ"))
+        @Html.ListBox("incomeId", new SelectList(Model.Person.income, "id","summ"));
     </form>
 </body>
 
@@ -30,6 +30,15 @@
         var s = document.getElementsByName("incomeId");
         s.forEach(p => p.removeAttribute("multiple"));
         s.forEach(p => p.setAttribute("size", 2));
+
+        function FrameUpdate() {
+            ///window.parent.postMessage({ message: 'Hello world' }, 'http://localhost:56385/Home/TransactionsForm?id=2');
+            //window.parent.postMessage({ message: 'FrameUpdate' });
+            setInterval(() => {
+                //alert('Запущено обновление');
+                top.document.getElementById("topFrame").contentWindow.location.reload(true);
+            }, 1);
+        };
 
     }
 </script>

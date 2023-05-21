@@ -13,6 +13,8 @@ using myPet4.Data;
 using static myPet4.Models.UserData;
 using static System.Runtime.InteropServices.JavaScript.JSType;
 using System.Diagnostics.CodeAnalysis;
+using NuGet.Configuration;
+using NuGet.Versioning;
 
 namespace myPet4.Controllers
 {
@@ -262,9 +264,38 @@ namespace myPet4.Controllers
         public IActionResult SaveIncome(Income newIncome)
         {
             newIncome.person = currentUser.Person.id;
-            _context.Income.Update(newIncome);
+            //_context.Income.Update(newIncome);
+            //Income userIncome = currentUser..Where(m => m.item.id == newIncome.id).First();
+            Finance finance = _context.Finance.Find(currentUser.Person.id);
+            Income oldIncome = null;
+            try
+            {
+                ////oldIncome = _context.Income.AsNoTracking().Where(m => m.id == newIncome.id).First();
+                oldIncome = currentUser.Person.income.Where(m => m.id == newIncome.id).First();
+
+            }
+            catch
+            { }
+
+            if (oldIncome == null)
+            {
+                _context.Income.Add(newIncome);
+                currentUser.Person.income.Add(newIncome);
+                currentUser.Person.Finance.cash += newIncome.summ;
+            }
+            else
+            {
+                int summ = newIncome.summ - oldIncome.summ;
+                currentUser.Person.Finance.cash += summ;
+                _context.Income.Update(newIncome);
+                currentUser.Person.income.Remove(oldIncome);
+                currentUser.Person.income.Add(newIncome);
+
+                currentUser.Person.income = new List<Income>(currentUser.Person.income.OrderBy(incomeList => incomeList.dateOf));
+
+            }
             _context.SaveChanges();
-            currentUser.Person.income.Add(newIncome);
+
 
             //return RedirectToAction("IncomeForm");
             return View("IncomeForm", currentUser);
@@ -297,10 +328,18 @@ namespace myPet4.Controllers
         public IActionResult DeleteIncome(int incomeId)
         {
             Income income = _context.Income.Find(incomeId);
-            _context.Income.Remove(income);
-            _context.SaveChanges();
+            
 
+
+            _context.Income.Remove(income);
+
+            income = currentUser.Person.income.Where(i => i.id == incomeId).FirstOrDefault();
+            //income.person = currentUser.Person.id;
+            //income.incomePerson = currentUser.Person;
             currentUser.Person.income.Remove(income);
+            
+
+            _context.SaveChanges();
 
             return View("IncomeForm", currentUser);
         }
