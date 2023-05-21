@@ -6,7 +6,7 @@
     Layout = "~/Views/Shared/_Layout.cshtml";
 }
 <body>
-    <form asp-action="AddTransaction" class="topPanels" style="height:300px; background:none; padding:0">
+    <form asp-action="AddTransaction" class="topPanels" style="height:300px; background:none; padding:0" >
         <progress value=@Model.loaded max=@Model.item.summ></progress>
         <div class="itemLabel" style="display:flex">
             <label>@Model.currentSumm &#8381</label>
@@ -22,7 +22,6 @@
 
         @Html.ListBox("transactionId", new SelectList(Model.item.transactions, "id","summ"))
     </form>
-    <button type="submit" id="submit" onclick="testt();">testt</button>
 </body>
 
 
@@ -33,10 +32,15 @@
         s.forEach(p => p.setAttribute("size", 2));
 
         function testt() {
-            //window.parent.postMessage({ message: 'Hello world' }, 'http://localhost:56385/Home/TransactionsForm?id=2');
-            window.parent.postMessage({ message: 'Hello world' });
+            //window.parent.postMessage({ message: 'Hello world' });
         };
 
+        function FrameUpdate() {
+            //window.parent.postMessage({ message: 'FrameUpdate' });
 
+            //alert(top.document.getElementById(@Model.item).style);
+
+            //top.document.getElementById('topFrame').contentWindow.location.reload();
+        };
     }
 </script>

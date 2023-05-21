@@ -9,18 +9,18 @@
 
 <body id="userFormBody">
 
-    <iframe style="height:fit-content; margin-left:5%;margin-right:5%;width:90%; min-width:1500px" id="test" src="@Url.Action("TopView")"></iframe>
+    <iframe style="height:fit-content; margin-left:5%;margin-right:5%;width:90%; min-width:1500px" id="topFrame" src="@Url.Action("TopView")"></iframe>
 
     <table>
         <tr>
             <td style="min-width: 210px">
-                <iframe src="@Url.Action("IncomeForm", new{id=Model.Person.id})"></iframe>
+                <iframe src="@Url.Action("IncomeForm", new{id=Model.Person.id})" name="incomeFrame"></iframe>
             </td>
             @foreach (UserData.UserItem userItem in Model.userItems)
             {
                 <td style="min-width: 210px">
                     @*<iframe src="@Url.Action("TransactionsForm", new{id=userItem.item.id})" onload="FrameUpdate();"></iframe>*@
-                    <iframe src="@Url.Action("TransactionsForm", new{id=userItem.item.id})" ></iframe>
+                    <iframe src="@Url.Action("TransactionsForm", new{id=userItem.item.id})" id="Transactions @userItem.item.id" onload="FrameUpdate();"></iframe>
                 </td>
             }
         </tr>
@@ -29,22 +29,21 @@
 </body>
 <script>
     function FrameUpdate() {
-        document.getElementById('test').contentWindow.location.reload();
+        //document.getElementById('topFrame').contentWindow.location.reload();
+        //document.getElementById('topFrame').contentWindoww.location.reload();
+        }
+
     }
 
-    window.addEventListener('message', function (event) {
-        //if (event.origin === 'http://localhost/') {
-        //    alert('Received message: ' + event.data.message);
-        //}
-        //else {
-        //    alert('Origin not allowed!');
-        //}
-        if (event.data.message === 'FrameUpdate') {
-            alert('Received message: ' + event.data.message);
-            FrameUpdate();
-        }
-        
+        //window.addEventListener('message', function (event) {
 
-    }, false);
+        //    if (event.data.message === 'FrameUpdate') {
+        //        alert('Received message: ' + event.data.message);
+        //        while (document.getElementById
+        //        FrameUpdate();
+        //    }
+
+
+        //}, false);
 
 </script>

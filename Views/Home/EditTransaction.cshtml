@@ -1,8 +1,10 @@
 ﻿@model myPet4.Models.Transactions
+
 @{
     Layout = "~/Views/Shared/_Transaction_layout.cshtml";
 }
-<form asp-action="SaveTransaction" id="interactiveForm" class="leftItems">
+
+<form asp-action="SaveTransaction" id="interactiveForm" class="leftItems" >
     <div asp-validation-summary="ModelOnly"></div>
     <label asp-for="@Model.summ"></label>
 
@@ -34,9 +36,24 @@
 <script>
     {
         function FrameUpdate() {
-            //window.parent.postMessage({ message: 'Hello world' }, 'http://localhost:56385/Home/TransactionsForm?id=2');
-            window.parent.postMessage({ message: 'FrameUpdate' });
+            //window.parent.postMessage({ message: 'FrameUpdate' });
+
+            //top.document.getElementById("Transactions 2").onload = Frupdt();
+            //var x = top.document.getElementById("Transactions 2");
+            //alert(x.rea);
+
+            //setTimeout(() => {
+            setInterval(() => {
+                //alert('Запущено обновление');
+                top.document.getElementById("topFrame").contentWindow.location.reload(true);
+            }, 1);
+
+            //alert("Запущено обновление");
         };
+        //function Frupdt() {
+        //    top.document.getElementById("topFrame").contentWindow.location.reload(true);
+
+        //}
     }
 </script>
 
