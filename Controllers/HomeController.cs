@@ -280,21 +280,38 @@ namespace myPet4.Controllers
             if (oldIncome == null)
             {
                 _context.Income.Add(newIncome);
+                finance.cash += newIncome.summ;
+                _context.Finance.Update(finance);
+
                 currentUser.Person.income.Add(newIncome);
                 currentUser.Person.Finance.cash += newIncome.summ;
+
+                currentUser.currentProfit += newIncome.summ;
+
+
+                //finance.cash
             }
             else
             {
                 int summ = newIncome.summ - oldIncome.summ;
                 currentUser.Person.Finance.cash += summ;
                 _context.Income.Update(newIncome);
+
+                finance.cash += summ;
+                _context.Finance.Update(finance);
+
                 currentUser.Person.income.Remove(oldIncome);
                 currentUser.Person.income.Add(newIncome);
+
+                currentUser.currentProfit += summ;
+
 
                 currentUser.Person.income = new List<Income>(currentUser.Person.income.OrderBy(incomeList => incomeList.dateOf));
 
             }
             _context.SaveChanges();
+
+
 
 
             //return RedirectToAction("IncomeForm");
@@ -322,13 +339,16 @@ namespace myPet4.Controllers
             _context.Finance.Update(finance);
             _context.SaveChanges();
 
+            currentUser.currentProfit -= transaction.summ;
+
+
             return RedirectToAction("TransactionsForm", new { id = transaction.item });
         }
 
         public IActionResult DeleteIncome(int incomeId)
         {
             Income income = _context.Income.Find(incomeId);
-            
+
 
 
             _context.Income.Remove(income);
@@ -337,7 +357,8 @@ namespace myPet4.Controllers
             //income.person = currentUser.Person.id;
             //income.incomePerson = currentUser.Person;
             currentUser.Person.income.Remove(income);
-            
+            currentUser.Person.Finance.cash -= income.summ;
+            currentUser.currentProfit -= income.summ;
 
             _context.SaveChanges();
 

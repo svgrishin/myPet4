@@ -17,7 +17,12 @@ namespace myPet4.Models
         [DisplayName("Текущие сбережения")]
         public int toSaveByPeriod { get; set; }
         /// <summary>
-        /// Прибыль в текущем периоде
+        /// Прибыль текущая за период
+        /// </summary>
+        [DisplayName("Текущая прибыль")]
+        public int currentProfit { get; set; }
+        /// <summary>
+        /// Прибыль теоритическая за период
         /// </summary>
         [DisplayName("Расчётная прибыль")]
         public int profit { get; set; }
@@ -54,14 +59,16 @@ namespace myPet4.Models
             {
                 loaded = 0;
 
-                DateTime date1 = new DateTime(2023, 3, 12);
+                //DateTime date1 = new DateTime(2023, 3, 12);
+                DateTime date1 = new DateTime(2023, 5, 5);
 
                 this.item = item;
             }
 
             public void UpdateItem(DateTime dateBegin, DateTime dateEnd)
             {
-                DateTime date1 = new DateTime(2023, 3, 12);
+                //DateTime date1 = new DateTime(2023, 3, 12);
+                DateTime date1 = new DateTime(2023, 5, 5);
 
                 loaded = 0;
                 try
@@ -95,11 +102,6 @@ namespace myPet4.Models
                 currentSumm = (balanceIncToday) / (dateEnd.Subtract(date1).Days + 1);
                 dailyBalance = (balanceExcToday) / (dateEnd.Subtract(date1).Days + 1) - d;
             }
-
-            
-
-
-
         }
         /// <summary>
         /// Статьи расходов для приложения. Содержит дополнительные параметры к EF ItemPerson
@@ -137,33 +139,37 @@ namespace myPet4.Models
 
             currentTransactionsSumm = 0;
             List<Transactions> currentTransactions = new List<Transactions>();
+            int itemsSumm=0;
             foreach (ItemPerson i in person.itemPerson)
             {
+                itemsSumm+= i.summ;
                 if (i.transactions != null)
                 {
                     currentTransactions.AddRange(i.transactions.Where(i => i.dateOf >= person.Finance.dateBegin && i.dateOf <= person.Finance.dateEnd));
-                    foreach (Transactions t in currentTransactions)
-                    {
-                        currentTransactionsSumm += t.summ;
-                    }
                 }
             }
+            foreach (Transactions t in currentTransactions)
+            {
+                currentTransactionsSumm += t.summ;
+            }
 
-            profit = 0;
+            currentProfit = 0;
             if (person.Finance.salary > currentIncome)
             {
-                profit = person.Finance.salary - currentTransactionsSumm;
+                currentProfit = person.Finance.salary - currentTransactionsSumm;
+                profit = person.Finance.salary - itemsSumm;
             }
             else
             {
-                profit = currentIncome - currentTransactionsSumm;
+                currentProfit = currentIncome - currentTransactionsSumm;
+                profit = currentIncome - itemsSumm;
             }
         }
 
         public void UpdateIncome(int income)
         {
             currentIncome += income;
-            profit = currentIncome - currentTransactionsSumm;
+            currentProfit = currentIncome - currentTransactionsSumm;
         }
 
         public UserData() { }

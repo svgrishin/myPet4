@@ -21,7 +21,7 @@
             <button id="editItem" asp-action="EditIncome" class="itemButton"></button>
             <button id="deleteItem" asp-action="DeleteIncome" class="itemButton" onclick="FrameUpdate();"></button>
         </div>
-        @Html.ListBox("incomeId", new SelectList(Model.Person.income, "id","summ"));
+        @Html.ListBox("incomeId", new SelectList(Model.Person.income, "id","summ"))
     </form>
 </body>
 

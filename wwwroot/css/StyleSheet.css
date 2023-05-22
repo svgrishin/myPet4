@@ -33,8 +33,7 @@ progress {
     margin-bottom: 5px;
 }
 
-body 
-{
+body {
     font-family: 'Segoe UI';
     font-size: 20px;
 }
@@ -48,7 +47,6 @@ body
     /*height:100vh;*/
     height: 98vh;
     background: linear-gradient(45deg, #adff2fdb, dodgerblue);
-
 }
 
 #formBody {
@@ -73,7 +71,7 @@ body
 
 iframe {
     background: none;
-    background-color:none;
+    background-color: none;
     height: 40vh;
     /*height:fit-content;*/
     width: 100%;
@@ -95,16 +93,16 @@ iframe {
     background: #d8fef44b;
 }
 
-table {
+/*table {
     width: 90%;
     max-width: 1700px;
-    margin-left:5%;
-    margin-right:5%;
-}
+    margin-left: 5%;
+    margin-right: 5%;
+}*/
 
-td {
-    width: 12%;
-}
+/*td {
+    width:12%;
+}*/
 
 form {
     /*box-sizing: content-box;*/
@@ -203,7 +201,7 @@ h1 {
     font-size: 14pt;
     min-height: 10vh;
     box-sizing: content-box;
-    position: relative;
+    /*position: relative;*/
 }
 
     .topPanels input {
@@ -231,6 +229,11 @@ h1 {
         scrollbar-color: blue orange;
         font-size: 12px;
         border: none;
+    }
+
+    .topPanels table{
+        margin:0;
+        padding:0;
     }
 
 
