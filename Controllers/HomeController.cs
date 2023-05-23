@@ -343,17 +343,19 @@ namespace myPet4.Controllers
 
         public IActionResult DeleteIncome(int incomeId)
         {
-            Income income = _context.Income.Find(incomeId);
+            //Income income = _context.Income.Find(incomeId);
 
+            _context.Income.Remove(_context.Income.Find(incomeId));
+            
 
-
-            _context.Income.Remove(income);
-
-            income = currentUser.Person.income.Where(i => i.id == incomeId).FirstOrDefault();
+            Income income = currentUser.Person.income.Where(i => i.id == incomeId).FirstOrDefault();
             //income.person = currentUser.Person.id;
             //income.incomePerson = currentUser.Person;
             currentUser.Person.income.Remove(income);
             currentUser.Person.Finance.cash -= income.summ;
+
+            _context.Finance.Find(currentUser.Person.id).cash-=income.summ;
+
             currentUser.UpdateProfit(-income.summ);
 
             if (currentUser.currentIncome > currentUser.Person.Finance.salary)
