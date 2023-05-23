@@ -1,5 +1,6 @@
 ﻿using Microsoft.AspNetCore.Http.Features;
 using Microsoft.AspNetCore.Routing.Matching;
+using Microsoft.Identity.Client;
 using NuGet.Packaging;
 using System;
 using System.ComponentModel;
@@ -35,6 +36,10 @@ namespace myPet4.Models
         /// Общий расход
         /// </summary>
         public int currentTransactionsSumm { get; set; }
+        /// <summary>
+        /// СУмма всех норм статей расходов
+        /// </summary>
+        public int itemsSumm { get; set; }
         /// <summary>
         /// Общие сбережения
         /// </summary>
@@ -118,12 +123,14 @@ namespace myPet4.Models
             Person = person;
             toSaveByPeriod = 0;
             savedMoney = 0;
+            this.itemsSumm = 0;
 
             userItems = new List<UserItem>();
             foreach (ItemPerson item in person.itemPerson)
             {
                 //userItems.Add(new UserItem(item, person.Finance.dateBegin, person.Finance.dateEnd));
                 userItems.Add(new UserItem(item, person.Finance.dateBegin, person.Finance.dateEnd));
+                this.itemsSumm += item.summ;
             }
 
             currentIncome = 0;
@@ -137,12 +144,14 @@ namespace myPet4.Models
                 toSaveByPeriod = currentIncome * (person.Finance.toSave / person.Finance.salary);
             }
 
+
+
             currentTransactionsSumm = 0;
             List<Transactions> currentTransactions = new List<Transactions>();
-            int itemsSumm=0;
+            int itemsSumm = 0;
             foreach (ItemPerson i in person.itemPerson)
             {
-                itemsSumm+= i.summ;
+                itemsSumm += i.summ;
                 if (i.transactions != null)
                 {
                     currentTransactions.AddRange(i.transactions.Where(i => i.dateOf >= person.Finance.dateBegin && i.dateOf <= person.Finance.dateEnd));
@@ -163,6 +172,20 @@ namespace myPet4.Models
             {
                 currentProfit = currentIncome - currentTransactionsSumm;
                 profit = currentIncome - itemsSumm;
+            }
+        }
+        public void UpdateProfit(int summ)
+        {
+            currentIncome += summ;
+            if (currentIncome > Person.Finance.salary)
+            {
+                profit = currentIncome-itemsSumm;
+                currentProfit = profit + currentTransactionsSumm;
+            }
+            else
+            {
+                profit = Person.Finance.salary - this.itemsSumm;
+                currentProfit = Person.Finance.salary - currentTransactionsSumm;
             }
         }
 

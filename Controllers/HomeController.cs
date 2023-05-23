@@ -286,10 +286,7 @@ namespace myPet4.Controllers
                 currentUser.Person.income.Add(newIncome);
                 currentUser.Person.Finance.cash += newIncome.summ;
 
-                currentUser.currentProfit += newIncome.summ;
-
-
-                //finance.cash
+                currentUser.UpdateProfit(newIncome.summ);
             }
             else
             {
@@ -303,8 +300,7 @@ namespace myPet4.Controllers
                 currentUser.Person.income.Remove(oldIncome);
                 currentUser.Person.income.Add(newIncome);
 
-                currentUser.currentProfit += summ;
-
+                currentUser.UpdateProfit(summ);
 
                 currentUser.Person.income = new List<Income>(currentUser.Person.income.OrderBy(incomeList => incomeList.dateOf));
 
@@ -358,7 +354,13 @@ namespace myPet4.Controllers
             //income.incomePerson = currentUser.Person;
             currentUser.Person.income.Remove(income);
             currentUser.Person.Finance.cash -= income.summ;
-            currentUser.currentProfit -= income.summ;
+            currentUser.UpdateProfit(-income.summ);
+
+            if (currentUser.currentIncome > currentUser.Person.Finance.salary)
+            {
+                currentUser.currentIncome -= income.summ;
+                currentUser.UpdateProfit(-income.summ);
+            }
 
             _context.SaveChanges();
 
