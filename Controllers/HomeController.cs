@@ -315,6 +315,8 @@ namespace myPet4.Controllers
             }
             _context.SaveChanges();
 
+            currentUser.Person.Finance = _context.Finance.Find(currentUser.Person.id);
+
 
 
 
@@ -341,9 +343,9 @@ namespace myPet4.Controllers
                     break;
             }
 
-
             _context.Finance.Update(finance);
             _context.SaveChanges();
+            currentUser.Person.Finance = _context.Finance.Find(currentUser.Person.id);
 
             //currentUser.currentProfit -= transaction.summ;
             currentUser.UpdateProfit(transaction);
@@ -378,9 +380,12 @@ namespace myPet4.Controllers
 
             _context.SaveChanges();
 
+            currentUser.Person.Finance = _context.Finance.Find(currentUser.Person.id);
+
             return View("IncomeForm", currentUser);
         }
 
+        [HttpGet]
         public IActionResult TopView()
         {
             return View(currentUser);

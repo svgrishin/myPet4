@@ -196,6 +196,7 @@ namespace myPet4.Models
                 profit = Person.Finance.salary - this.itemsSumm;
                 currentProfit = Person.Finance.salary - currentTransactionsSumm;
             }
+            //Person.Finance = new Finance(Person.Finance);
         }
 
         public void UpdateProfit(Transactions transaction)
@@ -205,13 +206,14 @@ namespace myPet4.Models
             {
                 int differens = item.loaded - item.item.summ;
                 if (differens >= Math.Abs(transaction.summ)) differens = transaction.summ;
-                profit -= differens;
+                profit -= (differens*(transaction.summ/Math.Abs(transaction.summ)));
                 currentProfit -= transaction.summ;
             }
             else
             {
                 currentProfit -= transaction.summ;
             }
+            //Person.Finance = new Finance(Person.Finance);
         }
 
         public void UpdateIncome(int income)

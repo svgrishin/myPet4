@@ -47,6 +47,7 @@ namespace myPet4.Models
             this.dateEnd = dateEnd;
             this.step = step;
         }
-        public Finance() { }
+        public Finance()
+        {}
     }
 }
