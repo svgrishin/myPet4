@@ -229,6 +229,8 @@ namespace myPet4.Controllers
                         currentUser.Person.Finance.credit -= oldTransaction.summ;
                         finance.credit = currentUser.Person.Finance.credit;
 
+                        
+
                         break;
                     case false:
                         currentUser.Person.Finance.cash += oldTransaction.summ;
@@ -236,9 +238,11 @@ namespace myPet4.Controllers
 
                         break;
                 }
-
+                oldTransaction.summ *= (-1);
+                currentUser.UpdateProfit(oldTransaction);
             }
             userItem.item.transactions.Add(newTransaction);
+
 
             userItem.UpdateItem(currentUser.Person.Finance.dateBegin, currentUser.Person.Finance.dateEnd);
 
@@ -255,6 +259,9 @@ namespace myPet4.Controllers
 
                     break;
             }
+
+            currentUser.UpdateProfit(newTransaction);
+
             _context.SaveChanges();
 
             return View("TransactionsForm", userItem);
@@ -286,7 +293,7 @@ namespace myPet4.Controllers
                 currentUser.Person.income.Add(newIncome);
                 currentUser.Person.Finance.cash += newIncome.summ;
 
-                currentUser.UpdateProfit(newIncome.summ);
+                currentUser.UpdateProfit(newIncome);
             }
             else
             {
@@ -300,7 +307,8 @@ namespace myPet4.Controllers
                 currentUser.Person.income.Remove(oldIncome);
                 currentUser.Person.income.Add(newIncome);
 
-                currentUser.UpdateProfit(summ);
+                newIncome.summ = summ;
+                currentUser.UpdateProfit(newIncome);
 
                 currentUser.Person.income = new List<Income>(currentUser.Person.income.OrderBy(incomeList => incomeList.dateOf));
 
@@ -332,11 +340,13 @@ namespace myPet4.Controllers
                     finance.cash = currentUser.Person.Finance.cash;
                     break;
             }
+
+
             _context.Finance.Update(finance);
             _context.SaveChanges();
 
-            currentUser.currentProfit -= transaction.summ;
-
+            //currentUser.currentProfit -= transaction.summ;
+            currentUser.UpdateProfit(transaction);
 
             return RedirectToAction("TransactionsForm", new { id = transaction.item });
         }
@@ -356,13 +366,15 @@ namespace myPet4.Controllers
 
             _context.Finance.Find(currentUser.Person.id).cash-=income.summ;
 
-            currentUser.UpdateProfit(-income.summ);
+            income.summ *= (-1);
 
             if (currentUser.currentIncome > currentUser.Person.Finance.salary)
             {
                 currentUser.currentIncome -= income.summ;
-                currentUser.UpdateProfit(-income.summ);
+                //currentUser.UpdateProfit(-income.summ);
             }
+
+            currentUser.UpdateProfit(income);
 
             _context.SaveChanges();
 

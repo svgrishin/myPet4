@@ -145,18 +145,26 @@ namespace myPet4.Models
             }
 
 
-
             currentTransactionsSumm = 0;
             List<Transactions> currentTransactions = new List<Transactions>();
             int itemsSumm = 0;
-            foreach (ItemPerson i in person.itemPerson)
+            int itemsSummOverLoaded = 0;
+            foreach (UserItem i in userItems)
             {
-                itemsSumm += i.summ;
-                if (i.transactions != null)
+                i.UpdateItem(person.Finance.dateBegin, person.Finance.dateEnd);
+                
+                itemsSumm += i.item.summ;
+                if (i.item.transactions != null)
                 {
-                    currentTransactions.AddRange(i.transactions.Where(i => i.dateOf >= person.Finance.dateBegin && i.dateOf <= person.Finance.dateEnd));
+                    currentTransactions.AddRange(i.item.transactions.Where(i => i.dateOf >= person.Finance.dateBegin && i.dateOf <= person.Finance.dateEnd));
+                }
+                if (i.loaded > i.item.summ)
+                {
+                    itemsSummOverLoaded += i.loaded - i.item.summ;
                 }
             }
+
+
             foreach (Transactions t in currentTransactions)
             {
                 currentTransactionsSumm += t.summ;
@@ -166,7 +174,7 @@ namespace myPet4.Models
             if (person.Finance.salary > currentIncome)
             {
                 currentProfit = person.Finance.salary - currentTransactionsSumm;
-                profit = person.Finance.salary - itemsSumm;
+                profit = person.Finance.salary - itemsSumm-itemsSummOverLoaded;
             }
             else
             {
@@ -174,18 +182,35 @@ namespace myPet4.Models
                 profit = currentIncome - itemsSumm;
             }
         }
-        public void UpdateProfit(int summ)
+        //public void UpdateProfit(int summ)
+        public void UpdateProfit(Income income)
         {
-            currentIncome += summ;
+            currentIncome += income.summ;
             if (currentIncome > Person.Finance.salary)
             {
-                profit = currentIncome-itemsSumm;
+                profit = currentIncome - itemsSumm;
                 currentProfit = profit + currentTransactionsSumm;
             }
             else
             {
                 profit = Person.Finance.salary - this.itemsSumm;
                 currentProfit = Person.Finance.salary - currentTransactionsSumm;
+            }
+        }
+
+        public void UpdateProfit(Transactions transaction)
+        {
+            UserItem item = userItems.Where(i => i.item.id == transaction.item).First();
+            if (item.loaded > item.item.summ)
+            {
+                int differens = item.loaded - item.item.summ;
+                if (differens >= Math.Abs(transaction.summ)) differens = transaction.summ;
+                profit -= differens;
+                currentProfit -= transaction.summ;
+            }
+            else
+            {
+                currentProfit -= transaction.summ;
             }
         }
 
