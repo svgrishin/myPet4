@@ -239,7 +239,7 @@ namespace myPet4.Controllers
                         break;
                 }
                 oldTransaction.summ *= (-1);
-                currentUser.UpdateProfit(oldTransaction);
+                //currentUser.UpdateProfit(oldTransaction);
             }
             userItem.item.transactions.Add(newTransaction);
 
@@ -260,7 +260,7 @@ namespace myPet4.Controllers
                     break;
             }
 
-            currentUser.UpdateProfit(newTransaction);
+            //currentUser.UpdateProfit(newTransaction);
 
             _context.SaveChanges();
 
@@ -271,48 +271,57 @@ namespace myPet4.Controllers
         public IActionResult SaveIncome(Income newIncome)
         {
             newIncome.person = currentUser.Person.id;
-            //_context.Income.Update(newIncome);
-            //Income userIncome = currentUser..Where(m => m.item.id == newIncome.id).First();
+            
             Finance finance = _context.Finance.Find(currentUser.Person.id);
+
             Income oldIncome = null;
             try
             {
-                ////oldIncome = _context.Income.AsNoTracking().Where(m => m.id == newIncome.id).First();
                 oldIncome = currentUser.Person.income.Where(m => m.id == newIncome.id).First();
-
             }
             catch
             { }
 
             if (oldIncome == null)
             {
-                _context.Income.Add(newIncome);
-                finance.cash += newIncome.summ;
-                _context.Finance.Update(finance);
+                finance.cash = currentUser.AddIncome(newIncome).cash;
+                
+                //finance.cash += newIncome.summ;
+                //_context.Finance.Update(finance);
 
-                currentUser.Person.income.Add(newIncome);
-                currentUser.Person.Finance.cash += newIncome.summ;
+                //currentUser.Person.income.Add(newIncome);
+                //currentUser.Person.Finance.cash += newIncome.summ;
 
-                currentUser.UpdateProfit(newIncome);
+                //currentUser.UpdateProfit(newIncome);
             }
             else
             {
-                int summ = newIncome.summ - oldIncome.summ;
-                currentUser.Person.Finance.cash += summ;
-                _context.Income.Update(newIncome);
+                currentUser.DeleteIncome(oldIncome);
 
-                finance.cash += summ;
-                _context.Finance.Update(finance);
+                finance = currentUser.AddIncome(newIncome);
 
-                currentUser.Person.income.Remove(oldIncome);
-                currentUser.Person.income.Add(newIncome);
+                //int summ = newIncome.summ - oldIncome.summ;
+                //currentUser.Person.Finance.cash += summ;
+                //_context.Income.Update(newIncome);
 
-                newIncome.summ = summ;
-                currentUser.UpdateProfit(newIncome);
+                //finance.cash += summ;
+                //_context.Finance.Update(finance);
 
-                currentUser.Person.income = new List<Income>(currentUser.Person.income.OrderBy(incomeList => incomeList.dateOf));
+                //currentUser.Person.income.Remove(oldIncome);
+                //currentUser.Person.income.Add(newIncome);
+
+                //newIncome.summ = summ;
+                //currentUser.UpdateProfit(newIncome);
+
+                //currentUser.Person.income = new List<Income>(currentUser.Person.income.OrderBy(incomeList => incomeList.dateOf));
 
             }
+
+            currentUser.Person.income.Add(newIncome);
+
+            _context.Income.Add(newIncome);
+            _context.Finance.Update(finance);
+
             _context.SaveChanges();
 
             currentUser.Person.Finance = _context.Finance.Find(currentUser.Person.id);
@@ -343,44 +352,54 @@ namespace myPet4.Controllers
                     break;
             }
 
+  
+            
             _context.Finance.Update(finance);
+
             _context.SaveChanges();
             currentUser.Person.Finance = _context.Finance.Find(currentUser.Person.id);
 
             //currentUser.currentProfit -= transaction.summ;
-            currentUser.UpdateProfit(transaction);
+            //currentUser.UpdateProfit(transaction);
 
             return RedirectToAction("TransactionsForm", new { id = transaction.item });
         }
 
         public IActionResult DeleteIncome(int incomeId)
         {
-            //Income income = _context.Income.Find(incomeId);
-
-            _context.Income.Remove(_context.Income.Find(incomeId));
             
 
             Income income = currentUser.Person.income.Where(i => i.id == incomeId).FirstOrDefault();
-            //income.person = currentUser.Person.id;
-            //income.incomePerson = currentUser.Person;
+
+            Finance finance = _context.Finance.Find(currentUser.Person.id);
+
+            
+
+            finance.cash = currentUser.DeleteIncome(income).cash;
+
+            //_context.Finance.Find(currentUser.Person.id).cash-=income.summ;
+
+            //income.summ *= (-1);
+
+            //if (currentUser.currentIncome > currentUser.Person.Finance.salary)
+            //{
+            //    currentUser.currentIncome -= income.summ;
+            //}
+
+
+            //_context.SaveChanges();
+
+            //currentUser.Person.Finance = _context.Finance.Find(currentUser.Person.id);
+
             currentUser.Person.income.Remove(income);
-            currentUser.Person.Finance.cash -= income.summ;
 
-            _context.Finance.Find(currentUser.Person.id).cash-=income.summ;
-
-            income.summ *= (-1);
-
-            if (currentUser.currentIncome > currentUser.Person.Finance.salary)
-            {
-                currentUser.currentIncome -= income.summ;
-                //currentUser.UpdateProfit(-income.summ);
-            }
-
-            currentUser.UpdateProfit(income);
+            _context.Income.Remove(_context.Income.Find(incomeId));
+            _context.Finance.Update(finance);
 
             _context.SaveChanges();
 
             currentUser.Person.Finance = _context.Finance.Find(currentUser.Person.id);
+
 
             return View("IncomeForm", currentUser);
         }

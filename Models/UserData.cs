@@ -5,6 +5,7 @@ using NuGet.Packaging;
 using System;
 using System.ComponentModel;
 using System.Linq.Expressions;
+using System.Transactions;
 using static myPet4.Models.UserData;
 
 namespace myPet4.Models
@@ -152,7 +153,7 @@ namespace myPet4.Models
             foreach (UserItem i in userItems)
             {
                 i.UpdateItem(person.Finance.dateBegin, person.Finance.dateEnd);
-                
+
                 itemsSumm += i.item.summ;
                 if (i.item.transactions != null)
                 {
@@ -174,7 +175,7 @@ namespace myPet4.Models
             if (person.Finance.salary > currentIncome)
             {
                 currentProfit = person.Finance.salary - currentTransactionsSumm;
-                profit = person.Finance.salary - itemsSumm-itemsSummOverLoaded;
+                profit = person.Finance.salary - itemsSumm - itemsSummOverLoaded;
             }
             else
             {
@@ -182,44 +183,114 @@ namespace myPet4.Models
                 profit = currentIncome - itemsSumm;
             }
         }
-        //public void UpdateProfit(int summ)
-        public void UpdateProfit(Income income)
+
+        //public void UpdateProfit(Income income)
+        //{
+        //    currentIncome += income.summ;
+        //    if (currentIncome > Person.Finance.salary)
+        //    {
+        //        profit = currentIncome - itemsSumm;
+        //        currentProfit = profit + currentTransactionsSumm;
+        //    }
+        //    else
+        //    {
+        //        profit = Person.Finance.salary - this.itemsSumm;
+        //        currentProfit = Person.Finance.salary - currentTransactionsSumm;
+        //    }
+        //    //Person.Finance = new Finance(Person.Finance);
+        //}
+
+        //public void UpdateProfit(Transactions transaction)
+        //{
+        //    UserItem item = userItems.Where(i => i.item.id == transaction.item).First();
+        //    if (item.loaded > item.item.summ)
+        //    {
+        //        int differens = item.loaded - item.item.summ;
+        //        if (differens >= Math.Abs(transaction.summ)) differens = transaction.summ;
+        //        profit -= (differens*(transaction.summ/Math.Abs(transaction.summ)));
+        //        currentProfit -= transaction.summ;
+        //    }
+        //    else
+        //    {
+        //        currentProfit -= transaction.summ;
+        //    }
+        //    //Person.Finance = new Finance(Person.Finance);
+        //}
+
+        //public void UpdateIncome(int income)
+        //{
+        //    currentIncome += income;
+        //    currentProfit = currentIncome - currentTransactionsSumm;
+        //}
+
+        public Finance AddIncome(Income income)
         {
+            Person.Finance.cash += income.summ;
             currentIncome += income.summ;
-            if (currentIncome > Person.Finance.salary)
+
+            if (currentIncome >= Person.Finance.salary)
             {
-                profit = currentIncome - itemsSumm;
-                currentProfit = profit + currentTransactionsSumm;
+                int differens = currentIncome - Person.Finance.salary;
+                if (differens > income.summ)
+                {
+                    profit += income.summ;
+                    currentProfit += income.summ;
+                }
+                else
+                {
+                    profit += differens;
+                    currentProfit += differens;
+                }
             }
-            else
-            {
-                profit = Person.Finance.salary - this.itemsSumm;
-                currentProfit = Person.Finance.salary - currentTransactionsSumm;
-            }
-            //Person.Finance = new Finance(Person.Finance);
+            return Person.Finance;
         }
 
-        public void UpdateProfit(Transactions transaction)
+        public Finance DeleteIncome(Income income)
         {
-            UserItem item = userItems.Where(i => i.item.id == transaction.item).First();
-            if (item.loaded > item.item.summ)
+            Person.Finance.cash -= income.summ;
+            currentIncome -= income.summ;
+            //currentProfit -= income.summ;
+            if (currentIncome >= Person.Finance.salary)
             {
-                int differens = item.loaded - item.item.summ;
-                if (differens >= Math.Abs(transaction.summ)) differens = transaction.summ;
-                profit -= (differens*(transaction.summ/Math.Abs(transaction.summ)));
-                currentProfit -= transaction.summ;
+                int differens = currentIncome - Person.Finance.salary;
+                if (differens > income.summ)
+                {
+                    profit -= income.summ;
+                    currentProfit -= income.summ;
+                }
+                else
+                {
+                    profit -= differens;
+                    currentProfit -= differens;
+                }
             }
-            else
-            {
-                currentProfit -= transaction.summ;
-            }
-            //Person.Finance = new Finance(Person.Finance);
+            return Person.Finance;
         }
 
-        public void UpdateIncome(int income)
+        public void AddExpence(Transactions transaction)
         {
-            currentIncome += income;
-            currentProfit = currentIncome - currentTransactionsSumm;
+            currentProfit -= transaction.summ;
+            UserItem userItem = userItems.Where(i => i.item.id == transaction.item).First();
+            if (userItem.item.summ < userItem.loaded)
+            {
+                int difference = userItem.loaded - userItem.item.summ;
+                if (difference > transaction.summ)
+                {
+                    profit -= transaction.summ;
+                }
+                else
+                {
+                    profit -= difference;
+                }
+                if (transaction.credit)
+                {
+                    Person.Finance.credit += transaction.summ;
+                }
+                else
+                {
+                    Person.Finance.cash -= transaction.summ;
+                }
+            }
         }
 
         public UserData() { }
