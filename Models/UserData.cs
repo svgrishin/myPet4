@@ -248,7 +248,6 @@ namespace myPet4.Models
         public Finance DeleteIncome(Income income)
         {
             Person.Finance.cash -= income.summ;
-            currentIncome -= income.summ;
             //currentProfit -= income.summ;
             if (currentIncome >= Person.Finance.salary)
             {
@@ -264,6 +263,7 @@ namespace myPet4.Models
                     currentProfit -= differens;
                 }
             }
+            currentIncome -= income.summ;
             return Person.Finance;
         }
 

@@ -285,7 +285,10 @@ namespace myPet4.Controllers
             if (oldIncome == null)
             {
                 finance.cash = currentUser.AddIncome(newIncome).cash;
-                
+                _context.Income.Add(newIncome);
+                currentUser.Person.income.Add(newIncome);
+
+
                 //finance.cash += newIncome.summ;
                 //_context.Finance.Update(finance);
 
@@ -296,9 +299,12 @@ namespace myPet4.Controllers
             }
             else
             {
-                currentUser.DeleteIncome(oldIncome);
+                finance.cash = currentUser.DeleteIncome(oldIncome).cash;
+                finance.cash = currentUser.AddIncome(newIncome).cash;
+                _context.Income.Update(newIncome);
+                currentUser.Person.income.Remove(oldIncome);
+                currentUser.Person.income.Add(newIncome);
 
-                finance = currentUser.AddIncome(newIncome);
 
                 //int summ = newIncome.summ - oldIncome.summ;
                 //currentUser.Person.Finance.cash += summ;
@@ -317,9 +323,7 @@ namespace myPet4.Controllers
 
             }
 
-            currentUser.Person.income.Add(newIncome);
 
-            _context.Income.Add(newIncome);
             _context.Finance.Update(finance);
 
             _context.SaveChanges();
@@ -367,13 +371,9 @@ namespace myPet4.Controllers
 
         public IActionResult DeleteIncome(int incomeId)
         {
-            
-
             Income income = currentUser.Person.income.Where(i => i.id == incomeId).FirstOrDefault();
 
-            Finance finance = _context.Finance.Find(currentUser.Person.id);
-
-            
+            Finance finance = _context.Finance.Find(currentUser.Person.id);          
 
             finance.cash = currentUser.DeleteIncome(income).cash;
 
