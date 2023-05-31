@@ -16,7 +16,7 @@
             <label style="background:none; width: 55%; display: inline-block">@Model.item.nameOf</label>
             <input value="" type="submit" id="addItem" asp-action="AddTransaction" asp-route-id="@Model.item.id" class="itemButton" />
             <button id="editItem" asp-action="EditTransaction" class="itemButton" onclick="testt();"></button>
-            <button id="deleteItem" asp-action="DeleteTransaction" class="itemButton"></button>
+            <button id="deleteItem" asp-action="DeleteTransaction" class="itemButton" onclick="FrameUpdate();"></button>
 
         </div>
 
@@ -31,16 +31,10 @@
         s.forEach(p => p.removeAttribute("multiple"));
         s.forEach(p => p.setAttribute("size", 2));
 
-        function testt() {
-            //window.parent.postMessage({ message: 'Hello world' });
-        };
-
         function FrameUpdate() {
-            //window.parent.postMessage({ message: 'FrameUpdate' });
-
-            //alert(top.document.getElementById(@Model.item).style);
-
-            //top.document.getElementById('topFrame').contentWindow.location.reload();
+            setInterval(() => {
+                top.document.getElementById("topFrame").contentWindow.location.reload(true);
+            }, 1);
         };
     }
 </script>

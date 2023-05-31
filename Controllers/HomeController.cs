@@ -205,9 +205,9 @@ namespace myPet4.Controllers
         [HttpPost]
         public IActionResult SaveTransaction(Transactions newTransaction)
         {
-            _context.Transactions.Update(newTransaction);
-
             UserItem userItem = currentUser.userItems.Where(m => m.item.id == newTransaction.item).First();
+
+            Finance finance = _context.Finance.Find(currentUser.Person.id);
 
             Transactions oldTransaction = null;
             try
@@ -217,61 +217,137 @@ namespace myPet4.Controllers
             catch
             { }
 
-            Finance finance = _context.Finance.Find(currentUser.Person.id);
 
             if (oldTransaction != null)
             {
-                userItem.item.transactions.Remove(oldTransaction);
-
-                switch (oldTransaction.credit)
-                {
-                    case true:
-                        currentUser.Person.Finance.credit -= oldTransaction.summ;
-                        finance.credit = currentUser.Person.Finance.credit;
-
-                        
-
-                        break;
-                    case false:
-                        currentUser.Person.Finance.cash += oldTransaction.summ;
-                        finance.cash = currentUser.Person.Finance.cash;
-
-                        break;
-                }
-                oldTransaction.summ *= (-1);
-                //currentUser.UpdateProfit(oldTransaction);
+                finance.cash = currentUser.DeleteExpence(oldTransaction).cash;
+                oldTransaction = _context.Transactions.Find(oldTransaction.id);
+                _context.Transactions.Remove(oldTransaction);
             }
-            userItem.item.transactions.Add(newTransaction);
+            finance.cash = currentUser.AddExpence(newTransaction).cash;
+
+            _context.Finance.Update(finance);
+            _context.Transactions.Add(newTransaction);
 
 
-            userItem.UpdateItem(currentUser.Person.Finance.dateBegin, currentUser.Person.Finance.dateEnd);
+            //if (oldTransaction != null)
+            //{
+            //    _context.Transactions.Update(newTransaction);
 
-            switch (newTransaction.credit)
-            {
-                case true:
-                    currentUser.Person.Finance.credit += newTransaction.summ;
-                    finance.credit = currentUser.Person.Finance.credit;
+            //    userItem.item.transactions.Remove(oldTransaction);
 
-                    break;
-                case false:
-                    currentUser.Person.Finance.cash -= newTransaction.summ;
-                    finance.cash = currentUser.Person.Finance.cash;
+            //    switch (oldTransaction.credit)
+            //    {
+            //        case true:
+            //            currentUser.Person.Finance.credit -= oldTransaction.summ;
+            //            finance.credit = currentUser.Person.Finance.credit;
 
-                    break;
-            }
 
-            //currentUser.UpdateProfit(newTransaction);
+
+            //            break;
+            //        case false:
+            //            currentUser.Person.Finance.cash += oldTransaction.summ;
+            //            finance.cash = currentUser.Person.Finance.cash;
+
+            //            break;
+            //    }
+            //    oldTransaction.summ *= (-1);
+            //    //currentUser.UpdateProfit(oldTransaction);
+            //}
+            //userItem.item.transactions.Add(newTransaction);
+
+
+            //userItem.UpdateItem(currentUser.Person.Finance.dateBegin, currentUser.Person.Finance.dateEnd);
+
+            //switch (newTransaction.credit)
+            //{
+            //    case true:
+            //        currentUser.Person.Finance.credit += newTransaction.summ;
+            //        finance.credit = currentUser.Person.Finance.credit;
+
+            //        break;
+            //    case false:
+            //        currentUser.Person.Finance.cash -= newTransaction.summ;
+            //        finance.cash = currentUser.Person.Finance.cash;
+
+            //        break;
+            //}
+
+            ////currentUser.UpdateProfit(newTransaction);
 
             _context.SaveChanges();
 
+            currentUser.Person.Finance = _context.Finance.Find(currentUser.Person.id);
+
             return View("TransactionsForm", userItem);
+
+            //_context.Transactions.Update(newTransaction);
+
+            //UserItem userItem = currentUser.userItems.Where(m => m.item.id == newTransaction.item).First();
+
+            //Transactions oldTransaction = null;
+            //try
+            //{
+            //    oldTransaction = userItem.item.transactions.Where(m => m.id == newTransaction.id).First();
+            //}
+            //catch
+            //{ }
+
+            //Finance finance = _context.Finance.Find(currentUser.Person.id);
+
+            //if (oldTransaction != null)
+            //{
+            //    userItem.item.transactions.Remove(oldTransaction);
+
+            //    switch (oldTransaction.credit)
+            //    {
+            //        case true:
+            //            currentUser.Person.Finance.credit -= oldTransaction.summ;
+            //            finance.credit = currentUser.Person.Finance.credit;
+
+
+
+            //            break;
+            //        case false:
+            //            currentUser.Person.Finance.cash += oldTransaction.summ;
+            //            finance.cash = currentUser.Person.Finance.cash;
+
+            //            break;
+            //    }
+            //    oldTransaction.summ *= (-1);
+            //    //currentUser.UpdateProfit(oldTransaction);
+            //}
+            //userItem.item.transactions.Add(newTransaction);
+
+
+            //userItem.UpdateItem(currentUser.Person.Finance.dateBegin, currentUser.Person.Finance.dateEnd);
+
+            //switch (newTransaction.credit)
+            //{
+            //    case true:
+            //        currentUser.Person.Finance.credit += newTransaction.summ;
+            //        finance.credit = currentUser.Person.Finance.credit;
+
+            //        break;
+            //    case false:
+            //        currentUser.Person.Finance.cash -= newTransaction.summ;
+            //        finance.cash = currentUser.Person.Finance.cash;
+
+            //        break;
+            //}
+
+            ////currentUser.UpdateProfit(newTransaction);
+
+            //_context.SaveChanges();
+
+            //return View("TransactionsForm", userItem);
         }
 
         [HttpPost]
         public IActionResult SaveIncome(Income newIncome)
         {
             newIncome.person = currentUser.Person.id;
-            
+
             Finance finance = _context.Finance.Find(currentUser.Person.id);
 
             Income oldIncome = null;
@@ -330,9 +406,6 @@ namespace myPet4.Controllers
 
             currentUser.Person.Finance = _context.Finance.Find(currentUser.Person.id);
 
-
-
-
             //return RedirectToAction("IncomeForm");
             return View("IncomeForm", currentUser);
         }
@@ -340,24 +413,28 @@ namespace myPet4.Controllers
         public IActionResult DeleteTransaction(int transactionId)
         {
             Transactions transaction = _context.Transactions.Find(transactionId);
-
             _context.Transactions.Remove(transaction);
+            
+            UserItem userItem = currentUser.userItems.Where(m => m.item.id == transaction.item).First();
 
             Finance finance = _context.Finance.Find(currentUser.Person.id);
-            switch (transaction.credit)
-            {
-                case true:
-                    currentUser.Person.Finance.credit -= transaction.summ;
-                    finance.credit = currentUser.Person.Finance.credit;
-                    break;
-                case false:
-                    currentUser.Person.Finance.cash += transaction.summ;
-                    finance.cash = currentUser.Person.Finance.cash;
-                    break;
-            }
 
-  
+            transaction = userItem.item.transactions.Where(t => t.id == transaction.id).First();
+
+            //if (transaction.credit)
+            //{
+            //    currentUser.Person.Finance.credit -= transaction.summ;
+            //    finance.credit = currentUser.Person.Finance.credit;
+            //}
+            //else
+            //{
+            //    currentUser.Person.Finance.cash += transaction.summ;
+            //    finance.cash = currentUser.Person.Finance.cash;
+            //}
             
+            userItem.item.transactions.Remove(transaction);
+
+            finance.cash = currentUser.DeleteExpence(transaction).cash;
             _context.Finance.Update(finance);
 
             _context.SaveChanges();
@@ -367,13 +444,42 @@ namespace myPet4.Controllers
             //currentUser.UpdateProfit(transaction);
 
             return RedirectToAction("TransactionsForm", new { id = transaction.item });
+
+            //Transactions transaction = _context.Transactions.Find(transactionId);
+
+            //_context.Transactions.Remove(transaction);
+
+            //Finance finance = _context.Finance.Find(currentUser.Person.id);
+            //switch (transaction.credit)
+            //{
+            //    case true:
+            //        currentUser.Person.Finance.credit -= transaction.summ;
+            //        finance.credit = currentUser.Person.Finance.credit;
+            //        break;
+            //    case false:
+            //        currentUser.Person.Finance.cash += transaction.summ;
+            //        finance.cash = currentUser.Person.Finance.cash;
+            //        break;
+            //}
+
+
+
+            //_context.Finance.Update(finance);
+
+            //_context.SaveChanges();
+            //currentUser.Person.Finance = _context.Finance.Find(currentUser.Person.id);
+
+            ////currentUser.currentProfit -= transaction.summ;
+            ////currentUser.UpdateProfit(transaction);
+
+            //return RedirectToAction("TransactionsForm", new { id = transaction.item });
         }
 
         public IActionResult DeleteIncome(int incomeId)
         {
             Income income = currentUser.Person.income.Where(i => i.id == incomeId).FirstOrDefault();
 
-            Finance finance = _context.Finance.Find(currentUser.Person.id);          
+            Finance finance = _context.Finance.Find(currentUser.Person.id);
 
             finance.cash = currentUser.DeleteIncome(income).cash;
 

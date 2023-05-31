@@ -36,24 +36,10 @@
 <script>
     {
         function FrameUpdate() {
-            //window.parent.postMessage({ message: 'FrameUpdate' });
-
-            //top.document.getElementById("Transactions 2").onload = Frupdt();
-            //var x = top.document.getElementById("Transactions 2");
-            //alert(x.rea);
-
-            //setTimeout(() => {
             setInterval(() => {
-                //alert('Запущено обновление');
                 top.document.getElementById("topFrame").contentWindow.location.reload(true);
             }, 1);
-
-            //alert("Запущено обновление");
         };
-        //function Frupdt() {
-        //    top.document.getElementById("topFrame").contentWindow.location.reload(true);
-
-        //}
     }
 </script>
 

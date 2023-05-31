@@ -267,30 +267,71 @@ namespace myPet4.Models
             return Person.Finance;
         }
 
-        public void AddExpence(Transactions transaction)
+        public Finance AddExpence(Transactions transaction)
         {
+            UserItem userItem = userItems.Where(i => i.item.id == transaction.item).First();
+            if (userItem.item.summ < (userItem.loaded+transaction.summ))
+            {
+                int difference = (userItem.loaded+transaction.summ) - userItem.item.summ;
+                if (difference > transaction.summ)
+                {
+                    profit -= transaction.summ;
+                    //currentProfit -= transaction.summ;
+                }
+                else
+                {
+                    profit -= difference;
+                    //currentProfit -= difference;
+                }
+            }
+
+            if (transaction.credit)
+            {
+                Person.Finance.credit += transaction.summ;
+            }
+            else
+            {
+                Person.Finance.cash -= transaction.summ;
+            }
             currentProfit -= transaction.summ;
+
+            userItem.item.transactions.Add(transaction);
+            userItem.loaded+= transaction.summ;
+
+            return Person.Finance;
+        }
+
+        public Finance DeleteExpence(Transactions transaction)
+        {
             UserItem userItem = userItems.Where(i => i.item.id == transaction.item).First();
             if (userItem.item.summ < userItem.loaded)
             {
                 int difference = userItem.loaded - userItem.item.summ;
                 if (difference > transaction.summ)
                 {
-                    profit -= transaction.summ;
+                    profit += transaction.summ;
+                    //currentProfit -= transaction.summ;
                 }
                 else
                 {
-                    profit -= difference;
-                }
-                if (transaction.credit)
-                {
-                    Person.Finance.credit += transaction.summ;
-                }
-                else
-                {
-                    Person.Finance.cash -= transaction.summ;
+                    profit += difference;
+                    //currentProfit -= difference;
                 }
             }
+
+            if (transaction.credit)
+            {
+                Person.Finance.credit -= transaction.summ;
+            }
+            else
+            {
+                Person.Finance.cash += transaction.summ;
+            }
+            currentProfit += transaction.summ;
+
+            userItem.item.transactions.Remove(transaction);
+
+            return Person.Finance;
         }
 
         public UserData() { }

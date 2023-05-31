@@ -21,10 +21,7 @@
 <script>
     {
         function FrameUpdate() {
-            ///window.parent.postMessage({ message: 'Hello world' }, 'http://localhost:56385/Home/TransactionsForm?id=2');
-            //window.parent.postMessage({ message: 'FrameUpdate' });
             setInterval(() => {
-                //alert('Запущено обновление');
                 top.document.getElementById("topFrame").contentWindow.location.reload(true);
             }, 1);
         };
