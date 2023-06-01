@@ -102,7 +102,6 @@ namespace myPet4.Models
 
                 //currentSumm = item.summ / dateEnd.Subtract(DateTime.Today).Days;
 
-
                 int balanceIncToday = item.summ - loaded;
                 int balanceExcToday = balanceIncToday + d;
                 currentSumm = (balanceIncToday) / (dateEnd.Subtract(date1).Days + 1);
@@ -129,7 +128,6 @@ namespace myPet4.Models
             userItems = new List<UserItem>();
             foreach (ItemPerson item in person.itemPerson)
             {
-                //userItems.Add(new UserItem(item, person.Finance.dateBegin, person.Finance.dateEnd));
                 userItems.Add(new UserItem(item, person.Finance.dateBegin, person.Finance.dateEnd));
                 this.itemsSumm += item.summ;
             }
@@ -184,45 +182,6 @@ namespace myPet4.Models
             }
         }
 
-        //public void UpdateProfit(Income income)
-        //{
-        //    currentIncome += income.summ;
-        //    if (currentIncome > Person.Finance.salary)
-        //    {
-        //        profit = currentIncome - itemsSumm;
-        //        currentProfit = profit + currentTransactionsSumm;
-        //    }
-        //    else
-        //    {
-        //        profit = Person.Finance.salary - this.itemsSumm;
-        //        currentProfit = Person.Finance.salary - currentTransactionsSumm;
-        //    }
-        //    //Person.Finance = new Finance(Person.Finance);
-        //}
-
-        //public void UpdateProfit(Transactions transaction)
-        //{
-        //    UserItem item = userItems.Where(i => i.item.id == transaction.item).First();
-        //    if (item.loaded > item.item.summ)
-        //    {
-        //        int differens = item.loaded - item.item.summ;
-        //        if (differens >= Math.Abs(transaction.summ)) differens = transaction.summ;
-        //        profit -= (differens*(transaction.summ/Math.Abs(transaction.summ)));
-        //        currentProfit -= transaction.summ;
-        //    }
-        //    else
-        //    {
-        //        currentProfit -= transaction.summ;
-        //    }
-        //    //Person.Finance = new Finance(Person.Finance);
-        //}
-
-        //public void UpdateIncome(int income)
-        //{
-        //    currentIncome += income;
-        //    currentProfit = currentIncome - currentTransactionsSumm;
-        //}
-
         public Finance AddIncome(Income income)
         {
             Person.Finance.cash += income.summ;
@@ -248,7 +207,6 @@ namespace myPet4.Models
         public Finance DeleteIncome(Income income)
         {
             Person.Finance.cash -= income.summ;
-            //currentProfit -= income.summ;
             if (currentIncome >= Person.Finance.salary)
             {
                 int differens = currentIncome - Person.Finance.salary;
@@ -276,12 +234,10 @@ namespace myPet4.Models
                 if (difference > transaction.summ)
                 {
                     profit -= transaction.summ;
-                    //currentProfit -= transaction.summ;
                 }
                 else
                 {
                     profit -= difference;
-                    //currentProfit -= difference;
                 }
             }
 
@@ -310,12 +266,10 @@ namespace myPet4.Models
                 if (difference > transaction.summ)
                 {
                     profit += transaction.summ;
-                    //currentProfit -= transaction.summ;
                 }
                 else
                 {
                     profit += difference;
-                    //currentProfit -= difference;
                 }
             }
 
@@ -336,6 +290,4 @@ namespace myPet4.Models
 
         public UserData() { }
     }
-
-
 }

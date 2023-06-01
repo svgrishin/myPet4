@@ -220,11 +220,17 @@ namespace myPet4.Controllers
 
             if (oldTransaction != null)
             {
-                finance.cash = currentUser.DeleteExpence(oldTransaction).cash;
+                //Finance f = currentUser.DeleteExpence(oldTransaction);
+                //finance.cash = f.cash;
+                //finance.credit = f.credit;
+
                 oldTransaction = _context.Transactions.Find(oldTransaction.id);
                 _context.Transactions.Remove(oldTransaction);
             }
-            finance.cash = currentUser.AddExpence(newTransaction).cash;
+
+            Finance f = currentUser.AddExpence(newTransaction);
+            finance.cash = f.cash;
+            finance.credit = f.credit;
 
             _context.Finance.Update(finance);
             _context.Transactions.Add(newTransaction);
@@ -434,7 +440,10 @@ namespace myPet4.Controllers
             
             userItem.item.transactions.Remove(transaction);
 
-            finance.cash = currentUser.DeleteExpence(transaction).cash;
+            Finance f = currentUser.DeleteExpence(transaction);
+            finance.cash = f.cash;
+            finance.credit = f.credit;
+
             _context.Finance.Update(finance);
 
             _context.SaveChanges();
