@@ -287,9 +287,11 @@ h1 {
 
 .itemLabel label {
     font-size: 13px;
-    margin: 5px 10px 5px 10px;
+    margin: 2px 5px 2px 5px;
+    /*margin: 2px 5px 2px 5px;*/
     border-radius: 10px;
-    padding: 3px 5% 3px 5%;
+    padding: 3px 2% 3px 2%;
+    text-align: center;
 }
 
 #interactiveForm {

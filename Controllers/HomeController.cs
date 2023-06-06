@@ -204,10 +204,11 @@ namespace myPet4.Controllers
 
         [HttpPost]
         public IActionResult SaveTransaction(Transactions newTransaction)
-        {
+        {            
             UserItem userItem = currentUser.userItems.Where(m => m.item.id == newTransaction.item).First();
 
             Finance finance = _context.Finance.Find(currentUser.Person.id);
+            Finance f;
 
             Transactions oldTransaction = null;
             try
@@ -220,20 +221,23 @@ namespace myPet4.Controllers
 
             if (oldTransaction != null)
             {
-                //Finance f = currentUser.DeleteExpence(oldTransaction);
-                //finance.cash = f.cash;
-                //finance.credit = f.credit;
+                f = currentUser.DeleteExpence(oldTransaction);
+                finance.cash = f.cash;
+                finance.credit = f.credit;
 
+                //userItem.item.transactions.Remove(oldTransaction);
                 oldTransaction = _context.Transactions.Find(oldTransaction.id);
                 _context.Transactions.Remove(oldTransaction);
             }
 
-            Finance f = currentUser.AddExpence(newTransaction);
+            f = currentUser.AddExpence(newTransaction);
             finance.cash = f.cash;
             finance.credit = f.credit;
 
             _context.Finance.Update(finance);
             _context.Transactions.Add(newTransaction);
+
+            userItem.UpdateItem(currentUser.Person.Finance.dateBegin, currentUser.Person.Finance.dateEnd);
 
 
             //if (oldTransaction != null)
@@ -448,6 +452,9 @@ namespace myPet4.Controllers
 
             _context.SaveChanges();
             currentUser.Person.Finance = _context.Finance.Find(currentUser.Person.id);
+
+            userItem.UpdateItem(currentUser.Person.Finance.dateBegin, currentUser.Person.Finance.dateEnd);
+
 
             //currentUser.currentProfit -= transaction.summ;
             //currentUser.UpdateProfit(transaction);

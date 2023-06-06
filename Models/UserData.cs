@@ -50,6 +50,10 @@ namespace myPet4.Models
         {
             public ItemPerson item { get; set; }
             /// <summary>
+            /// Рекомендуемая норма в день
+            /// </summary>
+            public decimal recomendedCurrentSumm { get; set; }
+            /// <summary>
             /// Текущая норма в день
             /// </summary>
             public decimal currentSumm { get; set; }
@@ -66,7 +70,7 @@ namespace myPet4.Models
                 loaded = 0;
 
                 //DateTime date1 = new DateTime(2023, 3, 12);
-                DateTime date1 = new DateTime(2023, 5, 5);
+                DateTime date1 = new DateTime(2023,5, 2);
 
                 this.item = item;
             }
@@ -74,7 +78,7 @@ namespace myPet4.Models
             public void UpdateItem(DateTime dateBegin, DateTime dateEnd)
             {
                 //DateTime date1 = new DateTime(2023, 3, 12);
-                DateTime date1 = new DateTime(2023, 5, 5);
+                DateTime date1 = new DateTime(2023, 5, 2);
 
                 loaded = 0;
                 try
@@ -104,7 +108,13 @@ namespace myPet4.Models
 
                 int balanceIncToday = item.summ - loaded;
                 int balanceExcToday = balanceIncToday + d;
-                currentSumm = (balanceIncToday) / (dateEnd.Subtract(date1).Days + 1);
+                recomendedCurrentSumm = (balanceIncToday) / (dateEnd.Subtract(date1).Days + 1);
+
+                TimeSpan daysBefore = date1 - dateBegin;
+                TimeSpan daysAfter = dateEnd - date1;
+                int dailySumm = item.summ / (dateEnd.Subtract(date1).Days + 1);
+                currentSumm = dailySumm * (daysBefore.Days+1)-d;
+
                 dailyBalance = (balanceExcToday) / (dateEnd.Subtract(date1).Days + 1) - d;
             }
         }
@@ -228,9 +238,9 @@ namespace myPet4.Models
         public Finance AddExpence(Transactions transaction)
         {
             UserItem userItem = userItems.Where(i => i.item.id == transaction.item).First();
-            if (userItem.item.summ < (userItem.loaded+transaction.summ))
+            if (userItem.item.summ < (userItem.loaded + transaction.summ))
             {
-                int difference = (userItem.loaded+transaction.summ) - userItem.item.summ;
+                int difference = (userItem.loaded + transaction.summ) - userItem.item.summ;
                 if (difference > transaction.summ)
                 {
                     profit -= transaction.summ;
@@ -252,7 +262,7 @@ namespace myPet4.Models
             currentProfit -= transaction.summ;
 
             userItem.item.transactions.Add(transaction);
-            userItem.loaded+= transaction.summ;
+            userItem.loaded += transaction.summ;
 
             return Person.Finance;
         }
