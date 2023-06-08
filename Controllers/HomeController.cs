@@ -531,5 +531,11 @@ namespace myPet4.Controllers
         {
             return View(currentUser);
         }
+
+        [HttpGet]
+        public IActionResult SetupItems()
+        {
+            return View(currentUser);
+        }
     }
 }
