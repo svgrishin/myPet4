@@ -10,26 +10,43 @@
     @*<form asp-action="CreateItems">*@
     <form>
         <h1 style="font-size:22pt">@ViewData["Title"]</h1>
-        <table>
+        <table style="width:100%; border:solid">
             @foreach (UserData.UserItem userItem in Model.userItems)
             {
-                <div class="leftItems" style="display:flex">
-                    <div asp-validation-summary="ModelOnly" class="text-danger"></div>
-                    @*<div class="form-group">*@
-                    <label class="control-label">@userItem.item.nameOf</label>
-                    <label class="control-label">@userItem.item.summ</label>
-                    <input asp-for="@userItem.item.summ" type="range" min="0" max="@Model.Person.Finance.salary" value="@userItem.item.summ" />
-                    @*<input asp-for="summ" style="height:50px" />*@
+                @*<tr class="leftItems" style="display:flex">*@
+                <tr style="display:flex">
+                    @*<div asp-validation-summary="ModelOnly" class="text-danger"></div>*@
+                    <td style="width:30%; align-self:center">
+                        <label class="control-label">@userItem.item.nameOf</label>
+                    </td>
+@*                    <td style="width:25%; align-self:center">
+                        <label class="control-label">@userItem.item.summ</label>
+                    </td>*@
+                    <td style="width:70%; align-self:center; display:flex">
+                        <input style="margin-top:3%; width:60%" asp-for="@userItem.item.summ" type="range" min="0" max="@Model.Person.Finance.salary" value="@userItem.item.summ" oninput="document.getElementById('rangeValue @userItem.item.nameOf').innerText = this.value" />
+                        <p style="margin-left:15%" id="rangeValue @userItem.item.nameOf">@userItem.item.summ</p>
+                    </td>
                     <span asp-validation-for="@userItem.item.summ" class="text-danger"></span>
-                    @*</div>*@
-                </div>
+
+
+
+                </tr>
             }
-        </table>    
-        
+        </table>
+
         <button class="systemButton pairButtons" formmethod="get" asp-action="CreateFinance">Назад</button>
         <input type="submit" asp-action="saveProfile" value="Готово" class="pairButtons" />
     </form>
 </body>
+
+
+<script>
+    function ValChante() {
+        var l = document.getElementById()
+    }
+</script>
+
+
 @section Scripts {
     @{
         await Html.RenderPartialAsync("_ValidationScriptsPartial");
