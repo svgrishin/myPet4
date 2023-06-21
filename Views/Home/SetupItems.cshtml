@@ -8,28 +8,28 @@
 }
 <body id="formBody">
     @*<form asp-action="CreateItems">*@
-    <form>
+    <form style="width:50%">
         <h1 style="font-size:22pt">@ViewData["Title"]</h1>
-        <table style="width:100%; border:solid">
+        <table style="width:100%">
             @foreach (UserData.UserItem userItem in Model.userItems)
             {
                 @*<tr class="leftItems" style="display:flex">*@
                 <tr style="display:flex">
                     @*<div asp-validation-summary="ModelOnly" class="text-danger"></div>*@
-                    <td style="width:30%; align-self:center">
+                    <td style="width:13%; align-self:center">
                         <label class="control-label">@userItem.item.nameOf</label>
                     </td>
-@*                    <td style="width:25%; align-self:center">
-                        <label class="control-label">@userItem.item.summ</label>
-                    </td>*@
-                    <td style="width:70%; align-self:center; display:flex">
-                        <input style="margin-top:3%; width:60%" asp-for="@userItem.item.summ" type="range" min="0" max="@Model.Person.Finance.salary" value="@userItem.item.summ" oninput="document.getElementById('rangeValue @userItem.item.nameOf').innerText = this.value" />
-                        <p style="margin-left:15%" id="rangeValue @userItem.item.nameOf">@userItem.item.summ</p>
+                    <td style="width:82%; align-self:center; display:flex">
+                        <input readonly="true" style="background:none; width:10%; border:none; margin-top:2%" type="text" asp-for="@userItem.item.summ" id="value @userItem.item.nameOf">
+                        <p style="margin-top:3%; margin-right:0; width:5%">&#8381</p>
+
+                        <input style="margin-top:3%; width:85%" type="range" min="0" max="100" value="@(userItem.item.summ*100/Model.Person.Finance.salary)" oninput="document.getElementById('rangeValue @userItem.item.nameOf').innerText = this.value; document.getElementById('value @userItem.item.nameOf').value = this.value*@Model.Person.Finance.salary/100" />
+                    </td>
+                    <td style="width:5%; align-self:center; display:flex">
+                        <p id="rangeValue @userItem.item.nameOf">@(userItem.item.summ * 100 / Model.Person.Finance.salary)</p>
+                        <p>%</p>
                     </td>
                     <span asp-validation-for="@userItem.item.summ" class="text-danger"></span>
-
-
-
                 </tr>
             }
         </table>
