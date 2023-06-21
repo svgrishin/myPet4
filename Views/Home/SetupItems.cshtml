@@ -10,6 +10,9 @@
     @*<form asp-action="CreateItems">*@
     <form style="width:50%">
         <h1 style="font-size:22pt">@ViewData["Title"]</h1>
+
+        <progress id="progress" value="100" max="100"></progress>
+
         <table style="width:100%">
             @foreach (UserData.UserItem userItem in Model.userItems)
             {
@@ -23,11 +26,13 @@
                         <input readonly="true" style="background:none; width:10%; border:none; margin-top:2%" type="text" asp-for="@userItem.item.summ" id="value @userItem.item.nameOf">
                         <p style="margin-top:3%; margin-right:0; width:5%">&#8381</p>
 
-                        <input style="margin-top:3%; width:85%" type="range" min="0" max="100" value="@(userItem.item.summ*100/Model.Person.Finance.salary)" oninput="document.getElementById('rangeValue @userItem.item.nameOf').innerText = this.value; document.getElementById('value @userItem.item.nameOf').value = this.value*@Model.Person.Finance.salary/100" />
+                        <input name="rangeOf" style="margin-top:3%; width:85%" type="range" min="0" max="100" value="@(userItem.item.summ*100/Model.Person.Finance.salary)" oninput="document.getElementById('rangeValue @userItem.item.nameOf').innerText = this.value; document.getElementById('value @userItem.item.nameOf').value = this.value*@Model.Person.Finance.salary/100; ValChange(value);" />
                     </td>
                     <td style="width:5%; align-self:center; display:flex">
                         <p id="rangeValue @userItem.item.nameOf">@(userItem.item.summ * 100 / Model.Person.Finance.salary)</p>
                         <p>%</p>
+                        @*<p>fixed</p>
+                    <input type="checkbox"/>*@
                     </td>
                     <span asp-validation-for="@userItem.item.summ" class="text-danger"></span>
                 </tr>
@@ -36,13 +41,30 @@
 
         <button class="systemButton pairButtons" formmethod="get" asp-action="CreateFinance">Назад</button>
         <input type="submit" asp-action="saveProfile" value="Готово" class="pairButtons" />
+
     </form>
+
+    <button onclick="ValChange();">test</button>
+
 </body>
 
 
 <script>
-    function ValChante() {
-        var l = document.getElementById()
+    function ValChange(arg) {
+        let vals = [];
+        let freeMoney = 100;
+        vals = document.getElementsByName("rangeOf");
+        for (let i = 0; i < vals.length; i++) {
+            freeMoney -= vals[i].value;
+            //alert(vals[i].value);
+        }
+        document.getElementById("progress").value = freeMoney;
+
+        if (freeMoney<1){
+            //alert(arg);
+            //break;
+        }
+        //alert(freeMoney);
     }
 </script>
 
