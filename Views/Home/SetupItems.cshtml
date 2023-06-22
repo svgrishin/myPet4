@@ -26,7 +26,11 @@
                         <input readonly="true" style="background:none; width:10%; border:none; margin-top:2%" type="text" asp-for="@userItem.item.summ" id="value @userItem.item.nameOf">
                         <p style="margin-top:3%; margin-right:0; width:5%">&#8381</p>
 
-                        <input name="rangeOf" style="margin-top:3%; width:85%" type="range" min="0" max="100" value="@(userItem.item.summ*100/Model.Person.Finance.salary)" oninput="document.getElementById('rangeValue @userItem.item.nameOf').innerText = this.value; document.getElementById('value @userItem.item.nameOf').value = this.value*@Model.Person.Finance.salary/100; ValChange(value);" />
+                        <input name="rangeOf" id="rangeOf @userItem.item.nameOf" style="margin-top:3%; width:85%" type="range" min="0" max="100" value="@(userItem.item.summ*100/Model.Person.Finance.salary)" oninput="
+                            ValChange('rangeOf @userItem.item.nameOf', value);
+                            document.getElementById('rangeValue @userItem.item.nameOf').innerText = this.value;
+                            document.getElementById('value @userItem.item.nameOf').value = this.value*@Model.Person.Finance.salary/100;
+                        " />
                     </td>
                     <td style="width:5%; align-self:center; display:flex">
                         <p id="rangeValue @userItem.item.nameOf">@(userItem.item.summ * 100 / Model.Person.Finance.salary)</p>
@@ -50,21 +54,21 @@
 
 
 <script>
-    function ValChange(arg) {
+    
+    function ValChange(arg, val) {
+        
         let vals = [];
         let freeMoney = 100;
         vals = document.getElementsByName("rangeOf");
         for (let i = 0; i < vals.length; i++) {
             freeMoney -= vals[i].value;
-            //alert(vals[i].value);
         }
         document.getElementById("progress").value = freeMoney;
 
-        if (freeMoney<1){
-            //alert(arg);
-            //break;
+        if (freeMoney < 1) {
+            let range = document.getElementById(arg);
+            range.value=range.value-1+freeMoney;
         }
-        //alert(freeMoney);
     }
 </script>
 
