@@ -6,12 +6,12 @@
     ViewData["Title"] = "Настройка статей расхода";
     Layout = "~/Views/Shared/_Layout.cshtml";
 }
-<body id="formBody">
+<body id="formBody" onload="SetLoad();">
     @*<form asp-action="CreateItems">*@
-    <form style="width:50%">
+    <form style="width:50%" >
         <h1 style="font-size:22pt">@ViewData["Title"]</h1>
 
-        <progress id="progress" value="100" max="100"></progress>
+        <progress id="progress" max="100" value="0"></progress>
 
         <table style="width:100%">
             @foreach (UserData.UserItem userItem in Model.userItems)
@@ -57,18 +57,37 @@
     
     function ValChange(arg, val) {
         
-        let vals = [];
-        let freeMoney = 100;
-        vals = document.getElementsByName("rangeOf");
-        for (let i = 0; i < vals.length; i++) {
-            freeMoney -= vals[i].value;
-        }
+        //let vals = [];
+        //let freeMoney = 100;
+        //vals = document.getElementsByName("rangeOf");
+        //for (let i = 0; i < vals.length; i++) {
+        //    freeMoney -= vals[i].value;
+        //}
+     
+
+
+        let freeMoney = GetLoad();
+
         document.getElementById("progress").value = freeMoney;
 
         if (freeMoney < 1) {
             let range = document.getElementById(arg);
             range.value=range.value-1+freeMoney;
         }
+    }
+
+    function GetLoad(){
+        let vals = [];
+        let freeMoney = 100;
+        vals = document.getElementsByName("rangeOf");
+        for (let i = 0; i < vals.length; i++) {
+            freeMoney -= vals[i].value;
+        }
+        return freeMoney;
+    }
+
+    function SetLoad(){
+        document.getElementById("progress").value = GetLoad();
     }
 </script>
 
