@@ -204,7 +204,7 @@ namespace myPet4.Controllers
 
         [HttpPost]
         public IActionResult SaveTransaction(Transactions newTransaction)
-        {            
+        {
             UserItem userItem = currentUser.userItems.Where(m => m.item.id == newTransaction.item).First();
 
             Finance finance = _context.Finance.Find(currentUser.Person.id);
@@ -424,7 +424,7 @@ namespace myPet4.Controllers
         {
             Transactions transaction = _context.Transactions.Find(transactionId);
             _context.Transactions.Remove(transaction);
-            
+
             UserItem userItem = currentUser.userItems.Where(m => m.item.id == transaction.item).First();
 
             Finance finance = _context.Finance.Find(currentUser.Person.id);
@@ -441,7 +441,7 @@ namespace myPet4.Controllers
             //    currentUser.Person.Finance.cash += transaction.summ;
             //    finance.cash = currentUser.Person.Finance.cash;
             //}
-            
+
             userItem.item.transactions.Remove(transaction);
 
             Finance f = currentUser.DeleteExpence(transaction);
@@ -535,7 +535,15 @@ namespace myPet4.Controllers
         [HttpGet]
         public IActionResult SetupItems()
         {
-            return View(currentUser);
+            currentUser = new UserData(currentUser.Person);
+            return View("SetupItems", currentUser);
+        }
+
+        [HttpPost]
+        public IActionResult SetupItems(UserData user)
+        {
+            currentUser = new UserData(currentUser.Person);
+            return View("UserForm", user);
         }
     }
 }

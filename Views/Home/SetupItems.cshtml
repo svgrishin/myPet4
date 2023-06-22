@@ -1,4 +1,5 @@
-﻿@model myPet4.Models.UserData
+﻿@*@model myPet4.Models.UserData*@
+@model myPet4.Models.ItemPerson
 @using myPet4.Models;
 @using myPet4.Controllers;
 
@@ -7,8 +8,7 @@
     Layout = "~/Views/Shared/_Layout.cshtml";
 }
 <body id="formBody" onload="SetLoad();">
-    @*<form asp-action="CreateItems">*@
-    <form style="width:50%" >
+    <form asp-action="SetupItems" style="width:50%">
         <h1 style="font-size:22pt">@ViewData["Title"]</h1>
 
         <progress id="progress" max="100" value="0"></progress>
@@ -16,9 +16,7 @@
         <table style="width:100%">
             @foreach (UserData.UserItem userItem in Model.userItems)
             {
-                @*<tr class="leftItems" style="display:flex">*@
                 <tr style="display:flex">
-                    @*<div asp-validation-summary="ModelOnly" class="text-danger"></div>*@
                     <td style="width:13%; align-self:center">
                         <label class="control-label">@userItem.item.nameOf</label>
                     </td>
@@ -35,8 +33,6 @@
                     <td style="width:5%; align-self:center; display:flex">
                         <p id="rangeValue @userItem.item.nameOf">@(userItem.item.summ * 100 / Model.Person.Finance.salary)</p>
                         <p>%</p>
-                        @*<p>fixed</p>
-                    <input type="checkbox"/>*@
                     </td>
                     <span asp-validation-for="@userItem.item.summ" class="text-danger"></span>
                 </tr>
@@ -44,27 +40,17 @@
         </table>
 
         <button class="systemButton pairButtons" formmethod="get" asp-action="CreateFinance">Назад</button>
-        <input type="submit" asp-action="saveProfile" value="Готово" class="pairButtons" />
+        <input type="submit" asp-route="@Url.Action("SetupItems", new {user = Model})" value="Готово" class="pairButtons" />
+        @*<input type="submit" asp-action="saveProfile" formmethod="get" value="Готово" class="pairButtons" />*@
 
     </form>
-
-    <button onclick="ValChange();">test</button>
 
 </body>
 
 
 <script>
-    
-    function ValChange(arg, val) {
-        
-        //let vals = [];
-        //let freeMoney = 100;
-        //vals = document.getElementsByName("rangeOf");
-        //for (let i = 0; i < vals.length; i++) {
-        //    freeMoney -= vals[i].value;
-        //}
-     
 
+    function ValChange(arg, val) {
 
         let freeMoney = GetLoad();
 
@@ -72,11 +58,11 @@
 
         if (freeMoney < 1) {
             let range = document.getElementById(arg);
-            range.value=range.value-1+freeMoney;
+            range.value = range.value - 1 + freeMoney;
         }
     }
 
-    function GetLoad(){
+    function GetLoad() {
         let vals = [];
         let freeMoney = 100;
         vals = document.getElementsByName("rangeOf");
@@ -86,7 +72,7 @@
         return freeMoney;
     }
 
-    function SetLoad(){
+    function SetLoad() {
         document.getElementById("progress").value = GetLoad();
     }
 </script>
